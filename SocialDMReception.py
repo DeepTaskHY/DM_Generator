@@ -16,7 +16,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 os.environ[
-    "GOOGLE_APPLICATION_CREDENTIALS"] = "socialrobot-hyu-reception-nyla-176b1cd7164b.json"  # reception
+    "GOOGLE_APPLICATION_CREDENTIALS"] = "add reception dialogflow auth key file path"  # reception
 
 '''
     Social Robot HYU
