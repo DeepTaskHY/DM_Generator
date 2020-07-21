@@ -12,9 +12,7 @@ The dialogue generator is an agent that generates the robot utterance in human-r
 
 ## 3. Overview
 
-When the user utterance and user information taken as input values, the robot utterance is generated using the given information. The user information is obtained from the Task Manager through ROS protocol. After the robot utterance created, the generated robot utterance is forwarded to the Task Manager again through the ROS protocol.
-
-(여기 다시 써야할 듯 / 구조도 추가하기)
+When creating the robot utterance, we define several tasks that consider sociality for natural dialogue with the user. Each task generates various utterances according to social information(e.g. user profile, health information, schedule information). The social information is updated by the Knowledge manager that manages knowledge in the form of ontology. 
 
 ## 4. Hardware requirements
 
@@ -69,13 +67,21 @@ Download ngrok from this site('https://ngrok.com/') and run the following comman
 
 - Download ngrok from this site('https://ngrok.com/') and run the following command line. 
   `$  ./ngrok <portnum>  `
-
 - If you have developer permission, in the dialogflow project, add the 'forwarding link (add '/webhook' after the forwarding link)' that appears when you run ngrok to the fulfillment in the dialogflow console. 
   You can test this module in the dialogflow console after running 'social_fulfillment.py'.  
+- If you don't have permission, go to [Author's Google drive](https://drive.google.com/file/d/1Tya9XQrtlAv393xh8D_5MYfBAta15quz/view?usp=sharing) and download the JSON file(auth key). 
+  Add the path of the downloaded JSON file to line 18 of 'SocialDMReception.py '. 
+  You can start this module by running the 'SocialDMReception.py' file.
 
-- If you don't have permission, go to Github and download the JSON file(auth key). 
-  Add the path of the downloaded JSON file to line 6 of 'dialogflow_client.py'. 
-  You can test this module by running the 'dialogflow_client.py' after running 'social_fulfillment.py'  
+### 5.3 Test the module
+
+To test this module, you can execute the following command line. This command sends a ROS message.
+
+```
+$ rostopic pub /taskExecution std_msgs/String "data"
+```
+
+
 
 ## 6. Input/Subscribed Topics
 
