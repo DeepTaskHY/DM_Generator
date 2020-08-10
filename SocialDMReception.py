@@ -16,8 +16,8 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 os.environ[
-    "GOOGLE_APPLICATION_CREDENTIALS"] = "add reception dialogflow auth key file path"  # reception
-
+    # "GOOGLE_APPLICATION_CREDENTIALS"] = "add reception dialogflow auth_key file path"  # reception
+    "GOOGLE_APPLICATION_CREDENTIALS"] = "auth_key/socialrobot-hyu-reception-nyla-a093501276ce.json"  # reception
 '''
     Social Robot HYU
     Homecare Bot DM (generator) model
@@ -220,7 +220,8 @@ def ros_callback(msg):
 def run_subscriber():
     threading.Thread(target=lambda: rospy.init_node('dm_node', disable_signals=True)).start()
     rospy.Subscriber('/taskExecution', String, ros_callback)
-
+    app.run()
+    rospy.spin()
 
 # default route
 @app.route('/')
@@ -230,13 +231,5 @@ def index():
     return 'Social Robot Dialogflow HYU Homecare'
 
 
-# create a route for webhook
-@app.route('/reception', methods=['GET', 'POST'])
-def webhook():
-    run_subscriber()
-    return run_subscriber()
-
-
 if __name__ == '__main__':
     run_subscriber()
-    app.run()

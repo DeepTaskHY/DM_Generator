@@ -15,7 +15,8 @@ from datetime import datetime
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="homecare dialogflow authkey file path" # homecare
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="homecare dialogflow authkey file path" # homecare
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="auth_key/socialrobot-hyu-xdtlug-7fe2505e00b7.json" # homecare
 
 '''
     Social Robot HYU
@@ -245,6 +246,8 @@ def ros_callback(msg):
 def run_subscriber():
     threading.Thread(target=lambda: rospy.init_node('dm_node', disable_signals=True)).start()
     rospy.Subscriber('/taskExecution', String, ros_callback)
+    app.run()
+    rospy.spin()
 
 
 # default route
@@ -255,13 +258,5 @@ def index():
     return 'Social Robot Dialogflow HYU Homecare'
 
 
-# create a route for webhook
-@app.route('/reception', methods=['GET', 'POST'])
-def webhook():
-    run_subscriber()
-    return run_subscriber()
-
-
 if __name__ == '__main__':
     run_subscriber()
-    app.run()
