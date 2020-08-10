@@ -16,8 +16,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 os.environ[
-    # "GOOGLE_APPLICATION_CREDENTIALS"] = "add reception dialogflow auth_key file path"  # reception
-    "GOOGLE_APPLICATION_CREDENTIALS"] = "auth_key/socialrobot-hyu-reception-nyla-a093501276ce.json"  # reception
+    "GOOGLE_APPLICATION_CREDENTIALS"] = "add reception dialogflow auth_key file path"  # reception
 '''
     Social Robot HYU
     Homecare Bot DM (generator) model

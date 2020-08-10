@@ -15,8 +15,7 @@ from datetime import datetime
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="homecare dialogflow authkey file path" # homecare
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="auth_key/socialrobot-hyu-xdtlug-7fe2505e00b7.json" # homecare
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="homecare dialogflow authkey file path" # homecare
 
 '''
     Social Robot HYU
