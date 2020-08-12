@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 import sys
-import yaml
 import json
 import time
-import threading
 import os
 import re
 import rospy
 from std_msgs.msg import String
-from flask import Flask, request, make_response, jsonify
-import dialogflow
+import dialogflow_v2 as dialogflow
 from datetime import datetime
 
 reload(sys)
@@ -21,9 +18,6 @@ os.environ[
     Social Robot HYU
     Homecare Bot DM (generator) model
 '''
-
-# initialize the flask app
-app = Flask(__name__)
 
 
 def print_for_check(inout, data):
@@ -73,19 +67,14 @@ def make_response_json(id, dialog):
 
 # START dialogflow_detect_intent_text
 def detect_intent_texts(project_id, session_id, texts, language_code):
-    import dialogflow_v2 as dialogflow
     session_client = dialogflow.SessionsClient()
 
     session = session_client.session_path(project_id, session_id)
 
     for text in texts:
-        text_input = dialogflow.types.TextInput(
-            text=text, language_code=language_code)
-
+        text_input = dialogflow.types.TextInput(text=text, language_code=language_code)
         query_input = dialogflow.types.QueryInput(text=text_input)
-
-        response = session_client.detect_intent(
-            session=session, query_input=query_input)
+        response = session_client.detect_intent(session=session, query_input=query_input)
 
     return response
 
@@ -115,7 +104,7 @@ def welcome_bye_intent_detect(response, social_context, name, intent):
             response.query_result.fulfillment_text = response.query_result.fulfillment_text + " 안녕히 가세요."
 
 
-def ros_callback(msg):
+def ros_callback_fn(msg):
     if msg.data != '':
         ros_input = json.loads(msg.data, encoding='utf-8')
 
@@ -217,17 +206,9 @@ def ros_callback(msg):
 
 
 def run_subscriber():
-    threading.Thread(target=lambda: rospy.init_node('dm_node', disable_signals=True)).start()
-    rospy.Subscriber('/taskExecution', String, ros_callback)
-    app.run()
+    rospy.init_node('DM_node')
+    rospy.Subscriber('/taskExecution', String, ros_callback_fn)
     rospy.spin()
-
-# default route
-@app.route('/')
-def index():
-    msg = String()
-    msg.data = 1
-    return 'Social Robot Dialogflow HYU Homecare'
 
 
 if __name__ == '__main__':
