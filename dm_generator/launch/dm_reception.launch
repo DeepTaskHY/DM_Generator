@@ -1,0 +1,7 @@
+<launch>
+
+	<node name="DM_reception_node" pkg="dm_generator" type="SocialDMReception.py">
+
+	</node>
+
+</launch>

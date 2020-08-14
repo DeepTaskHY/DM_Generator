@@ -1,4 +1,6 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 import sys
 import json
 import time
@@ -13,7 +15,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 os.environ[
-    "GOOGLE_APPLICATION_CREDENTIALS"] = "add reception dialogflow auth_key file path"  # reception
+    "GOOGLE_APPLICATION_CREDENTIALS"] = "path-to-key"  # reception
 '''
     Social Robot HYU
     Homecare Bot DM (generator) model
@@ -206,7 +208,7 @@ def ros_callback_fn(msg):
 
 
 def run_subscriber():
-    rospy.init_node('DM_node')
+    rospy.init_node('DM_reception_node')
     rospy.Subscriber('/taskExecution', String, ros_callback_fn)
     rospy.spin()
 

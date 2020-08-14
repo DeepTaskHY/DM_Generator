@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys
 import json
@@ -12,7 +13,7 @@ from datetime import datetime
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="homecare dialogflow authkey file path" # homecare
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="path-to-key" # homecare
 '''
     Social Robot HYU
     Homecare Bot DM (generator) model
@@ -229,7 +230,7 @@ def ros_callback_fn(msg):
 
 
 def run_subscriber():
-    rospy.init_node('DM_node')
+    rospy.init_node('DM_homecare_node')
     rospy.Subscriber('/taskExecution', String, ros_callback_fn)
     rospy.spin()
 
