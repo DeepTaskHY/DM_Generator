@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 import sys
 import json
 import time
@@ -14,8 +13,7 @@ from datetime import datetime
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-os.environ[
-    "GOOGLE_APPLICATION_CREDENTIALS"] = "path-to-key"  # reception
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "path-to-key"  # reception
 '''
     Social Robot HYU
     Homecare Bot DM (generator) model

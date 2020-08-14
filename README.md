@@ -22,37 +22,11 @@ None
 
 ### 5.1 Install dependency:
 
-**Flask**
-
-installation
-
-```
-$ pip install flask
-```
-
-test code  
-
-```
-from flask import Flask  
-app = Flask(__name__)  
-
-@app.route('/') 
-def hello_world():
-	return 'Hello world!'  
-	if __name__=='__main__':
-		app.run() 
-```
-
 **dialogflow api**  
 
     $ pip install dialogflow  
     $ pip install --upgrade google-auth-oauthlib  
     $ pip install --upgrade pyasn1-modules  
-
-**ngrok**  
-Download ngrok from this site('https://ngrok.com/') and run the following command line.  
-
-    $ ./ngrok <portnum>
 
 **ros-kinetic**
 
@@ -65,12 +39,8 @@ Download ngrok from this site('https://ngrok.com/') and run the following comman
 
 ### 5.2 Start the module
 
-- Download ngrok from this site('https://ngrok.com/') and run the following command line. 
-  `$  ./ngrok <portnum>  `
-- If you have developer permission, in the dialogflow project, add the 'forwarding link (add '/webhook' after the forwarding link)' that appears when you run ngrok to the fulfillment in the dialogflow console. 
-  You can test this module in the dialogflow console after running 'social_fulfillment.py'.  
 - If you don't have permission, go to [Author's Google drive](https://drive.google.com/file/d/1Tya9XQrtlAv393xh8D_5MYfBAta15quz/view?usp=sharing) and download the JSON file(auth key). 
-  Add the path of the downloaded JSON file to line 18 of 'SocialDMReception.py '. 
+  Add the path of the downloaded JSON file to line 16 of 'SocialDMReception.py '. 
   You can start this module by running the 'SocialDMReception.py' file.
 
 ### 5.3 Test the module
@@ -178,6 +148,3 @@ None
 
 -  Dialogflow API official document[Website]. (2019, Aug 22). https://cloud.google.com/dialogflow/docs/reference/rest/v2/projects.agent.sessions/detectIntent  
 -  ROS Kinetic installation instructions[Website]. (2019, Aug 22). http://wiki.ros.org/kinetic/Installation  
--  Flask user’s Guide[Website]. (2019, Aug 22). https://flask.palletsprojects.com/en/1.1.x/  
--  ngrok[Website]. (2019, Aug 22). https://ngrok.com  
-
