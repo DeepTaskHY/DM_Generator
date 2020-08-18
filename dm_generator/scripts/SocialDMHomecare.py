@@ -120,7 +120,7 @@ def medication_scenario_intent_detect(response, social_context, name, intent):
         response.query_result.fulfillment_text = "간밤에 잘 주무셨어요?"
 
     elif intent == "transmit_information_reaction":
-        if not response.query_result.parameters.fields['no'].string_value and not response.query_result.parameters.fields['negative'].string_value:
+        if not response.query_result.parameters.fields['negative'].string_value:
             response.query_result.fulfillment_text = "푹 주무셨다니 다행이에요."
         else:
             response.query_result.fulfillment_text = "잘 못 주무셨다니 속상해요."
@@ -131,29 +131,29 @@ def medication_scenario_intent_detect(response, social_context, name, intent):
 
     elif intent == "check_information_meal":
         dialog = " 식사는 뭐 드셨나요?"
-        if response.query_result.parameters.fields['positive'].string_value != u'':
+        if response.query_result.parameters.fields['positive'].string_value:
             response.query_result.fulfillment_text = "좋은 소식이네요."+dialog
-        elif response.query_result.parameters.fields['negative'].string_value != u'':
+        elif response.query_result.parameters.fields['negative'].string_value:
             response.query_result.fulfillment_text = "안 좋은 소식이네요."+dialog
 
     elif intent == "transmit_information_disease_advise":
         disease = social_context['disease_name']
         advice = social_context['disease_advice']
-        if response.query_result.parameters.fields['meal'].string_value:
+        if response.query_result.parameters.fields['good_meal'].string_value:
             response.query_result.fulfillment_text = "잘 하셨어요. "+disease+"에 "+advice+" 중요한 거 아시죠?"
         else:
             response.query_result.fulfillment_text = "조심하셔야 해요. "+disease+"에 "+advice+" 중요한 거 아시죠?"
 
     elif intent == "check_information_health":
         task = social_context['task']
-        if response.query_result.parameters.fields['negative'].string_value == u'':
+        if not response.query_result.parameters.fields['negative'].string_value:
             response.query_result.fulfillment_text = "다행이에요. "+task+"은 하셨나요?"
         else:
             response.query_result.fulfillment_text = "주의해주세요. "+task+"은 하셨나요?"
 
     elif intent == "transmit_information_health_advice":
         take = social_context['medicine_schedule']
-        if response.query_result.parameters.fields['negative'].string_value == u'':
+        if not response.query_result.parameters.fields['negative'].string_value:
             response.query_result.fulfillment_text = "잘 챙기셨네요. "+take+"하셔야 해요."
         else:
             response.query_result.fulfillment_text = "다음에는 빠뜨리시면 안 돼요. "+take+"하셔야 해요."
