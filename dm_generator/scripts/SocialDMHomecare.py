@@ -139,10 +139,10 @@ def medication_scenario_intent_detect(response, social_context, name, intent):
     elif intent == "transmit_information_disease_advise":
         disease = social_context['disease_name']
         advice = social_context['disease_advice']
-        if response.query_result.parameters.fields['good_meal'].string_value:
-            response.query_result.fulfillment_text = "잘 하셨어요. "+disease+"에 "+advice+" 중요한 거 아시죠?"
-        else:
+        if not response.query_result.parameters.fields['good_meal'].string_value:
             response.query_result.fulfillment_text = "조심하셔야 해요. "+disease+"에 "+advice+" 중요한 거 아시죠?"
+        else:
+            response.query_result.fulfillment_text = "잘 하셨어요. "+disease+"에 "+advice+" 중요한 거 아시죠?"
 
     elif intent == "check_information_health":
         task = social_context['task']
@@ -162,10 +162,11 @@ def medication_scenario_intent_detect(response, social_context, name, intent):
 def hospital_schedule_detect_intent(response, social_context, name, intent):
     if intent == "check_information_schedule":
         visit = social_context['visit_place']
-        if not response.query_result.parameters.fields['no'].string_value and not response.query_result.parameters.fields['negative'].string_value:
+        if not response.query_result.parameters.fields['negative'].list_value:
             response.query_result.fulfillment_text = "잘 지내셨다니 다행이에요."
         else:
             response.query_result.fulfillment_text = "잘 못 지내셨다니 슬퍼요."
+
         dialog = " 오늘 "+visit+" 방문하시는 날이었죠?"
         response.query_result.fulfillment_text = response.query_result.fulfillment_text + dialog
 
@@ -173,13 +174,13 @@ def hospital_schedule_detect_intent(response, social_context, name, intent):
         disease = social_context['disease_name']
         status = social_context['disease_status']
         appellation = social_context['appellation']
-        dialog = appellation+" "+disease+"이 "
+        dialog = appellation+" "+disease+" 상태가 "   # 어르신 고혈압이
         if status == "negative":
             dialog = dialog + "나빠지셨다고 들었어요."
         elif status == "positive":
             dialog = dialog + "좋아지셨다고 들었어요."
 
-        if response.query_result.parameters.fields['positive'].string_value != u'':
+        if response.query_result.parameters.fields['positive'].string_value != u'' or response.query_result.parameters.fields['go'].string_value != u'':
             response.query_result.fulfillment_text = "잘 하셨어요. " + dialog
         else:
             response.query_result.fulfillment_text = "꼭 가셔야 해요. " + dialog
@@ -188,7 +189,7 @@ def hospital_schedule_detect_intent(response, social_context, name, intent):
         disease = social_context['disease_name']
         status = social_context['disease_status']
         appellation = social_context['appellation']
-        dialog = appellation+" "+disease+"이 "
+        dialog = appellation+" "+disease+" 상태가 "
         if status == "negative":
             response.query_result.fulfillment_text = dialog + "나빠지셔서 드시는 약이 바뀌었어요."
         elif status == "positive":
