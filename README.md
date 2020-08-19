@@ -39,9 +39,9 @@ None
 
 ### 5.2 Start the module
 
-- If you don't have permission, go to [Author's Google drive](https://drive.google.com/file/d/1Tya9XQrtlAv393xh8D_5MYfBAta15quz/view?usp=sharing) and download the JSON file(auth key). 
-  Add the path of the downloaded JSON file to line 16 of 'SocialDMReception.py '. 
-  You can start this module by running the 'SocialDMReception.py' file.
+Go to [Author's Google drive](https://drive.google.com/file/d/1Tya9XQrtlAv393xh8D_5MYfBAta15quz/view?usp=sharing) and download the JSON file(auth key). 
+Add the path of the downloaded JSON file to line 16 of 'SocialDMReception.py '. 
+You can start this module by launch ros package.
 
 ### 5.3 Test the module
 
@@ -76,8 +76,7 @@ $ roslaunch launch/dm_reception.launch
         'dialog_generation': {
         'name': '이병현', 
         'intent': 'transmit_information_health_advice', 
-        'id': 177, 
-        'human_speech':'응 먹었지.', 
+        'id': 177,  
         'social_context': {'take_medicine_schedule': '식후 30분 후'}
     }
 }
