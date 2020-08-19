@@ -22,18 +22,18 @@ None
 
 ### 5.1 Install dependency:
 
-**dialogflow api**  
+**requirements**  
 
-    $ pip install dialogflow  
+    $ pip install -r requirements.txt  
     $ pip install --upgrade google-auth-oauthlib  
     $ pip install --upgrade pyasn1-modules  
 
-**ros-kinetic**
+**ros-melodic**
 
-    $ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'  
-    $ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654  
+    $ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+    $ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
     $ sudo apt-get update  
-    $ sudo apt-get install ros-kinetic-desktop-full  
+    $ sudo apt-get install ros-melodic-desktop-full  
     $ sudo rosdep init  
     $ rosdep update  
 
@@ -47,8 +47,18 @@ None
 
 To test this module, you can execute the following command line. This command sends a ROS message.
 
+**homecare**
+
 ```
-$ rostopic pub /taskExecution std_msgs/String "data"
+$ cd dm_generator/
+$ roslaunch launch/dm_homecare.launch 
+```
+
+**reception**
+
+```
+$ cd dm_generator/
+$ roslaunch launch/dm_reception.launch
 ```
 
 
