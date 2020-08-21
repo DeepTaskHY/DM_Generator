@@ -13,11 +13,17 @@ from datetime import datetime
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="path-to-key" # homecare
-'''
-    Social Robot HYU
-    Homecare Bot DM (generator) model
-'''
+
+import rospkg
+
+PACK_PATH = rospkg.RosPack().get_path("dm_generator")
+
+AUTH_KEY_HOMECARE_PATH = PACK_PATH + "/scripts/authkey/socialrobot-hyu-xdtlug-7fe2505e00b7.json"
+AUTH_KEY_RECEPTION_PATH = PACK_PATH + "/scripts/authkey/socialrobot-hyu-reception-nyla-a093501276ce.json"
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = AUTH_KEY_HOMECARE_PATH
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = AUTH_KEY_RECEPTION_PATH
+
 
 
 def isHangul(text):
@@ -223,7 +229,6 @@ def ros_callback_fn(msg):
             robot_dialog = response.query_result.fulfillment_text.encode("utf-8")
             final_output = make_response_json(id, robot_dialog)
 
-            task_completion_pub = rospy.Publisher('/taskCompletion', String, queue_size=10)
             task_completion_pub.publish(json.dumps(final_output, ensure_ascii=False, indent=4))
 
             print_for_check(" Output", final_output)
@@ -231,7 +236,9 @@ def ros_callback_fn(msg):
 
 
 def run_subscriber():
+    global task_completion_pub
     rospy.init_node('DM_homecare_node')
+    task_completion_pub = rospy.Publisher('/taskCompletion', String, queue_size=10)
     rospy.Subscriber('/taskExecution', String, ros_callback_fn)
     rospy.spin()
 
