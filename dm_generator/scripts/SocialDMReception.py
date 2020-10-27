@@ -132,10 +132,18 @@ def ros_callback_fn(msg):
                 disease = social_context['disease_name']
                 status = social_context['disease_status']
                 appellation = social_context['appellation']
-                if status == 'positive':
-                    response.query_result.fulfillment_text = "네, "+name+" "+appellation+". 몇 주간 식단 조절을 하시더니 "+disease+" 경과가 좋아지셨다고 하더라고요. 기쁘시겠어요."
-                elif status == 'negative':
-                    response.query_result.fulfillment_text = "네, "+name+" "+appellation+". 요즘 "+disease+" 경과가 안 좋아지셨다고 하더라고요. 걱정스러우시겠어요."
+                help_avail = social_context['help_avail']
+                if help_avail == "False":
+                    response.query_result.fulfillment_text = "죄송해요. 지금 시간에는 약국이 문을 닫았어요."
+                else:
+                    if not response.query_result.parameters.fields['disease'].string_value.encode("utf-8"):
+                        response.query_result.fulfillment_text = "어떤 약이 필요하세요?"
+                    else:
+                        if status == 'positive':
+                            response.query_result.fulfillment_text = "네, " + name + " " + appellation + ". 몇 주간 식단 조절을 하시더니 " + disease + " 경과가 좋아지셨다고 하더라고요. 기쁘시겠어요."
+                        elif status == 'negative':
+                            response.query_result.fulfillment_text = "네, " + name + " " + appellation + ". 요즘 " + disease + " 경과가 안 좋아지셨다고 하더라고요. 걱정스러우시겠어요."
+
 
             elif intent == "transmit_information_pharmacy":
                 opening_hour = social_context['opening_hour']
@@ -144,13 +152,22 @@ def ros_callback_fn(msg):
                 response.query_result.fulfillment_text = "여기 "+treat+"입니다. 저희 센터 옆 "+place+"에서 받아가실 수 있고, "+opening_hour+"까지 운영해요. 다른 도움이 필요하신가요?"
 
 
+            # 여기부터 독감 접종 시나리오
             if intent == "transmit_information_disease_advice":
                 disease = social_context['disease_name']
                 description = social_context['disease_description']
                 symptom = social_context['disease_symptom']
                 prevent = social_context['prevent']
-                response.query_result.fulfillment_text = "네, "+disease+"은 "+description+"입니다. 증상은 "+symptom+" 등이 있어요. "\
-                                                         +prevent+"으로 "+disease+"을 예방할 수 있어요. 저도 작년에 컴퓨터 바이러스를 잡았는데 플래쉬 드라이브를 더 조심해야겠어요. 하하하."
+                help_avail = social_context['help_avail']
+                if not response.query_result.parameters.fields['disease'].string_value.encode("utf-8"):
+                    response.query_result.fulfillment_text = "병명을 말씀해주시겠어요?"
+                else:
+                    if help_avail == "False":
+                        response.query_result.fulfillment_text = "죄송해요. 지금은 " + disease + " 접종 기간이 아니에요."
+                    else:
+                        response.query_result.fulfillment_text = "네, " + disease + "은 " + description + "입니다. 증상은 " + symptom + " 등이 있어요. " \
+                            + prevent + "으로 " + disease + "을 예방할 수 있어요. 저도 작년에 컴퓨터 바이러스를 잡았는데 플래쉬 드라이브를 더 조심해야겠어요. 하하하."
+
 
             elif intent == "check_information_reservation":
                 treat = social_context['treat']
@@ -160,9 +177,11 @@ def ros_callback_fn(msg):
                 if response.query_result.parameters.fields['negative'].string_value != u'':
                     response.query_result.fulfillment_text = "네, 알겠습니다."
                 else:
-                    date = social_context['date']
+                    # date = response.query_result.parameters.fields['date'].string_value.encode("utf-8")[0:10] # 2020-10-28T12:00:00+09:00
+                    month = response.query_result.parameters.fields['date'].string_value.encode("utf-8")[5:7]
+                    day = response.query_result.parameters.fields['date'].string_value.encode("utf-8")[8:10]
                     avail_times = social_context['available_time']
-                    response.query_result.fulfillment_text = date+" "+avail_times+"에 예약하실 수 있어요. 시간 괜찮으세요?"
+                    response.query_result.fulfillment_text = month+"월 "+day+"일 "+avail_times+"에 예약하실 수 있어요. 시간 괜찮으세요?"
 
             elif intent == "check_information_alarm":
                 reserve_time = response.query_result.parameters.fields['time'].string_value.encode("utf-8")[11:16]
@@ -190,12 +209,13 @@ def ros_callback_fn(msg):
                     response.query_result.fulfillment_text = "죄송해요. 지금은 그 시간에만 가능해요."
 
             elif intent == "transmit_information_reservation":
-                date = social_context['date']
-                time = response.query_result.parameters.fields['time'].string_value.encode("utf-8")
+                month = response.query_result.parameters.fields['date'].string_value.encode("utf-8")[5:7]
+                day = response.query_result.parameters.fields['date'].string_value.encode("utf-8")[8:10]
+                time = response.query_result.parameters.fields['time'].string_value.encode("utf-8") # date, time은 dialogflow context에서 받음
                 if response.query_result.parameters.fields['negative'].string_value != u'':
-                    response.query_result.fulfillment_text = "알겠어요. 그럼 " + date + " " + time + "에 뵙겠습니다."
+                    response.query_result.fulfillment_text = "알겠어요. 그럼 "+ time + "에 뵙겠습니다."
                 else:
-                    response.query_result.fulfillment_text = "홈케어 로봇에게 예약을 알리는 메시지를 보냈어요. 그럼 " + date + " " + time + "에 뵙겠습니다."
+                    response.query_result.fulfillment_text = "홈케어 로봇에게 예약을 알리는 메시지를 보냈어요. 그럼 "+month+"월 "+day+"일 "+time+"에 뵙겠습니다."
 
             robot_dialog = response.query_result.fulfillment_text.encode("utf-8")
 
