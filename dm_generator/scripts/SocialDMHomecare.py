@@ -18,8 +18,8 @@ import rospkg
 
 PACK_PATH = rospkg.RosPack().get_path("dm_generator")
 
-AUTH_KEY_HOMECARE_PATH = PACK_PATH + "/scripts/authkey/socialrobot-hyu-xdtlug-7fe2505e00b7.json"
-AUTH_KEY_RECEPTION_PATH = PACK_PATH + "/scripts/authkey/socialrobot-hyu-reception-nyla-a093501276ce.json"
+AUTH_KEY_HOMECARE_PATH = PACK_PATH + "/authkey/socialrobot-hyu-xdtlug-7fe2505e00b7.json"
+AUTH_KEY_RECEPTION_PATH = PACK_PATH + "/authkey/socialrobot-hyu-reception-nyla-a093501276ce.json"
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = AUTH_KEY_HOMECARE_PATH
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = AUTH_KEY_RECEPTION_PATH

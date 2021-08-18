@@ -1,2 +1,3 @@
-dm_generator/scripts/authkey/*
+/dm_generator/authkey/*
+/dm_generator/tests/*
 /.idea/*
