@@ -1,0 +1,14 @@
+version: '2.2'
+
+services:
+    dm:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: generator
+        network_mode: host
+        environment:
+            - DISPLAY=:0
+        volumes:
+            - .:/app
+            - /tmp/.X11-unix:/tmp/.X11-unix
