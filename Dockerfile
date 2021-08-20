@@ -15,11 +15,11 @@ RUN pip install --upgrade pip && \
 
 # ROS environment
 RUN rosdep update
-RUN mkdir -p /workspace/src
 WORKDIR /workspace
+RUN mkdir src
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.sh" >> /etc/bash.bashrc && \
     echo "source /workspace/devel/setup.bash" >> /etc/bash.bashrc
 
 # Install require dependencies
-ADD requirements.txt /workspace/src
-RUN pip install -r /workspace/src/requirements.txt
+ADD requirements.txt .
+RUN pip install -r requirements.txt
