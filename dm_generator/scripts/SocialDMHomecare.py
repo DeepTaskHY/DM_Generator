@@ -7,13 +7,8 @@ import os
 import re
 import rospy
 from std_msgs.msg import String
-import dialogflow_v2 as dialogflow
+import google.cloud.dialogflow_v2 as dialogflow
 from datetime import datetime
-
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
-
 import rospkg
 
 PACK_PATH = rospkg.RosPack().get_path("dm_generator")
@@ -22,8 +17,6 @@ AUTH_KEY_HOMECARE_PATH = PACK_PATH + "/authkey/socialrobot-hyu-xdtlug-7fe2505e00
 AUTH_KEY_RECEPTION_PATH = PACK_PATH + "/authkey/socialrobot-hyu-reception-nyla-a093501276ce.json"
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = AUTH_KEY_HOMECARE_PATH
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = AUTH_KEY_RECEPTION_PATH
-
 
 
 def isHangul(text):
