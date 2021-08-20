@@ -65,10 +65,10 @@ def make_response_json(id, dialog):
 
 
 def print_for_check(inout, data):
-    print ''
-    print '*' * 20 + ' DM module ' + inout +' ros massage ' + '*' * 20
-    print json.dumps(data, ensure_ascii=False, indent=4)
-    print ''
+    print('')
+    print('*' * 20 + ' DM module ' + inout +' ros massage ' + '*' * 20)
+    print(json.dumps(data, ensure_ascii=False, indent=4))
+    print('')
 
 
 # START dialogflow_detect_intent_text

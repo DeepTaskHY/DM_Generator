@@ -24,10 +24,10 @@ AUTH_KEY_RECEPTION_PATH = PACK_PATH + "/authkey/socialrobot-hyu-reception-nyla-a
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = AUTH_KEY_RECEPTION_PATH
 
 def print_for_check(inout, data):
-    print ''
-    print '*' * 20 + ' DM module ' + inout +' ros massage ' + '*' * 20
-    print json.dumps(data, ensure_ascii=False, indent=4)
-    print ''
+    print('')
+    print('*' * 20 + ' DM module ' + inout +' ros massage ' + '*' * 20)
+    print(json.dumps(data, ensure_ascii=False, indent=4))
+    print('')
 
 
 def isHangul(text):
