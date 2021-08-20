@@ -7,19 +7,19 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
     apt-get upgrade -y
 
-# Python initialization
+# Install python
 RUN ln -s /usr/bin/python3 /usr/bin/python
 RUN apt-get install -y python3-pip
 RUN pip install --upgrade pip && \
     pip install --upgrade setuptools
 
-# Install python packages
-WORKDIR /workspace
-ADD requirements.txt /workspace
-RUN pip install -r requirements.txt
-
-# Install ROS
+# ROS environment
 RUN rosdep update
+RUN mkdir -p /workspace/src
+WORKDIR /workspace
+RUN echo "source /opt/ros/$ROS_DISTRO/setup.sh" >> /etc/bash.bashrc && \
+    echo "source /workspace/devel/setup.bash" >> /etc/bash.bashrc
 
-# ROS entrypoint
-RUN echo "source /opt/ros/$ROS_DISTRO/setup.sh" >> /etc/bash.bashrc
+# Install require dependencies
+ADD requirements.txt /workspace/src
+RUN pip install -r /workspace/src/requirements.txt
