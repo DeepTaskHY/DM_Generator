@@ -1,6 +1,3 @@
 <launch>
-	<node name="DM_homecare_node" pkg="dm_generator" type="SocialDMHomecare.py">
-	
-	</node>
-
+	<node name="DM_homecare_node" pkg="dm_generator" type="SocialDMHomecare.py"/>
 </launch>

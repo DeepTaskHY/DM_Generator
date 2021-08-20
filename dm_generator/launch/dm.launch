@@ -1,0 +1,4 @@
+<launch>
+	<node pkg="dm_generator" name="DM_homecare_node" type="SocialDMHomecare.py"/>
+	<node pkg="dm_generator" name="DM_reception_node" type="SocialDMReception.py"/>
+</launch>
