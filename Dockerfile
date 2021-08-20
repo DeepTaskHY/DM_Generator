@@ -23,3 +23,6 @@ RUN echo "source /opt/ros/$ROS_DISTRO/setup.sh" >> /etc/bash.bashrc && \
 # Install require dependencies
 ADD requirements.txt .
 RUN pip install -r requirements.txt
+
+# Add catkin build script
+ADD build.bash .
