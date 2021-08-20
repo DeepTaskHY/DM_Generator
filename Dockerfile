@@ -1,19 +1,25 @@
-FROM ros:melodic-ros-core-bionic
+FROM ros:noetic
 
-# Repo update
+# Remove user interactive
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update
 
-# Install python
-RUN apt-get install -y python3 python3-distutils curl && \
-    curl "https://bootstrap.pypa.io/get-pip.py" -o get-pip.py && \
-    python3 get-pip.py && \
-    rm get-pip.py
+# Update repo packages
+RUN apt-get update && \
+    apt-get upgrade -y
+
+# Python initialization
+RUN ln -s /usr/bin/python3 /usr/bin/python
+RUN apt-get install -y python3-pip
+RUN pip install --upgrade pip && \
+    pip install --upgrade setuptools
 
 # Install python packages
 WORKDIR /workspace
 ADD requirements.txt /workspace
-RUN pip install --upgrade pip \
- && pip install --upgrade google-auth-oauthlib \
- && pip install --upgrade pyasn1-modules \
- && pip install -r requirements.txt
+RUN pip install -r requirements.txt
+
+# Install ROS
+RUN rosdep update
+
+# ROS entrypoint
+RUN echo "source /opt/ros/$ROS_DISTRO/setup.sh" >> /etc/bash.bashrc
