@@ -13,16 +13,14 @@ RUN apt-get install -y python3-pip
 RUN pip install --upgrade pip && \
     pip install --upgrade setuptools
 
-# ROS environment
-WORKDIR /workspace
-RUN rosdep update
-RUN mkdir src
-RUN echo "source /opt/ros/$ROS_DISTRO/setup.sh" >> /etc/bash.bashrc && \
-    echo "source /workspace/devel/setup.bash" >> /etc/bash.bashrc
-
 # Install require dependencies
+WORKDIR /workspace
 ADD requirements.txt .
 RUN pip install -r requirements.txt
 
-# Add catkin build script
-ADD build.bash .
+# Setup ROS environment
+RUN rosdep update
+ADD docker-entrypoint.sh .
+RUN chmod +x docker-entrypoint.sh
+ENTRYPOINT ["/workspace/docker-entrypoint.sh"]
+CMD ["bash"]
