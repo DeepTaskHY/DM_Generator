@@ -14,8 +14,8 @@ RUN pip install --upgrade pip && \
     pip install --upgrade setuptools
 
 # ROS environment
-RUN rosdep update
 WORKDIR /workspace
+RUN rosdep update
 RUN mkdir src
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.sh" >> /etc/bash.bashrc && \
     echo "source /workspace/devel/setup.bash" >> /etc/bash.bashrc
