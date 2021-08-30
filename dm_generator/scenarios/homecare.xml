@@ -1,0 +1,374 @@
+<?xml version="1.0"?>
+<scenario name="homecare">
+    <intent name="saying_hello">
+        <parameters>
+            <parameter name="hour" type="date" ref="now.hour"/>
+            <parameter name="name" type="variable" ref="name"/>
+            <parameter name="appellation" type="social_context" ref="appellation"/>
+            <parameter name="hello" type="dialogflow" ref="parameters.hello"/>
+        </parameters>
+
+        <dialogs>
+            <!-- check_information_sleep 시나리오 -->
+            <dialog>
+                <format xml:lang="ko">{name} {appellation}, 좋은 아침이에요. 건강 상담이 필요하신가요?</format>
+                <conditions>
+                    <condition parameter="hello" operator="exist" value="true" logic="and"/>
+                    <conditionGroup>
+                        <condition parameter="hour" operator="more" value="6" logic="and"/>
+                        <condition parameter="hour" operator="below" value="11"/>
+                    </conditionGroup>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">{name} {appellation}, 좋은 오후에요. 건강 상담이 필요하신가요?</format>
+                <conditions>
+                    <condition parameter="hello" operator="exist" value="true" logic="and"/>
+                    <conditionGroup>
+                        <condition parameter="hour" operator="more" value="12" logic="and"/>
+                        <condition parameter="hour" operator="below" value="17"/>
+                    </conditionGroup>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">{name} {appellation}, 좋은 저녁이에요. 건강 상담이 필요하신가요?</format>
+                <conditions>
+                    <condition parameter="hello" operator="exist" value="true" logic="and"/>
+                    <conditionGroup>
+                        <condition parameter="hour" operator="more" value="18" logic="and"/>
+                        <condition parameter="hour" operator="below" value="21"/>
+                    </conditionGroup>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">{name} {appellation}, 안녕하세요. 건강 상담이 필요하신가요?</format>
+                <conditions>
+                    <condition parameter="hello" operator="exist" value="true" logic="and"/>
+                    <conditionGroup>
+                        <condition parameter="hour" operator="more" value="22" logic="or"/>
+                        <condition parameter="hour" operator="below" value="5"/>
+                    </conditionGroup>
+                </conditions>
+            </dialog>
+
+            <!-- check_information_schedule 시나리오 -->
+            <dialog>
+                <format xml:lang="ko">{name} {appellation}, 좋은 아침이에요. 잘 지내셨어요?</format>
+                <conditions>
+                    <condition parameter="hello" operator="exist" value="false" logic="and"/>
+                    <conditionGroup>
+                        <condition parameter="hour" operator="more" value="6" logic="and"/>
+                        <condition parameter="hour" operator="below" value="11"/>
+                    </conditionGroup>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">{name} {appellation}, 좋은 오후에요. 잘 지내셨어요?</format>
+                <conditions>
+                    <condition parameter="hello" operator="exist" value="false" logic="and"/>
+                    <conditionGroup>
+                        <condition parameter="hour" operator="more" value="12" logic="and"/>
+                        <condition parameter="hour" operator="below" value="17"/>
+                    </conditionGroup>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">{name} {appellation}, 좋은 저녁이에요. 잘 지내셨어요?</format>
+                <conditions>
+                    <condition parameter="hello" operator="exist" value="false" logic="and"/>
+                    <conditionGroup>
+                        <condition parameter="hour" operator="more" value="18" logic="and"/>
+                        <condition parameter="hour" operator="below" value="21"/>
+                    </conditionGroup>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">{name} {appellation}, 잘 지내셨어요?</format>
+                <conditions>
+                    <condition parameter="hello" operator="exist" value="false" logic="and"/>
+                    <conditionGroup>
+                        <condition parameter="hour" operator="more" value="22" logic="or"/>
+                        <condition parameter="hour" operator="below" value="5"/>
+                    </conditionGroup>
+                </conditions>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="saying_good_bye">
+        <parameters>
+            <parameter name="hour" type="date" ref="now.hour"/>
+            <parameter name="fulfillment_text" type="dialogflow" ref="fulfillment_text"/>
+        </parameters>
+
+        <dialogs>
+            <dialog>
+                <format xml:lang="ko">{fulfillment_text} 좋은 하루 보내세요.</format>
+                <conditions>
+                    <condition parameter="hour" operator="more" value="6" logic="and"/>
+                    <condition parameter="hour" operator="below" value="11"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">{fulfillment_text} 오후 잘 보내세요.</format>
+                <conditions>
+                    <condition parameter="hour" operator="more" value="12" logic="and"/>
+                    <condition parameter="hour" operator="below" value="17"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">{fulfillment_text} 저녁 잘 보내세요.</format>
+                <conditions>
+                    <condition parameter="hour" operator="more" value="18" logic="and"/>
+                    <condition parameter="hour" operator="below" value="21"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">{fulfillment_text} 안녕히 가세요.</format>
+                <conditions>
+                    <condition parameter="hour" operator="more" value="22" logic="or"/>
+                    <condition parameter="hour" operator="below" value="5"/>
+                </conditions>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="check_information_sleep">
+        <dialogs>
+            <dialog>
+                <format xml:lang="ko">간밤에 잘 주무셨어요?</format>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="transmit_information_reaction">
+        <parameters>
+            <parameter name="negative" type="dialogflow" ref="parameters.negative"/>
+        </parameters>
+
+        <dialogs>
+            <dialog>
+                <format xml:lang="ko">잘 못 주무셨다니 속상해요.</format>
+                <conditions>
+                    <condition parameter="negative" operator="exist" value="true"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">푹 주무셨다니 다행이에요.</format>
+                <conditions>
+                    <condition parameter="negative" operator="exist" value="false"/>
+                </conditions>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="check_information_disease">
+        <parameters>
+            <parameter name="disease_name" type="social_context" ref="disease_name"/>
+        </parameters>
+
+        <dialogs>
+            <dialog>
+                <format xml:lang="ko">{disease_name}{particle 은 는} 좀 어떠세요?</format>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="check_information_meal">
+        <parameters>
+            <parameter name="positive" type="dialogflow" ref="parameters.positive"/>
+            <parameter name="negative" type="dialogflow" ref="parameters.negative"/>
+        </parameters>
+
+        <dialogs>
+            <dialog>
+                <format xml:lang="ko">좋은 소식이네요. 식사는 뭐 드셨나요?</format>
+                <conditions>
+                    <condition parameter="positive" operator="exist" value="true"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">안 좋은 소식이네요. 식사는 뭐 드셨나요?</format>
+                <conditions>
+                    <condition parameter="negative" operator="exist" value="true"/>
+                </conditions>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="transmit_information_disease_advice">
+        <parameters>
+            <parameter name="disease_name" type="social_context" ref="disease_name"/>
+            <parameter name="disease_advice" type="social_context" ref="disease_advice"/>
+            <parameter name="good_meal" type="dialogflow" ref="parameters.good_meal"/>
+        </parameters>
+
+        <dialogs>
+            <dialog>
+                <format xml:lang="ko">잘 하셨어요. {disease_name}에 {disease_advice} 중요한 거 아시죠?</format>
+                <conditions>
+                    <condition parameter="good_meal" operator="exist" value="true"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">조심하셔야 해요. {disease_name}에 {disease_advice} 중요한 거 아시죠?</format>
+                <conditions>
+                    <condition parameter="good_meal" operator="exist" value="false"/>
+                </conditions>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="check_information_health">
+        <parameters>
+            <parameter name="task" type="social_context" ref="task"/>
+            <parameter name="negative" type="dialogflow" ref="parameters.negative"/>
+        </parameters>
+
+        <dialogs>
+            <dialog>
+                <format xml:lang="ko">주의해주세요. {task}{particle 은 는} 하셨나요?</format>
+                <conditions>
+                    <condition parameter="negative" operator="exist" value="true"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">다행이에요. {task}{particle 은 는} 하셨나요?</format>
+                <conditions>
+                    <condition parameter="negative" operator="exist" value="false"/>
+                </conditions>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="transmit_information_health_advice">
+        <parameters>
+            <parameter name="medicine_schedule" type="social_context" ref="medicine_schedule"/>
+            <parameter name="negative" type="dialogflow" ref="parameters.negative"/>
+        </parameters>
+
+        <dialogs>
+            <dialog>
+                <format xml:lang="ko">다음에는 빠뜨리시면 안 돼요. {medicine_schedule}하셔야 해요.</format>
+                <conditions>
+                    <condition parameter="negative" operator="exist" value="true"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">잘 챙기셨네요. {medicine_schedule}하셔야 해요.</format>
+                <conditions>
+                    <condition parameter="negative" operator="exist" value="false"/>
+                </conditions>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="check_information_schedule">
+        <parameters>
+            <parameter name="visit_place" type="social_context" ref="visit_place"/>
+            <parameter name="negative" type="dialogflow" ref="parameters.negative"/>
+        </parameters>
+
+        <dialogs>
+            <dialog>
+                <format xml:lang="ko">잘 못 지내셨다니 슬퍼요. 오늘 {visit_place} 방문하시는 날이었죠?</format>
+                <conditions>
+                    <condition parameter="negative" operator="exist" value="true"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">잘 지내셨다니 다행이에요. 오늘 {visit_place} 방문하시는 날이었죠?</format>
+                <conditions>
+                    <condition parameter="negative" operator="exist" value="false"/>
+                </conditions>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="transmit_information_disease_regard">
+        <parameters>
+            <parameter name="disease_name" type="social_context" ref="disease_name"/>
+            <parameter name="disease_status" type="social_context" ref="disease_status"/>
+            <parameter name="appellation" type="social_context" ref="appellation"/>
+            <parameter name="positive" type="dialogflow" ref="parameters.positive"/>
+            <parameter name="go" type="dialogflow" ref="parameters.go"/>
+        </parameters>
+
+        <dialogs>
+            <dialog>
+                <format xml:lang="ko">잘 하셨어요. {appellation} {disease_name} 상태가 좋아지셨다고 들었어요.</format>
+                <conditions>
+                    <condition parameter="disease_status" operator="equal" value="positive" logic="and"/>
+                    <conditionGroup>
+                        <condition parameter="positive" operator="exist" value="true" logic="or"/>
+                        <condition parameter="go" operator="exist" value="true"/>
+                    </conditionGroup>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">잘 하셨어요. {appellation} {disease_name} 상태가 나빠지셨다고 들었어요.</format>
+                <conditions>
+                    <condition parameter="disease_status" operator="equal" value="negative" logic="and"/>
+                    <conditionGroup>
+                        <condition parameter="positive" operator="exist" value="true" logic="or"/>
+                        <condition parameter="go" operator="exist" value="true"/>
+                    </conditionGroup>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">꼭 가셔야 해요. {appellation} {disease_name} 상태가 좋아지셨다고 들었어요.</format>
+                <conditions>
+                    <condition parameter="disease_status" operator="equal" value="positive" logic="and"/>
+                    <conditionGroup>
+                        <condition parameter="positive" operator="exist" value="false" logic="and"/>
+                        <condition parameter="go" operator="exist" value="false"/>
+                    </conditionGroup>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">꼭 가셔야 해요. {appellation} {disease_name} 상태가 나빠지셨다고 들었어요.</format>
+                <conditions>
+                    <condition parameter="disease_status" operator="equal" value="negative" logic="and"/>
+                    <conditionGroup>
+                        <condition parameter="positive" operator="exist" value="false" logic="and"/>
+                        <condition parameter="go" operator="exist" value="false"/>
+                    </conditionGroup>
+                </conditions>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="transmit_information_medicine">
+        <parameters>
+            <parameter name="disease_name" type="social_context" ref="disease_name"/>
+            <parameter name="disease_status" type="social_context" ref="disease_status"/>
+            <parameter name="appellation" type="social_context" ref="appellation"/>
+        </parameters>
+
+        <dialogs>
+            <dialog>
+                <format xml:lang="ko">{appellation} {disease_name} 상태가 좋아지셔서 드시는 약이 바뀌었어요.</format>
+                <conditions>
+                    <condition parameter="disease_status" operator="equal" value="positive"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format xml:lang="ko">{appellation} {disease_name} 상태가 나빠지셔서 드시는 약이 바뀌었어요.</format>
+                <conditions>
+                    <condition parameter="disease_status" operator="equal" value="negative"/>
+                </conditions>
+            </dialog>
+        </dialogs>
+    </intent>
+</scenario>
