@@ -1,0 +1,20 @@
+{
+  "modules": {
+    "homecare": {
+      "node-name": "ros-node-name",
+      "project-id": "dialogflow-project-id",
+      "session-id": "dialogflow-session-id",
+      "authorization": {
+        "key": "filename.json"
+      }
+    },
+    "reception": {
+      "node-name": "ros-node-name",
+      "project-id": "dialogflow-project-id",
+      "session-id": "dialogflow-session-id",
+      "authorization": {
+        "key": "filename.json"
+      }
+    }
+  }
+}
