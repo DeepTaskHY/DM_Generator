@@ -132,7 +132,7 @@ dmypy.json
 .idea/
 
 # Authorization key
-/dm_generator/authkey/*
+/dm_generator/keys/*
 
 # Test scripts
 /dm_generator/tests/*
