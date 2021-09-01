@@ -21,12 +21,6 @@ def get_module_configuration(module_name: str):
     return configuration['modules'][module_name]
 
 
-# Authorize Google API
-def authorize_credentials(key_file: str):
-    key_path = os.path.join(AUTHORIZATION_PATH, key_file)
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = key_path
-
-
 # Timestamp string
 def timestamp():
     return str(time.time())

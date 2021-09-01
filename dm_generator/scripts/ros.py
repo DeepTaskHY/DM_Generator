@@ -1,9 +1,13 @@
 from abc import *
-from typing import Callable
+from typing import Callable, Tuple
+
 import time
 import json
+import random
 import rospy
-from std_msgs.msg import Message, String
+from std_msgs.msg import String
+from dialogflow import DialogflowClient
+from scenarios import ScenarioParser, Scenario
 from helpers import timestamp
 
 
@@ -78,31 +82,41 @@ class DTNode(NodeBase, metaclass=ABCMeta):
 
     def subscribe(self, message):
         received_message = json.loads(message.data)
+        rospy.loginfo(f'Received message: {received_message}')
 
         # Check receiver
         if self.source_name and self.source_name not in received_message['header']['target']:
             return
 
         header = received_message['header']
-        content = received_message[header['content']]
-        content_name, targets, generated_content = self.generate_content(header, content)
-        generated_message = self.generate_message(content_name, targets, **generated_content)
-        self.publish(self.publish_message, json.dumps(generated_message, ensure_ascii=False))
+        content_names = header['content']
+
+        if isinstance(content_names, str):
+            content_names = [content_names]
+
+        for content_name in content_names:
+            content = received_message[content_name]
+            generated_content_name, generated_content, target_list = self.generate_content(content_name, content)
+
+            if generated_content_name:
+                generated_message = self.generate_message(generated_content_name, target_list, **generated_content)
+                self.publish(self.publish_message, json.dumps(generated_message, ensure_ascii=False))
+                rospy.loginfo(f'Published message: {generated_message}')
 
     # Generate DeepTask ROS module output message
     def generate_message(self,
-                         content: str,
-                         target: list,
-                         **kwargs):
+                         content_name: str,
+                         target_list: list,
+                         **kwargs) -> dict:
 
         message = {
             'header': {
-                'content': content,
+                'content': content_name,
                 'source': self.source_name,
-                'target': target,
+                'target': target_list,
                 'timestamp': timestamp()
             },
-            content: kwargs
+            content_name: kwargs
         }
 
         return message
@@ -110,13 +124,58 @@ class DTNode(NodeBase, metaclass=ABCMeta):
     # Generate specific ROS module output content
     @abstractmethod
     def generate_content(self,
-                         header: dict,
-                         content: dict) -> tuple(str, list, dict):
+                         content_name: str,
+                         content: dict) -> Tuple[str, list, dict]:
+
         pass
 
 
 # Node of Dialog Manager
 class DMNode(DTNode):
-    def __init__(self, *args, **kwargs):
-        super(DMNode, self).__init__(*args, **kwargs)
+    __scenario: Scenario = None
+
+    def __init__(self,
+                 scenario_name: str,
+                 dialogflow_client: DialogflowClient,
+                 language_code: str = 'ko',
+                 *args, **kwargs):
+
+        super(DMNode, self).__init__(publish_message='/taskCompletion',
+                                     subscribe_message='/taskExecution',
+                                     *args, **kwargs)
+
         self.source_name = 'dialog'
+        self.scenario_name = scenario_name
+        self.dialogflow_client = dialogflow_client
+        self.language_code = language_code
+
+    @property
+    def scenario(self):
+        if not self.__scenario:
+            scenario_parser = ScenarioParser(self.scenario_name)
+            self.__scenario = scenario_parser.get_scenario()
+
+        return self.__scenario
+
+    def generate_content(self,
+                         content_name: str,
+                         content: dict) -> Tuple[str, list, dict]:
+
+        if content_name == 'dialog_generation':
+            intent = self.scenario.get_intent(content['intent'])
+            intent.set_parameter_content(content, {'dialogflow': self.dialogflow_client})
+            dialog = random.choice(intent.correct_dialogs)
+
+            target_list = [
+                'planning'
+            ]
+
+            generated_content = {
+                'id': content['id'],
+                'dialog': dialog.value[self.language_code],
+                'result': 'completion'
+            }
+
+            return content_name, generated_content, target_list
+
+        return None, None, None
