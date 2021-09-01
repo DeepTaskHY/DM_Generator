@@ -135,7 +135,7 @@ dmypy.json
 /dm_generator/keys/*
 
 # Test scripts
-/dm_generator/tests/*
+/dm_generator/scripts/tests/*
 
 # Configuration
 /dm_generator/configuration.json
