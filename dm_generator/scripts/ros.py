@@ -174,7 +174,15 @@ class DMNode(DTNode):
             intent.set_parameter_content(content)
 
             # Get correct dialog
-            dialog = random.choice(intent.correct_dialogs)
+            try:
+                selected_dialog = random.choice(intent.correct_dialogs)
+                generated_dialog = selected_dialog.value[self.language_code]
+
+            except IndexError:
+                if 'dialogflow' in content:
+                    generated_dialog = content['dialogflow'].query_result.fulfillment_text
+                else:
+                    generated_dialog = None
 
             # Publish message
             target_list = [
@@ -183,7 +191,7 @@ class DMNode(DTNode):
 
             generated_content = {
                 'id': content['id'],
-                'dialog': dialog.value[self.language_code],
+                'dialog': generated_dialog,
                 'result': 'completion'
             }
 
