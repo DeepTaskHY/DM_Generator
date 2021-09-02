@@ -163,9 +163,10 @@ class DMNode(DTNode):
 
         if content_name == 'dialog_generation':
             # Add DialogFlow result
-            human_speech = content['human_speech']
-            dialogflow_result = self.dialogflow_client.detect_intent_text(human_speech)
-            content.update({'dialogflow': dialogflow_result})
+            if 'human_speech' in content:
+                human_speech = content['human_speech']
+                dialogflow_result = self.dialogflow_client.detect_intent_text(human_speech)
+                content.update({'dialogflow': dialogflow_result})
 
             # Instantiate Intent
             intent_name = content['intent']
