@@ -2,19 +2,23 @@
   "modules": {
     "homecare": {
       "node-name": "ros-node-name",
+      "scenario-name": "homecare",
       "project-id": "dialogflow-project-id",
       "session-id": "dialogflow-session-id",
       "authorization": {
         "key": "filename.json"
-      }
+      },
+      "language-code": "ko"
     },
     "reception": {
       "node-name": "ros-node-name",
+      "scenario-name": "reception",
       "project-id": "dialogflow-project-id",
       "session-id": "dialogflow-session-id",
       "authorization": {
         "key": "filename.json"
-      }
+      },
+      "language-code": "ko"
     }
   }
 }

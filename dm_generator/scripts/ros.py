@@ -136,8 +136,8 @@ class DMNode(DTNode):
 
     def __init__(self,
                  scenario_name: str,
+                 language_code: str,
                  dialogflow_client: DialogflowClient,
-                 language_code: str = 'ko',
                  *args, **kwargs):
 
         super(DMNode, self).__init__(publish_message='/taskCompletion',

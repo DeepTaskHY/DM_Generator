@@ -10,17 +10,15 @@ configuration = get_module_configuration(MODULE_NAME)
 
 
 def main():
-    language_code = 'ko'
-
     dialogflow_client = DialogflowClient(project_id=configuration['project-id'],
                                          session_id=configuration['session-id'],
                                          key_file=configuration['authorization']['key'],
-                                         language_code=language_code)
+                                         language_code=configuration['language-code'])
 
-    node = DMNode(node_name='DM_homecare_node',
-                  scenario_name=MODULE_NAME,
-                  dialogflow_client=dialogflow_client,
-                  language_code=language_code)
+    node = DMNode(node_name=configuration['node-name'],
+                  scenario_name=configuration['scenario-name'],
+                  language_code=configuration['language-code'],
+                  dialogflow_client=dialogflow_client)
 
     node.spin()
 
