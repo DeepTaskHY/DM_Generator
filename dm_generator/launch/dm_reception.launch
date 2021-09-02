@@ -1,3 +1,5 @@
 <launch>
-	<node name="DM_reception_node" pkg="dm_generator" type="SocialDMReception.py"/>
+    <node pkg="dm_generator" name="DM_reception_node" type="launcher.py" output="screen">
+        <env name="module_name" value="reception"/>
+    </node>
 </launch>

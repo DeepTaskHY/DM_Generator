@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import os
 from ros import DMNode
 from dialogflow import DialogflowClient
 from helpers import get_module_configuration
 
 
-MODULE_NAME = 'homecare'
-configuration = get_module_configuration(MODULE_NAME)
+module_name = os.environ['module_name']
+configuration = get_module_configuration(module_name)
 
 
 def main():

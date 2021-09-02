@@ -13,8 +13,8 @@ import rospkg
 
 PACK_PATH = rospkg.RosPack().get_path("dm_generator")
 
-AUTH_KEY_HOMECARE_PATH = PACK_PATH + "/authkey/socialrobot-hyu-xdtlug-7fe2505e00b7.json"
-AUTH_KEY_RECEPTION_PATH = PACK_PATH + "/authkey/socialrobot-hyu-reception-nyla-a093501276ce.json"
+AUTH_KEY_HOMECARE_PATH = PACK_PATH + "/keys/socialrobot-hyu-xdtlug-7fe2505e00b7.json"
+AUTH_KEY_RECEPTION_PATH = PACK_PATH + "/keys/socialrobot-hyu-reception-nyla-a093501276ce.json"
 
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = AUTH_KEY_HOMECARE_PATH
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = AUTH_KEY_RECEPTION_PATH
@@ -73,7 +73,7 @@ def detect_intent_texts(project_id, session_id, texts, language_code):
     for text in texts:
         text_input = dialogflow.types.TextInput(text=text, language_code=language_code)
         query_input = dialogflow.types.QueryInput(text=text_input)
-        response = session_client.detect_intent(session=session, query_input=query_input)
+        response = session_client.detect_intent(request = {'session': session, 'query_input': query_input})
 
     return response
 

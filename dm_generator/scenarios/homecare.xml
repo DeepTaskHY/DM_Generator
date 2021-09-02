@@ -13,40 +13,40 @@
             <dialog>
                 <format lang="ko">{name} {appellation}, 좋은 아침이에요. 건강 상담이 필요하신가요?</format>
                 <conditions>
-                    <condition parameter="hello" operator="exist" value="true" logic="and"/>
+                    <condition lparam="hello" operator="exist" value="true" pipe="and"/>
                     <conditionGroup>
-                        <condition parameter="hour" operator="more" value="6" logic="and"/>
-                        <condition parameter="hour" operator="below" value="11"/>
+                        <condition lparam="hour" operator="more" value="6" pipe="and"/>
+                        <condition lparam="hour" operator="below" value="11"/>
                     </conditionGroup>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">{name} {appellation}, 좋은 오후에요. 건강 상담이 필요하신가요?</format>
                 <conditions>
-                    <condition parameter="hello" operator="exist" value="true" logic="and"/>
+                    <condition lparam="hello" operator="exist" value="true" pipe="and"/>
                     <conditionGroup>
-                        <condition parameter="hour" operator="more" value="12" logic="and"/>
-                        <condition parameter="hour" operator="below" value="17"/>
+                        <condition lparam="hour" operator="more" value="12" pipe="and"/>
+                        <condition lparam="hour" operator="below" value="17"/>
                     </conditionGroup>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">{name} {appellation}, 좋은 저녁이에요. 건강 상담이 필요하신가요?</format>
                 <conditions>
-                    <condition parameter="hello" operator="exist" value="true" logic="and"/>
+                    <condition lparam="hello" operator="exist" value="true" pipe="and"/>
                     <conditionGroup>
-                        <condition parameter="hour" operator="more" value="18" logic="and"/>
-                        <condition parameter="hour" operator="below" value="21"/>
+                        <condition lparam="hour" operator="more" value="18" pipe="and"/>
+                        <condition lparam="hour" operator="below" value="21"/>
                     </conditionGroup>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">{name} {appellation}, 안녕하세요. 건강 상담이 필요하신가요?</format>
                 <conditions>
-                    <condition parameter="hello" operator="exist" value="true" logic="and"/>
+                    <condition lparam="hello" operator="exist" value="true" pipe="and"/>
                     <conditionGroup>
-                        <condition parameter="hour" operator="more" value="22" logic="or"/>
-                        <condition parameter="hour" operator="below" value="5"/>
+                        <condition lparam="hour" operator="more" value="22" pipe="or"/>
+                        <condition lparam="hour" operator="below" value="5"/>
                     </conditionGroup>
                 </conditions>
             </dialog>
@@ -55,40 +55,40 @@
             <dialog>
                 <format lang="ko">{name} {appellation}, 좋은 아침이에요. 잘 지내셨어요?</format>
                 <conditions>
-                    <condition parameter="hello" operator="exist" value="false" logic="and"/>
+                    <condition lparam="hello" operator="exist" value="false" pipe="and"/>
                     <conditionGroup>
-                        <condition parameter="hour" operator="more" value="6" logic="and"/>
-                        <condition parameter="hour" operator="below" value="11"/>
+                        <condition lparam="hour" operator="more" value="6" pipe="and"/>
+                        <condition lparam="hour" operator="below" value="11"/>
                     </conditionGroup>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">{name} {appellation}, 좋은 오후에요. 잘 지내셨어요?</format>
                 <conditions>
-                    <condition parameter="hello" operator="exist" value="false" logic="and"/>
+                    <condition lparam="hello" operator="exist" value="false" pipe="and"/>
                     <conditionGroup>
-                        <condition parameter="hour" operator="more" value="12" logic="and"/>
-                        <condition parameter="hour" operator="below" value="17"/>
+                        <condition lparam="hour" operator="more" value="12" pipe="and"/>
+                        <condition lparam="hour" operator="below" value="17"/>
                     </conditionGroup>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">{name} {appellation}, 좋은 저녁이에요. 잘 지내셨어요?</format>
                 <conditions>
-                    <condition parameter="hello" operator="exist" value="false" logic="and"/>
+                    <condition lparam="hello" operator="exist" value="false" pipe="and"/>
                     <conditionGroup>
-                        <condition parameter="hour" operator="more" value="18" logic="and"/>
-                        <condition parameter="hour" operator="below" value="21"/>
+                        <condition lparam="hour" operator="more" value="18" pipe="and"/>
+                        <condition lparam="hour" operator="below" value="21"/>
                     </conditionGroup>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">{name} {appellation}, 잘 지내셨어요?</format>
                 <conditions>
-                    <condition parameter="hello" operator="exist" value="false" logic="and"/>
+                    <condition lparam="hello" operator="exist" value="false" pipe="and"/>
                     <conditionGroup>
-                        <condition parameter="hour" operator="more" value="22" logic="or"/>
-                        <condition parameter="hour" operator="below" value="5"/>
+                        <condition lparam="hour" operator="more" value="22" pipe="or"/>
+                        <condition lparam="hour" operator="below" value="5"/>
                     </conditionGroup>
                 </conditions>
             </dialog>
@@ -106,29 +106,29 @@
             <dialog>
                 <format lang="ko">{fulfillment_text} 좋은 하루 보내세요.</format>
                 <conditions>
-                    <condition parameter="hour" operator="more" value="6" logic="and"/>
-                    <condition parameter="hour" operator="below" value="11"/>
+                    <condition lparam="hour" operator="more" value="6" pipe="and"/>
+                    <condition lparam="hour" operator="below" value="11"/>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">{fulfillment_text} 오후 잘 보내세요.</format>
                 <conditions>
-                    <condition parameter="hour" operator="more" value="12" logic="and"/>
-                    <condition parameter="hour" operator="below" value="17"/>
+                    <condition lparam="hour" operator="more" value="12" pipe="and"/>
+                    <condition lparam="hour" operator="below" value="17"/>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">{fulfillment_text} 저녁 잘 보내세요.</format>
                 <conditions>
-                    <condition parameter="hour" operator="more" value="18" logic="and"/>
-                    <condition parameter="hour" operator="below" value="21"/>
+                    <condition lparam="hour" operator="more" value="18" pipe="and"/>
+                    <condition lparam="hour" operator="below" value="21"/>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">{fulfillment_text} 안녕히 가세요.</format>
                 <conditions>
-                    <condition parameter="hour" operator="more" value="22" logic="or"/>
-                    <condition parameter="hour" operator="below" value="5"/>
+                    <condition lparam="hour" operator="more" value="22" pipe="or"/>
+                    <condition lparam="hour" operator="below" value="5"/>
                 </conditions>
             </dialog>
         </dialogs>
@@ -153,13 +153,13 @@
             <dialog>
                 <format lang="ko">잘 못 주무셨다니 속상해요.</format>
                 <conditions>
-                    <condition parameter="negative" operator="exist" value="true"/>
+                    <condition lparam="negative" operator="exist" value="true"/>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">푹 주무셨다니 다행이에요.</format>
                 <conditions>
-                    <condition parameter="negative" operator="exist" value="false"/>
+                    <condition lparam="negative" operator="exist" value="false"/>
                 </conditions>
             </dialog>
         </dialogs>
@@ -189,13 +189,13 @@
             <dialog>
                 <format lang="ko">좋은 소식이네요. 식사는 뭐 드셨나요?</format>
                 <conditions>
-                    <condition parameter="positive" operator="exist" value="true"/>
+                    <condition lparam="positive" operator="exist" value="true"/>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">안 좋은 소식이네요. 식사는 뭐 드셨나요?</format>
                 <conditions>
-                    <condition parameter="negative" operator="exist" value="true"/>
+                    <condition lparam="negative" operator="exist" value="true"/>
                 </conditions>
             </dialog>
         </dialogs>
@@ -213,13 +213,13 @@
             <dialog>
                 <format lang="ko">잘 하셨어요. {disease_name}에 {disease_advice} 중요한 거 아시죠?</format>
                 <conditions>
-                    <condition parameter="good_meal" operator="exist" value="true"/>
+                    <condition lparam="good_meal" operator="exist" value="true"/>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">조심하셔야 해요. {disease_name}에 {disease_advice} 중요한 거 아시죠?</format>
                 <conditions>
-                    <condition parameter="good_meal" operator="exist" value="false"/>
+                    <condition lparam="good_meal" operator="exist" value="false"/>
                 </conditions>
             </dialog>
         </dialogs>
@@ -236,13 +236,13 @@
             <dialog>
                 <format lang="ko">주의해주세요. {task}은(는) 하셨나요?</format>
                 <conditions>
-                    <condition parameter="negative" operator="exist" value="true"/>
+                    <condition lparam="negative" operator="exist" value="true"/>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">다행이에요. {task}은(는) 하셨나요?</format>
                 <conditions>
-                    <condition parameter="negative" operator="exist" value="false"/>
+                    <condition lparam="negative" operator="exist" value="false"/>
                 </conditions>
             </dialog>
         </dialogs>
@@ -259,13 +259,13 @@
             <dialog>
                 <format lang="ko">다음에는 빠뜨리시면 안 돼요. {medicine_schedule}하셔야 해요.</format>
                 <conditions>
-                    <condition parameter="negative" operator="exist" value="true"/>
+                    <condition lparam="negative" operator="exist" value="true"/>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">잘 챙기셨네요. {medicine_schedule}하셔야 해요.</format>
                 <conditions>
-                    <condition parameter="negative" operator="exist" value="false"/>
+                    <condition lparam="negative" operator="exist" value="false"/>
                 </conditions>
             </dialog>
         </dialogs>
@@ -282,13 +282,13 @@
             <dialog>
                 <format lang="ko">잘 못 지내셨다니 슬퍼요. 오늘 {visit_place} 방문하시는 날이었죠?</format>
                 <conditions>
-                    <condition parameter="negative" operator="exist" value="true"/>
+                    <condition lparam="negative" operator="exist" value="true"/>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">잘 지내셨다니 다행이에요. 오늘 {visit_place} 방문하시는 날이었죠?</format>
                 <conditions>
-                    <condition parameter="negative" operator="exist" value="false"/>
+                    <condition lparam="negative" operator="exist" value="false"/>
                 </conditions>
             </dialog>
         </dialogs>
@@ -308,40 +308,40 @@
             <dialog>
                 <format lang="ko">잘 하셨어요. {appellation} {disease_name} 상태가 좋아지셨다고 들었어요.</format>
                 <conditions>
-                    <condition parameter="disease_status" operator="equal" value="positive" logic="and"/>
+                    <condition lparam="disease_status" operator="equal" value="positive" pipe="and"/>
                     <conditionGroup>
-                        <condition parameter="positive" operator="exist" value="true" logic="or"/>
-                        <condition parameter="go" operator="exist" value="true"/>
+                        <condition lparam="positive" operator="exist" value="true" pipe="or"/>
+                        <condition lparam="go" operator="exist" value="true"/>
                     </conditionGroup>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">잘 하셨어요. {appellation} {disease_name} 상태가 나빠지셨다고 들었어요.</format>
                 <conditions>
-                    <condition parameter="disease_status" operator="equal" value="negative" logic="and"/>
+                    <condition lparam="disease_status" operator="equal" value="negative" pipe="and"/>
                     <conditionGroup>
-                        <condition parameter="positive" operator="exist" value="true" logic="or"/>
-                        <condition parameter="go" operator="exist" value="true"/>
+                        <condition lparam="positive" operator="exist" value="true" pipe="or"/>
+                        <condition lparam="go" operator="exist" value="true"/>
                     </conditionGroup>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">꼭 가셔야 해요. {appellation} {disease_name} 상태가 좋아지셨다고 들었어요.</format>
                 <conditions>
-                    <condition parameter="disease_status" operator="equal" value="positive" logic="and"/>
+                    <condition lparam="disease_status" operator="equal" value="positive" pipe="and"/>
                     <conditionGroup>
-                        <condition parameter="positive" operator="exist" value="false" logic="and"/>
-                        <condition parameter="go" operator="exist" value="false"/>
+                        <condition lparam="positive" operator="exist" value="false" pipe="and"/>
+                        <condition lparam="go" operator="exist" value="false"/>
                     </conditionGroup>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">꼭 가셔야 해요. {appellation} {disease_name} 상태가 나빠지셨다고 들었어요.</format>
                 <conditions>
-                    <condition parameter="disease_status" operator="equal" value="negative" logic="and"/>
+                    <condition lparam="disease_status" operator="equal" value="negative" pipe="and"/>
                     <conditionGroup>
-                        <condition parameter="positive" operator="exist" value="false" logic="and"/>
-                        <condition parameter="go" operator="exist" value="false"/>
+                        <condition lparam="positive" operator="exist" value="false" pipe="and"/>
+                        <condition lparam="go" operator="exist" value="false"/>
                     </conditionGroup>
                 </conditions>
             </dialog>
@@ -360,13 +360,13 @@
             <dialog>
                 <format lang="ko">{appellation} {disease_name} 상태가 좋아지셔서 드시는 약이 바뀌었어요.</format>
                 <conditions>
-                    <condition parameter="disease_status" operator="equal" value="positive"/>
+                    <condition lparam="disease_status" operator="equal" value="positive"/>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">{appellation} {disease_name} 상태가 나빠지셔서 드시는 약이 바뀌었어요.</format>
                 <conditions>
-                    <condition parameter="disease_status" operator="equal" value="negative"/>
+                    <condition lparam="disease_status" operator="equal" value="negative"/>
                 </conditions>
             </dialog>
         </dialogs>

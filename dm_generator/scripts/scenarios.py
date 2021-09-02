@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 from distutils.util import strtobool
 from xml.etree.ElementTree import Element, parse
-from helpers import SCENARIO_PATH
+from helpers import SCENARIO_PATH, reverse_time
 
 
 class ScenarioBase(metaclass=ABCMeta):
@@ -26,6 +26,7 @@ class ScenarioBase(metaclass=ABCMeta):
 
 class Parameter(ScenarioBase):
     __value = None
+    __partial: List[int] = []
 
     @property
     def type(self) -> str:
@@ -34,6 +35,17 @@ class Parameter(ScenarioBase):
     @property
     def ref(self) -> List[str]:
         return self.root.get('ref').split('.')
+
+    @property
+    def partial(self) -> List[int]:
+        if not self.__partial and self.root.get('partial'):
+            self.__partial = [int(num) for num in self.root.get('partial').split(':')]
+
+        return self.__partial
+
+    @property
+    def split(self) -> str:
+        return self.root.get('split')
 
     @property
     def value(self):
@@ -65,6 +77,12 @@ class Parameter(ScenarioBase):
                 elif isinstance(ref, object):
                     ref = getattr(ref, key)
 
+        if ref:
+            if self.partial:
+                ref = str(ref)[self.partial[0]:self.partial[1]]
+            elif self.split:
+                ref = str(ref).split(self.split)
+
         self.__value = ref
 
 
@@ -90,8 +108,8 @@ class ConditionBase(ParameterAssociationBase, metaclass=ABCMeta):
         return self.root.get('operator')
 
     @property
-    def logic(self) -> str:
-        return self.root.get('logic')
+    def pipe(self) -> str:
+        return self.root.get('pipe')
 
     @property
     @abstractmethod
@@ -101,8 +119,23 @@ class ConditionBase(ParameterAssociationBase, metaclass=ABCMeta):
 
 class Condition(ConditionBase):
     @property
-    def parameter(self) -> str:
-        return self.root.get('parameter')
+    def lparam(self) -> str:
+        return self.root.get('lparam')
+
+    @property
+    def lparam_value(self):
+        return self.parameter_values[self.lparam]
+
+    @property
+    def rparam(self) -> str:
+        return self.root.get('rparam')
+
+    @property
+    def rparam_value(self):
+        if not self.rparam:
+            return None
+
+        return self.parameter_values[self.rparam]
 
     @property
     def value(self) -> str:
@@ -110,35 +143,43 @@ class Condition(ConditionBase):
 
     @property
     def result(self) -> bool:
-        parameter_value = self.parameter_values[self.parameter]
+        lvalue = self.lparam_value
+        rvalue = self.rparam_value or self.value
 
         if self.operator == 'exist':
-            value = bool(strtobool(self.value))
-            parameter_value = bool(parameter_value)
-            return value == parameter_value
+            return bool(lvalue) == bool(strtobool(rvalue))
 
         elif self.operator == 'equal':
-            return self.value == parameter_value
+            return lvalue == rvalue
+
+        elif self.operator == 'time_equal':
+            reversed_rvalue = reverse_time(rvalue)
+            return (lvalue == rvalue) or (lvalue == reversed_rvalue)
+
+        elif self.operator == 'contains':
+            if not lvalue or not rvalue:
+                return False
+
+            return (lvalue in rvalue) == bool(strtobool(self.value))
+
+        elif self.operator == 'time_contains':
+            if not lvalue or not rvalue:
+                return False
+
+            reversed_rvalue = [reverse_time(time) for time in rvalue]
+            return ((lvalue in rvalue) or (lvalue in reversed_rvalue)) == bool(strtobool(self.value))
 
         elif self.operator == 'more':  # 이상
-            value = float(self.value)
-            parameter_value = float(parameter_value)
-            return value <= parameter_value
+            return float(lvalue) >= float(rvalue)
 
         elif self.operator == 'below':  # 이하
-            value = float(self.value)
-            parameter_value = float(parameter_value)
-            return value >= parameter_value
+            return float(lvalue) <= float(rvalue)
 
         elif self.operator == 'excess':  # 초과
-            value = float(self.value)
-            parameter_value = float(parameter_value)
-            return value < parameter_value
+            return float(lvalue) > float(rvalue)
 
         elif self.operator == 'under':  # 미만
-            value = float(self.value)
-            parameter_value = float(parameter_value)
-            return value > parameter_value
+            return float(lvalue) < float(rvalue)
 
         return False
 
@@ -165,17 +206,17 @@ class ConditionGroup(ConditionBase):
     @property
     def result(self) -> bool:
         result = True
-        logic = 'and'
+        pipe = 'and'
 
         for condition in self.conditions:
             partial_result = condition.result
 
-            if logic == 'and':
+            if pipe == 'and':
                 result = result and partial_result
-            elif logic == 'or':
+            elif pipe == 'or':
                 result = result or partial_result
 
-            logic = condition.logic
+            pipe = condition.pipe
 
         return result
 
