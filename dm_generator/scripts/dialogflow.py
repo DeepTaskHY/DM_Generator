@@ -15,7 +15,7 @@ class DialogflowClient:
                  project_id: str,
                  session_id: str,
                  key_file: str,
-                 language_code: str = 'ko'):
+                 language_code: str):
 
         self.__project_id = project_id
         self.__session_id = session_id
