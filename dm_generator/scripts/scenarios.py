@@ -39,10 +39,7 @@ class Parameter(ScenarioBase):
     def value(self):
         return self.__value
 
-    def set_content(self,
-                    content: dict,
-                    apis: Dict[str, object] = {}):
-
+    def set_content(self, content: dict):
         ref = None
 
         if self.type == 'variable':
@@ -55,9 +52,7 @@ class Parameter(ScenarioBase):
             ref = content['social_context']
 
         elif self.type == 'dialogflow':
-            api = apis['dialogflow']
-            text = content['human_speech']
-            ref = api.detect_intent_text(text).query_result
+            ref = content['dialogflow'].query_result
 
         if ref:
             for key in self.ref:
@@ -217,12 +212,9 @@ class Intent(ScenarioBase):
 
         return self.__parameters
 
-    def set_parameter_content(self,
-                              content: dict,
-                              apis: Dict[str, object] = {}):
-
+    def set_parameter_content(self, content: dict):
         for parameter_name, parameter in self.parameters.items():
-            parameter.set_content(content, apis)
+            parameter.set_content(content)
 
     @property
     def correct_dialogs(self) -> List[Dialog]:

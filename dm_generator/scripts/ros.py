@@ -162,10 +162,20 @@ class DMNode(DTNode):
                          content: dict) -> Tuple[str, list, dict]:
 
         if content_name == 'dialog_generation':
-            intent = self.scenario.get_intent(content['intent'])
-            intent.set_parameter_content(content, {'dialogflow': self.dialogflow_client})
+            # Add DialogFlow result
+            human_speech = content['human_speech']
+            dialogflow_result = self.dialogflow_client.detect_intent_text(human_speech)
+            content.update({'dialogflow': dialogflow_result})
+
+            # Instantiate Intent
+            intent_name = content['intent']
+            intent = self.scenario.get_intent(intent_name)
+            intent.set_parameter_content(content)
+
+            # Get correct dialog
             dialog = random.choice(intent.correct_dialogs)
 
+            # Publish message
             target_list = [
                 'planning'
             ]
