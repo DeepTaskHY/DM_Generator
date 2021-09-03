@@ -23,4 +23,4 @@ RUN rosdep update
 ADD docker-entrypoint.sh .
 RUN chmod +x docker-entrypoint.sh
 ENTRYPOINT ["/workspace/docker-entrypoint.sh"]
-CMD ["roslaunch", "/workspace/src/launch/dm.launch"]
+CMD ["bash"]
