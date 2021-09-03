@@ -158,7 +158,9 @@ class Condition(ConditionBase):
 
         elif self.operator == 'time_equal':
             reversed_rvalue = reverse_time(rvalue)
-            return (lvalue == rvalue) or (lvalue == reversed_rvalue)
+            rvalue = [rvalue, reversed_rvalue]
+
+            return lvalue in rvalue
 
         elif self.operator == 'contains':
             if not lvalue or not rvalue:
@@ -171,7 +173,9 @@ class Condition(ConditionBase):
                 return False
 
             reversed_rvalue = [reverse_time(time) for time in rvalue]
-            return ((lvalue in rvalue) or (lvalue in reversed_rvalue)) == bool(strtobool(self.value))
+            rvalue += reversed_rvalue
+
+            return (lvalue in rvalue) == bool(strtobool(self.value))
 
         elif self.operator == 'more':  # 이상
             return float(lvalue) >= float(rvalue)
