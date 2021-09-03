@@ -93,6 +93,7 @@ class DTNode(NodeBase, metaclass=ABCMeta):
             return
 
         # Check receiver
+        source = header['source']
         targets = header['target']
 
         if not targets:
@@ -119,7 +120,7 @@ class DTNode(NodeBase, metaclass=ABCMeta):
             return
 
         contents = {content_name: received_message[content_name] for content_name in content_names}
-        targets, generated_content_names, generated_contents = self.generate_content(content_names, contents)
+        targets, generated_content_names, generated_contents = self.generate_content(source, content_names, contents)
 
         # Publish message
         if targets:
@@ -149,8 +150,9 @@ class DTNode(NodeBase, metaclass=ABCMeta):
     # Generate specific ROS module output content
     @abstractmethod
     def generate_content(self,
-                         content_name: str,
-                         content: dict) -> Tuple[list, list, Dict[str, dict]]:
+                         source: str,
+                         content_names: list,
+                         content: Dict[str, dict]) -> Tuple[list, list, Dict[str, dict]]:
 
         pass
 
@@ -183,6 +185,7 @@ class DMNode(DTNode):
         return self.__scenario
 
     def generate_content(self,
+                         source: str,
                          content_names: list,
                          contents: Dict[str, dict]) -> Tuple[list, list, Dict[str, dict]]:
 
@@ -218,7 +221,10 @@ class DMNode(DTNode):
                         generated_dialog = None
 
                 # Publish message
-                targets = ['planning']
+                targets = source
+
+                if isinstance(targets, str):
+                    targets = [targets]
 
                 content_names = ['dialog_generation']
 
