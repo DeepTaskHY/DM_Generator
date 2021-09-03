@@ -82,11 +82,12 @@ class DTNode(NodeBase, metaclass=ABCMeta):
 
     def subscribe(self, message):
         received_message = json.loads(message.data)
-        rospy.loginfo(f'Received message: {received_message}')
 
         # Check receiver
         if self.source_name and self.source_name not in received_message['header']['target']:
             return
+
+        rospy.loginfo(f'Received message: {received_message}')
 
         header = received_message['header']
         content_names = header['content']
@@ -162,15 +163,20 @@ class DMNode(DTNode):
                          content: dict) -> Tuple[str, list, dict]:
 
         if content_name == 'dialog_generation':
+            # Instantiate Intent
+            intent_name = content['intent']
+            intent = self.scenario.get_intent(intent_name)
+
+            # Handling intent exceptions without scenarios
+            if not intent.exist:
+                return None, None, None
+
             # Add DialogFlow result
             if 'human_speech' in content:
                 human_speech = content['human_speech']
                 dialogflow_result = self.dialogflow_client.detect_intent_text(human_speech)
                 content.update({'dialogflow': dialogflow_result})
 
-            # Instantiate Intent
-            intent_name = content['intent']
-            intent = self.scenario.get_intent(intent_name)
             intent.set_parameter_content(content)
 
             # Get correct dialog

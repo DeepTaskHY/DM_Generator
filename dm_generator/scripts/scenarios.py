@@ -23,6 +23,10 @@ class ScenarioBase(metaclass=ABCMeta):
     def name(self) -> str:
         return self.root.get('name')
 
+    @property
+    def exist(self) -> bool:
+        return not not self.root
+
 
 class Parameter(ScenarioBase):
     __value = None
