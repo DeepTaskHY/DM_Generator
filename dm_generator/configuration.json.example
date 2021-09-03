@@ -1,7 +1,7 @@
 {
   "modules": {
     "homecare": {
-      "node-name": "ros-node-name",
+      "node-name": "DM_homecare_node",
       "scenario-name": "homecare",
       "project-id": "dialogflow-project-id",
       "session-id": "dialogflow-session-id",
@@ -11,7 +11,7 @@
       "language-code": "ko"
     },
     "reception": {
-      "node-name": "ros-node-name",
+      "node-name": "DM_reception_node",
       "scenario-name": "reception",
       "project-id": "dialogflow-project-id",
       "session-id": "dialogflow-session-id",
