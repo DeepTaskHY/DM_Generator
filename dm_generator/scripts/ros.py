@@ -83,21 +83,45 @@ class DTNode(NodeBase, metaclass=ABCMeta):
     def subscribe(self, message):
         received_message = json.loads(message.data)
 
-        # Check receiver
-        if self.source_name and self.source_name not in received_message['header']['target']:
+        # Check message format
+        if not isinstance(received_message, dict):
             return
 
-        rospy.loginfo(f'Received message: {received_message}')
-
         header = received_message['header']
+
+        if not isinstance(header, dict) or 'target' not in header:
+            return
+
+        # Check receiver
+        targets = header['target']
+
+        if not targets:
+            return
+
+        if isinstance(targets, str):
+            targets = [targets]
+            header['target'] = targets
+
+        if not self.source_name or self.source_name not in targets:
+            return
+
+        # Process received message
+        rospy.loginfo(f'Received message: {received_message}')
         content_names = header['content']
+
+        if not content_names:
+            return
 
         if isinstance(content_names, str):
             content_names = [content_names]
 
+        if not isinstance(content_names, list):
+            return
+
         contents = {content_name: received_message[content_name] for content_name in content_names}
         targets, generated_content_names, generated_contents = self.generate_content(content_names, contents)
 
+        # Publish message
         if targets:
             generated_message = self.generate_message(targets, generated_content_names, generated_contents)
             self.publish(self.publish_message, json.dumps(generated_message, ensure_ascii=False))
