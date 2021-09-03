@@ -197,7 +197,7 @@ class ConditionGroup(ConditionBase):
     def conditions(self) -> List[ConditionBase]:
         conditions = []
 
-        if self.root:
+        if self.exist:
             for child in self.root:
                 if child.tag == 'condition':
                     condition = Condition(child)
