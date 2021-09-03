@@ -1,5 +1,5 @@
 from abc import *
-from typing import Callable, Tuple
+from typing import Dict, Tuple
 
 import time
 import json
@@ -95,30 +95,30 @@ class DTNode(NodeBase, metaclass=ABCMeta):
         if isinstance(content_names, str):
             content_names = [content_names]
 
-        for content_name in content_names:
-            content = received_message[content_name]
-            generated_content_name, generated_content, target_list = self.generate_content(content_name, content)
+        contents = {content_name: received_message[content_name] for content_name in content_names}
+        targets, generated_content_names, generated_contents = self.generate_content(content_names, contents)
 
-            if generated_content_name:
-                generated_message = self.generate_message(generated_content_name, target_list, **generated_content)
-                self.publish(self.publish_message, json.dumps(generated_message, ensure_ascii=False))
-                rospy.loginfo(f'Published message: {generated_message}')
+        if targets:
+            generated_message = self.generate_message(targets, generated_content_names, generated_contents)
+            self.publish(self.publish_message, json.dumps(generated_message, ensure_ascii=False))
+            rospy.loginfo(f'Published message: {generated_message}')
 
     # Generate DeepTask ROS module output message
     def generate_message(self,
-                         content_name: str,
-                         target_list: list,
-                         **kwargs) -> dict:
+                         targets: list,
+                         content_names: list,
+                         contents: Dict[str, dict]) -> dict:
 
         message = {
             'header': {
-                'content': content_name,
+                'timestamp': timestamp(),
                 'source': self.source_name,
-                'target': target_list,
-                'timestamp': timestamp()
-            },
-            content_name: kwargs
+                'target': targets,
+                'content': content_names,
+            }
         }
+
+        message.update(contents)
 
         return message
 
@@ -126,7 +126,7 @@ class DTNode(NodeBase, metaclass=ABCMeta):
     @abstractmethod
     def generate_content(self,
                          content_name: str,
-                         content: dict) -> Tuple[str, list, dict]:
+                         content: dict) -> Tuple[list, list, Dict[str, dict]]:
 
         pass
 
@@ -159,48 +159,53 @@ class DMNode(DTNode):
         return self.__scenario
 
     def generate_content(self,
-                         content_name: str,
-                         content: dict) -> Tuple[str, list, dict]:
+                         content_names: list,
+                         contents: Dict[str, dict]) -> Tuple[list, list, Dict[str, dict]]:
 
-        if content_name == 'dialog_generation':
-            # Instantiate Intent
-            intent_name = content['intent']
-            intent = self.scenario.get_intent(intent_name)
+        for content_name in content_names:
+            content = contents[content_name]
 
-            # Handling intent exceptions without scenarios
-            if not intent.exist:
-                return None, None, None
+            if content_name == 'dialog_generation':
+                # Instantiate Intent
+                intent_name = content['intent']
+                intent = self.scenario.get_intent(intent_name)
 
-            # Add DialogFlow result
-            if 'human_speech' in content:
-                human_speech = content['human_speech']
-                dialogflow_result = self.dialogflow_client.detect_intent_text(human_speech)
-                content.update({'dialogflow': dialogflow_result})
+                # Handling intent exceptions without scenarios
+                if not intent.exist:
+                    continue
 
-            intent.set_parameter_content(content)
+                # Add DialogFlow result
+                if 'human_speech' in content:
+                    human_speech = content['human_speech']
+                    dialogflow_result = self.dialogflow_client.detect_intent_text(human_speech)
+                    content.update({'dialogflow': dialogflow_result})
 
-            # Get correct dialog
-            try:
-                selected_dialog = random.choice(intent.correct_dialogs)
-                generated_dialog = selected_dialog.value[self.language_code]
+                intent.set_parameter_content(content)
 
-            except IndexError:
-                if 'dialogflow' in content:
-                    generated_dialog = content['dialogflow'].query_result.fulfillment_text
-                else:
-                    generated_dialog = None
+                # Get correct dialog
+                try:
+                    selected_dialog = random.choice(intent.correct_dialogs)
+                    generated_dialog = selected_dialog.value[self.language_code]
 
-            # Publish message
-            target_list = [
-                'planning'
-            ]
+                except IndexError:
+                    if 'dialogflow' in content:
+                        generated_dialog = content['dialogflow'].query_result.fulfillment_text
+                    else:
+                        generated_dialog = None
 
-            generated_content = {
-                'id': content['id'],
-                'dialog': generated_dialog,
-                'result': 'completion'
-            }
+                # Publish message
+                targets = ['planning']
 
-            return content_name, generated_content, target_list
+                content_names = ['dialog_generation']
+
+                generated_contents = {
+                    'dialog_generation': {
+                        'id': content['id'],
+                        'dialog': generated_dialog,
+                        'result': 'completion'
+                    }
+                }
+
+                return targets, content_names, generated_contents
 
         return None, None, None
