@@ -17,23 +17,23 @@ with open(CONFIGURATION_PATH) as json_file:
     configuration = json.load(json_file)
 
 
-def get_module_configuration(module_name: str):
+def get_module_configuration(module_name: str) -> dict:
     return configuration['modules'][module_name]
 
 
 # Timestamp string
-def timestamp():
+def timestamp() -> str:
     return str(time.time())
 
 
 # Check message language
-def is_hangul(text: str):
+def is_hangul(text: str) -> bool:
     hangul_count = len(re.findall(u'[\u3130-\u318F\uAC00-\uD7A3]+', text))
     return hangul_count > 0
 
 
 # Reverse AM:PM
-def reverse_time(time: str):
+def reverse_time(time: str) -> str:
     if not time:
         return None
 

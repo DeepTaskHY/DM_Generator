@@ -13,43 +13,47 @@ from helpers import timestamp
 
 # Base Node of ROS
 class NodeBase:
-    def __init__(self, node_name: str):
-        self.node_name = node_name
-        self.publishers = {}
-        self.subscribers = {}
+    __node_name: str = None
+    __publishers: Dict[str, rospy.Publisher] = {}
+    __subscribers: Dict[str, rospy.Subscriber] = {}
 
-        # ROS module initialization
+    def __init__(self, node_name: str):
+        self.__node_name = node_name
         rospy.init_node(self.node_name)
+
+    @property
+    def node_name(self) -> str:
+        return self.__node_name
 
     def add_publisher(self,
                       topic_name: str,
-                      *args, **kwargs):
+                      *args, **kwargs) -> rospy.Publisher:
 
         # Initialize publisher
         publisher = rospy.Publisher(topic_name, *args, **kwargs)
 
         # Delete exist publisher
-        if topic_name in self.publishers:
-            del self.publishers[topic_name]
+        if topic_name in self.__publishers:
+            del self.__publishers[topic_name]
 
         # Add publisher to list
-        self.publishers[topic_name] = publisher
+        self.__publishers[topic_name] = publisher
 
         return publisher
 
     def add_subscriber(self,
                        topic_name: str,
-                       *args, **kwargs):
+                       *args, **kwargs) -> rospy.Subscriber:
 
         # Initialize publisher
         subscriber = rospy.Subscriber(topic_name, *args, **kwargs)
 
         # Delete exist publisher
-        if topic_name in self.subscribers:
-            del self.subscribers[topic_name]
+        if topic_name in self.__subscribers:
+            del self.__subscribers[topic_name]
 
         # Add publisher to list
-        self.subscribers[topic_name] = subscriber
+        self.__subscribers[topic_name] = subscriber
 
         return subscriber
 
@@ -57,8 +61,8 @@ class NodeBase:
                 topic_name: str,
                 *args, **kwargs):
 
-        publisher = self.publishers[topic_name]
-        return publisher.publish(*args, **kwargs)
+        publisher = self.__publishers[topic_name]
+        publisher.publish(*args, **kwargs)
 
     @classmethod
     def spin(cls):
@@ -177,7 +181,7 @@ class DMNode(DTNode):
         self.language_code = language_code
 
     @property
-    def scenario(self):
+    def scenario(self) -> Scenario:
         if not self.__scenario:
             scenario_parser = ScenarioParser(self.scenario_name)
             self.__scenario = scenario_parser.get_scenario()

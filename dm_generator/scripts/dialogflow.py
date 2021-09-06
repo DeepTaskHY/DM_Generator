@@ -24,27 +24,26 @@ class DialogflowClient:
         self.authorize_credentials()
 
     @property
-    def project_id(self):
+    def project_id(self) -> str:
         return self.__project_id
 
     @property
-    def session_id(self):
+    def session_id(self) -> str:
         return self.__session_id
 
     @property
-    def client(self):
+    def client(self) -> dialogflow.SessionsClient:
         if self.__client is None:
             self.__client = dialogflow.SessionsClient()
 
         return self.__client
 
     @property
-    def session(self):
-        session = self.client.session_path(self.project_id, self.session_id)
-        return session
+    def session(self) -> str:
+        return self.client.session_path(self.project_id, self.session_id)
 
     @property
-    def key_path(self):
+    def key_path(self) -> str:
         if self.__key_path is None:
             self.__key_path = os.path.join(AUTHORIZATION_PATH, self.__key_file)
 
@@ -54,10 +53,10 @@ class DialogflowClient:
         os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = self.key_path
 
     @property
-    def language_code(self):
+    def language_code(self) -> str:
         return self.__language_code
 
-    def detect_intent_text(self, text: str):
+    def detect_intent_text(self, text: str) -> dialogflow.types.DetectIntentResponse:
         text_input = dialogflow.types.TextInput(text=text, language_code=self.language_code)
         query_input = dialogflow.types.QueryInput(text=text_input)
 
