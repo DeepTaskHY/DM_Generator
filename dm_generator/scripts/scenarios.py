@@ -108,10 +108,6 @@ class ParameterAssociationBase(ScenarioBase, metaclass=ABCMeta):
 
 class ConditionBase(ParameterAssociationBase, metaclass=ABCMeta):
     @property
-    def operator(self) -> str:
-        return self.root.get('operator')
-
-    @property
     def pipe(self) -> str:
         return self.root.get('pipe')
 
@@ -122,6 +118,10 @@ class ConditionBase(ParameterAssociationBase, metaclass=ABCMeta):
 
 
 class Condition(ConditionBase):
+    @property
+    def operator(self) -> str:
+        return self.root.get('operator')
+
     @property
     def lparam(self) -> str:
         return self.root.get('lparam')
@@ -250,21 +250,50 @@ class ConditionGroup(ConditionBase):
         return result
 
 
-class Dialog(ParameterAssociationBase):
+class Format(ParameterAssociationBase):
     @property
-    def format(self) -> Dict[str, str]:
-        return {format.get('lang'): format.text for format in self.root.findall('./format')}
+    def lang(self) -> str:
+        return self.root.get('lang')
 
     @property
-    def value(self) -> Dict[str, str]:
-        return {lang: text.format(**self.parameter_values) for lang, text in self.format.items()}
+    def format(self) -> str:
+        return self.root.text
+
+    @property
+    def value(self) -> str:
+        if not self.parameters:
+            return self.format
+
+        return self.format.format(**self.parameter_values)
+
+
+class Dialog(ParameterAssociationBase):
+    __formats: List[Format] = []
+    __conditions: ConditionGroup = None
+
+    @property
+    def formats(self) -> List[Format]:
+        if not self.__formats:
+            formats = self.root.findall('./format')
+            self.__formats = [Format(root) for root in formats]
+
+        for format in self.__formats:
+            format.parameters = self.parameters
+
+        return self.__formats
 
     @property
     def conditions(self) -> ConditionGroup:
-        conditions = ConditionGroup(self.root.find('./conditions'))
-        conditions.parameters = self.parameters
+        if not self.__conditions:
+            self.__conditions = ConditionGroup(self.root.find('./conditions'))
 
-        return conditions
+        self.__conditions.parameters = self.parameters
+
+        return self.__conditions
+
+    @property
+    def value(self) -> Dict[str, str]:
+        return {format.lang: format.value for format in self.formats}
 
     @property
     def result(self) -> bool:
