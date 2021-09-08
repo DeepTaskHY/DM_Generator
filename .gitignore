@@ -135,7 +135,10 @@ dmypy.json
 /dm_generator/keys/*
 
 # Test scripts
-/dm_generator/scripts/tests/*
+/dm_generator/tests/*
 
 # Configuration
 /dm_generator/configuration.json
+
+# Keep the folder by keeping .gitkeep
+!/**/.gitkeep
