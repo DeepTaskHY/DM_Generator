@@ -151,43 +151,59 @@ class Condition(ConditionBase):
         rvalue = self.rparam_value or self.value
 
         if self.operator == 'exist':
-            return bool(lvalue) == bool(strtobool(rvalue))
+            lvalue = bool(lvalue)
+            exist_value = bool(strtobool(self.value))
+
+            return lvalue == exist_value
 
         elif self.operator == 'equal':
             return lvalue == rvalue
 
         elif self.operator == 'time_equal':
-            reversed_rvalue = reverse_time(rvalue)
-            rvalue = [rvalue, reversed_rvalue]
+            rvalue = [rvalue, reverse_time(rvalue)]
 
             return lvalue in rvalue
 
         elif self.operator == 'contains':
-            if not lvalue or not rvalue:
+            if not lvalue or not rvalue or not isinstance(rvalue, list):
                 return False
 
-            return (lvalue in rvalue) == bool(strtobool(self.value))
+            exist_value = bool(strtobool(self.value))
+
+            return (lvalue in rvalue) == exist_value
 
         elif self.operator == 'time_contains':
-            if not lvalue or not rvalue:
+            if not lvalue or not rvalue or not isinstance(rvalue, list):
                 return False
 
-            reversed_rvalue = [reverse_time(time) for time in rvalue]
-            rvalue += reversed_rvalue
+            rvalue += [reverse_time(time) for time in rvalue]
+            exist_value = bool(strtobool(self.value))
 
-            return (lvalue in rvalue) == bool(strtobool(self.value))
+            return (lvalue in rvalue) == exist_value
 
         elif self.operator == 'more':  # 이상
-            return float(lvalue) >= float(rvalue)
+            lvalue = float(lvalue)
+            rvalue = float(rvalue)
+
+            return lvalue >= rvalue
 
         elif self.operator == 'below':  # 이하
-            return float(lvalue) <= float(rvalue)
+            lvalue = float(lvalue)
+            rvalue = float(rvalue)
+
+            return lvalue <= rvalue
 
         elif self.operator == 'excess':  # 초과
-            return float(lvalue) > float(rvalue)
+            lvalue = float(lvalue)
+            rvalue = float(rvalue)
+
+            return lvalue > rvalue
 
         elif self.operator == 'under':  # 미만
-            return float(lvalue) < float(rvalue)
+            lvalue = float(lvalue)
+            rvalue = float(rvalue)
+
+            return lvalue < rvalue
 
         return False
 
