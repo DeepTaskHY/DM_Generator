@@ -209,23 +209,28 @@ class Condition(ConditionBase):
 
 
 class ConditionGroup(ConditionBase):
+    __conditions: List[ConditionBase] = []
+
     @property
     def conditions(self) -> List[ConditionBase]:
-        conditions = []
+        if self.exist and not self.__conditions:
+            conditions = []
 
-        if self.exist:
             for child in self.root:
                 if child.tag == 'condition':
                     condition = Condition(child)
-                    condition.parameters = self.parameters
                     conditions.append(condition)
 
                 elif child.tag == 'conditionGroup':
                     condition = ConditionGroup(child)
-                    condition.parameters = self.parameters
                     conditions.append(condition)
 
-        return conditions
+            self.__conditions = conditions
+
+        for condition in self.__conditions:
+            condition.parameters = self.parameters
+
+        return self.__conditions
 
     @property
     def result(self) -> bool:
