@@ -1,5 +1,5 @@
 from abc import *
-from typing import List, Dict
+from typing import Any, List, Dict
 from proto.marshal.collections.maps import MapComposite
 
 import os
@@ -29,7 +29,7 @@ class ScenarioBase(metaclass=ABCMeta):
 
 
 class Parameter(ScenarioBase):
-    __value = None
+    __value: Any = None
     __partial: List[int] = []
 
     @property
@@ -52,7 +52,7 @@ class Parameter(ScenarioBase):
         return self.root.get('split')
 
     @property
-    def value(self):
+    def value(self) -> Any:
         return self.__value
 
     def set_content(self, content: dict):
@@ -94,7 +94,7 @@ class ParameterAssociationBase(ScenarioBase, metaclass=ABCMeta):
     __parameters: Dict[str, Parameter] = {}
 
     @property
-    def parameter_values(self) -> Dict[str, str]:
+    def parameter_values(self) -> Dict[str, Any]:
         return {parameter_name: parameter.value for parameter_name, parameter in self.parameters.items()}
 
     @property
