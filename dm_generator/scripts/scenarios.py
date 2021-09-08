@@ -5,8 +5,8 @@ from proto.marshal.collections.maps import MapComposite
 import os
 from datetime import datetime
 from distutils.util import strtobool
-from xml.etree.ElementTree import Element, parse
-from helpers import SCENARIO_PATH, reverse_time
+from xml.etree.ElementTree import Element
+from helpers import XMLParser, reverse_time, SCENARIO_PATH
 
 
 class ScenarioBase(metaclass=ABCMeta):
@@ -302,6 +302,7 @@ class Dialog(ParameterAssociationBase):
 
 class Intent(ScenarioBase):
     __parameters: Dict[str, Parameter] = {}
+    __dialogs: List[Dialog] = []
 
     @property
     def parameters(self) -> Dict[str, Parameter]:
@@ -311,22 +312,23 @@ class Intent(ScenarioBase):
 
         return self.__parameters
 
+    @property
+    def dialogs(self):
+        if not self.__dialogs:
+            dialogs = self.root.findall('./dialogs/dialog')
+            self.__dialogs = [Dialog(root) for root in dialogs]
+
+        for dialog in self.__dialogs:
+            dialog.parameters = self.parameters
+
+        return self.__dialogs
+
     def set_parameter_content(self, content: dict):
         for parameter_name, parameter in self.parameters.items():
             parameter.set_content(content)
 
-    @property
-    def correct_dialogs(self) -> List[Dialog]:
-        dialogs = []
-
-        for root in self.root.findall('./dialogs/dialog'):
-            dialog = Dialog(root)
-            dialog.parameters = self.parameters
-
-            if dialog.result:
-                dialogs.append(dialog)
-
-        return dialogs
+    def get_correct_dialogs(self) -> List[Dialog]:
+        return [dialog for dialog in self.dialogs if dialog.result]
 
 
 class Scenario(ScenarioBase):
@@ -334,16 +336,6 @@ class Scenario(ScenarioBase):
     def get_intent(self, intent_name: str) -> Intent:
         root = self.root.find(f'./intent[@name="{intent_name}"]')
         return Intent(root)
-
-
-class XMLParser:
-    def __init__(self, file_path: str):
-        self.file_path = file_path
-        self.tree = parse(file_path)
-
-    @property
-    def root(self) -> Element:
-        return self.tree.getroot()
 
 
 class ScenarioParser(XMLParser):

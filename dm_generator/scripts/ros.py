@@ -213,11 +213,13 @@ class DMNode(DTNode):
 
                 intent.set_parameter_content(content)
 
-                # Get correct dialog
+                # Generate dialog
                 try:
-                    selected_dialog = random.choice(intent.correct_dialogs)
+                    dialogs = intent.get_correct_dialogs()
+                    selected_dialog = random.choice(dialogs)
                     generated_dialog = selected_dialog.value[self.language_code]
 
+                # Out of scenario exception
                 except IndexError:
                     if 'dialogflow' in content:
                         generated_dialog = content['dialogflow'].query_result.fulfillment_text

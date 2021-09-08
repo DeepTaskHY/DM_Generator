@@ -3,6 +3,7 @@ import time
 import re
 import json
 import rospkg
+from xml.etree.ElementTree import Element, parse
 
 
 # Constants
@@ -50,3 +51,13 @@ def reverse_time(time: str) -> str:
 
     # to AM
     return f'{hour - 12}:{min}'
+
+
+class XMLParser:
+    def __init__(self, file_path: str):
+        self.file_path = file_path
+        self.tree = parse(file_path)
+
+    @property
+    def root(self) -> Element:
+        return self.tree.getroot()
