@@ -16,40 +16,11 @@
     <div class="row">
         <!-- Input Layout -->
         <form class="col" id="input-form">
-            <div class="col mb-3">
-                <div class="form-floating">
-                    <input type="text" class="form-control" name="header[timestamp]" id="timestamp" value="{{ timestamp }}" readonly/>
-                    <label for="timestamp">Timestamp</label>
-                </div>
-            </div>
-
-            <div class="col mb-3">
-                <div class="form-floating">
-                    <input type="text" class="form-control" name="header[source]" id="source" value="planning" readonly/>
-                    <label for="source">Source</label>
-                </div>
-            </div>
-
-            <div class="col mb-3">
-                <div class="form-floating">
-                    <input type="text" class="form-control" name="header[target]" id="target" value="dialog" readonly/>
-                    <label for="target">Target</label>
-                </div>
-            </div>
-
-            <div class="col mb-3">
-                <div class="form-floating">
-                    <input type="text" class="form-control" name="header[content]" id="content" value="dialog_generation" readonly/>
-                    <label for="content">Content</label>
-                </div>
-            </div>
-
-            <div class="col mb-3">
-                <div class="form-floating">
-                    <input type="number" class="form-control" name="id" id="id" value="1" readonly/>
-                    <label for="content">ID</label>
-                </div>
-            </div>
+            <input type="hidden" name="header[timestamp]" value="{{ timestamp }}"/>
+            <input type="hidden" name="header[source]" value="planning"/>
+            <input type="hidden" name="header[target]" value="dialog"/>
+            <input type="hidden" name="header[content]" value="dialog_generation"/>
+            <input type="number" name="id" id="id" value="1" hidden/>
 
             <div class="col mb-3">
                 <div class="form-floating">
