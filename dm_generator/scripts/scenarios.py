@@ -337,6 +337,14 @@ class Scenario(ScenarioBase):
         root = self.root.find(f'./intent[@name="{intent_name}"]')
         return Intent(root)
 
+    def get_intent_names(self) -> List[str]:
+        names = []
+
+        for intent in self.root.findall('./intent'):
+            names.append(intent.get('name'))
+
+        return names
+
 
 class ScenarioParser(XMLParser):
     __scenario_name: str = None

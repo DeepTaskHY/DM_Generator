@@ -16,7 +16,11 @@ RUN pip install --upgrade pip && \
 # Install require dependencies
 WORKDIR /workspace
 ADD requirements.txt .
+ADD requirements-dev.txt .
 RUN pip install -r requirements.txt
+
+# Install ROS bridge for WebSocket
+RUN apt-get install -y ros-noetic-rosbridge-suite
 
 # Setup ROS environment
 RUN rosdep update

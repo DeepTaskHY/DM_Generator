@@ -20,5 +20,15 @@
       },
       "language-code": "ko"
     }
+  },
+  "tests": {
+    "flask": {
+      "host": "0.0.0.0",
+      "port": 5001
+    },
+    "ros": {
+      "host": "0.0.0.0",
+      "port": 9090
+    }
   }
 }

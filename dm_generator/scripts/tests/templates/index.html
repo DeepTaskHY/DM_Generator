@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <!-- CSS -->
+    <link href="//cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"/>
+    <!-- JS -->
+    <script src="//code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-serialize-object/2.5.0/jquery.serialize-object.min.js" integrity="sha512-Gn0tSSjkIGAkaZQWjx3Ctl/0dVJuTmjW/f9QyB302kFjU4uTNP4HtA32U2qXs/TRlEsK5CoEqMEMs7LnzLOBsA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js" integrity="sha512-2hIBfT6wur46uR5ayhmyICuA8s15BvJhagB+jZImgktQAy832P7EuY8njl1HGp4YS0Sk8DXRo9dByhvD3jfDxA==" referrerpolicy="no-referrer" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='rosbridge.js') }}"></script>
+    <!-- META -->
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<body class="container">
+    <div class="row">
+        <!-- Input Layout -->
+        <form class="col" id="input-form">
+            <div class="col mb-3">
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="header[timestamp]" id="timestamp" value="{{ timestamp }}" readonly/>
+                    <label for="timestamp">Timestamp</label>
+                </div>
+            </div>
+
+            <div class="col mb-3">
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="header[source]" id="source" value="planning" readonly/>
+                    <label for="source">Source</label>
+                </div>
+            </div>
+
+            <div class="col mb-3">
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="header[target]" id="target" value="dialog" readonly/>
+                    <label for="target">Target</label>
+                </div>
+            </div>
+
+            <div class="col mb-3">
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="header[content]" id="content" value="dialog_generation" readonly/>
+                    <label for="content">Content</label>
+                </div>
+            </div>
+
+            <div class="col mb-3">
+                <div class="form-floating">
+                    <input type="number" class="form-control" name="id" id="id" value="1" readonly/>
+                    <label for="content">ID</label>
+                </div>
+            </div>
+
+            <div class="col mb-3">
+                <div class="form-floating">
+                    <select class="form-select" name="intent" id="intent" required>
+                        <option value="" selected>Select...</option>
+                        {% for intent_name in intent_names %}
+                            <option value="{{ intent_name }}">{{ intent_name }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="intent">Intent</label>
+                </div>
+            </div>
+
+            <div class="col mb-3">
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="name" id="name" required/>
+                    <label for="content">Name</label>
+                </div>
+            </div>
+
+            <div class="col mb-3">
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="human_speech" id="human_speech" required/>
+                    <label for="human_speech">Speech</label>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Social Context</label>
+                <div class="col-sm-9">
+                    <div class="col mb-3">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="social_context[appellation]" id="appellation"/>
+                            <label for="appellation">Appellation</label>
+                        </div>
+                    </div>
+
+                    <div class="col mb-3">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="social_context[disease_name]" id="disease_name"/>
+                            <label for="disease_name">Disease Name</label>
+                        </div>
+                    </div>
+
+                    <div class="col mb-3">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="social_context[disease_advice]" id="disease_advice"/>
+                            <label for="disease_advice">Disease Advice</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Speech</button>
+        </form>
+
+        <!-- Output Layout -->
+        <div class="col bg-light border border-secondary rounded-3 overflow-auto" style="height: 500px" id="dialog-wrap">
+            <div class="d-grid">
+                <div class="p-2 visually-hidden dialog dialog-example">
+                    <p class="d-flex dialog-output">
+                        <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#dialog-detail" aria-expanded="false" aria-controls="dialog-detail"></button>
+                    </p>
+                    <div class="collapse dialog-detail">
+                        <div class="card card-body"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

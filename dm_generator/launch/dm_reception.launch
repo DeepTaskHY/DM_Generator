@@ -1,4 +1,5 @@
 <launch>
+    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
     <node pkg="dm_generator" name="DM_reception_node" type="launcher.py" output="screen">
         <env name="module_name" value="reception"/>
     </node>
