@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 from distutils.util import strtobool
 from xml.etree.ElementTree import Element
-from helpers import XMLParser, reverse_time, SCENARIO_PATH
+from dtroslib.helpers import XMLParser, reverse_time, get_scenario_path
 
 
 class ScenarioBase(metaclass=ABCMeta):
@@ -361,7 +361,7 @@ class ScenarioParser(XMLParser):
     @property
     def scenario_path(self) -> str:
         if self.__scenario_path is None:
-            self.__scenario_path = os.path.join(SCENARIO_PATH, f'{self.scenario_name}.xml')
+            self.__scenario_path = os.path.join(get_scenario_path('dm_generator'), f'{self.scenario_name}.xml')
 
         return self.__scenario_path
 

@@ -3,17 +3,18 @@
 import os
 from ros import DMNode
 from dialogflow import DialogflowClient
-from helpers import get_module_configuration
+from dtroslib.helpers import get_module_configuration, get_key_path
 
 
 module_name = os.environ['module_name']
-configuration = get_module_configuration(module_name)
+configuration = get_module_configuration('dm_generator', module_name)
+key_path = get_key_path('dm_generator', configuration['authorization']['key'])
 
 
 def main():
     dialogflow_client = DialogflowClient(project_id=configuration['project-id'],
                                          session_id=configuration['session-id'],
-                                         key_file=configuration['authorization']['key'],
+                                         key_path=key_path,
                                          language_code=configuration['language-code'])
 
     node = DMNode(node_name=configuration['node-name'],

@@ -1,25 +1,23 @@
 import os
 from google.cloud import dialogflow_v2 as dialogflow
-from helpers import AUTHORIZATION_PATH
 
 
 class DialogflowClient:
     __client: dialogflow.SessionsClient = None
     __project_id: str = None
     __session_id: str = None
-    __key_file: str = None
     __key_path: str = None
     __language_code: str = None
 
     def __init__(self,
                  project_id: str,
                  session_id: str,
-                 key_file: str,
+                 key_path: str,
                  language_code: str):
 
         self.__project_id = project_id
         self.__session_id = session_id
-        self.__key_file = key_file
+        self.__key_path = key_path
         self.__language_code = language_code
         self.authorize_credentials()
 
@@ -42,15 +40,8 @@ class DialogflowClient:
     def session(self) -> str:
         return self.client.session_path(self.project_id, self.session_id)
 
-    @property
-    def key_path(self) -> str:
-        if self.__key_path is None:
-            self.__key_path = os.path.join(AUTHORIZATION_PATH, self.__key_file)
-
-        return self.__key_path
-
     def authorize_credentials(self):
-        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = self.key_path
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = self.__key_path
 
     @property
     def language_code(self) -> str:
