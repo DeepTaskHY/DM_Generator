@@ -19,7 +19,8 @@ ADD requirements.txt .
 RUN pip install -r requirements.txt
 
 # Install ROS bridge for WebSocket
-RUN apt-get install -y ros-noetic-rosbridge-suite
+RUN apt-get update --fix-missing && \
+    apt-get install -y ros-noetic-rosbridge-suite
 
 # Setup ROS environment
 RUN rosdep update
