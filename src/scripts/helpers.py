@@ -22,10 +22,6 @@ def get_module_configuration(module_name: str) -> dict:
     return configuration['modules'][module_name]
 
 
-def get_test_configuration(test_name: str) -> dict:
-    return configuration['tests'][test_name]
-
-
 # Timestamp string
 def timestamp() -> str:
     return str(time.time())
