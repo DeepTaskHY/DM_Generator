@@ -10,5 +10,5 @@ services:
         environment:
             - DISPLAY=:0
         volumes:
-            - ./dm_generator:/workspace/src
+            - ./src:/workspace/src
             - /tmp/.X11-unix:/tmp/.X11-unix
