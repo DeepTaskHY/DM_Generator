@@ -4,6 +4,7 @@ import os
 from ros import DMNode
 from dialogflow import DialogflowClient
 from dtroslib.helpers import get_module_configuration, get_key_path
+import rospy
 
 
 module_name = os.environ['module_name']
@@ -21,6 +22,8 @@ def main():
                   scenario_name=configuration['scenario-name'],
                   language_code=configuration['language-code'],
                   dialogflow_client=dialogflow_client)
+
+    rospy.loginfo('Start DM')
 
     node.spin()
 
