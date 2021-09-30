@@ -81,7 +81,6 @@ class DMNode(DTNode):
 
                 generated_contents = {
                     'dialog_generation': {
-                        'id': content['id'],
                         'dialog': generated_dialog,
                         'result': 'completion'
                     }
