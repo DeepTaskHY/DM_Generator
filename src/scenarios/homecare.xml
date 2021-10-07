@@ -3,7 +3,7 @@
     <intent name="saying_hello">
         <parameters>
             <parameter name="hour" type="time" ref="hour"/>
-            <parameter name="name" type="variable" ref="name"/>
+            <parameter name="name" type="social_context" ref="name"/>
             <parameter name="appellation" type="social_context" ref="appellation"/>
             <parameter name="hello" type="dialogflow" ref="parameters.hello"/>
         </parameters>

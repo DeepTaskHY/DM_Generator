@@ -3,7 +3,7 @@
     <intent name="saying_welcome">
         <parameters>
             <parameter name="hour" type="time" ref="hour"/>
-            <parameter name="name" type="variable" ref="name"/>
+            <parameter name="name" type="social_context" ref="name"/>
             <parameter name="appellation" type="social_context" ref="appellation"/>
             <parameter name="fulfillment_text" type="dialogflow" ref="fulfillment_text"/>
         </parameters>
@@ -82,7 +82,7 @@
 
     <intent name="check_information_disease">
         <parameters>
-            <parameter name="name" type="variable" ref="name"/>
+            <parameter name="name" type="social_context" ref="name"/>
             <parameter name="disease_check" type="dialogflow" ref="parameters.disease"/>
             <parameter name="disease_name" type="social_context" ref="disease_name"/>
             <parameter name="disease_status" type="social_context" ref="disease_status"/>
