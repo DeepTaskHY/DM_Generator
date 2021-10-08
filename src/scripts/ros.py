@@ -1,5 +1,5 @@
 import random
-from dialogflow import DialogflowClient
+from dtroslib.dialogflow import DialogflowClient
 from dtroslib.ros import DTNode
 from scenarios import ScenarioParser, Scenario
 from typing import Dict, Tuple
