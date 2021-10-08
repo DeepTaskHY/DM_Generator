@@ -3,7 +3,7 @@
     "homecare": {
       "node-name": "DM_homecare_node",
       "scenario-name": "homecare",
-      "project-id": "dialogflow-project-id",
+      "project-id": "socialrobot-hyu-xdtlug",
       "session-id": "dialogflow-session-id",
       "authorization": {
         "key": "filename.json"
@@ -13,7 +13,7 @@
     "reception": {
       "node-name": "DM_reception_node",
       "scenario-name": "reception",
-      "project-id": "dialogflow-project-id",
+      "project-id": "socialrobot-hyu-reception-nyla",
       "session-id": "dialogflow-session-id",
       "authorization": {
         "key": "filename.json"
