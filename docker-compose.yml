@@ -11,3 +11,4 @@ services:
             - PYTHONUNBUFFERED=1
         volumes:
             - ./src:/workspace/src
+            - /etc/localtime:/etc/localtime
