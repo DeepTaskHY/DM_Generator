@@ -5,8 +5,8 @@
 The dialogue generator is an agent that generates the robot utterance in human-robot interaction. When the user utterance and user information taken as input values, the robot utterance is generated using the given information. The user information is obtained from the Task Manager through ROS protocol. After the robot utterance created, the generated robot utterance is forwarded to the Task Manager again through the ROS protocol.
 
 - 2.1 Maintainer status: maintained
-- 2.2 Maintainer: Yuri Kim, [yurikim@hanyang.ac.kr]()
-- 2.3 Author: Yuri Kim, [yurikim@hanyang.ac.kr]()
+- 2.2 Maintainer: Yuri Kim ([yurikim@hanyang.ac.kr]()), Eunsoo Lee ([eunsoogi@hanyang.ac.kr]())
+- 2.3 Author: Yuri Kim ([yurikim@hanyang.ac.kr]())
 - 2.4 License (optional): 
 - 2.5 Source git: https://github.com/DeepTaskHY/DM_Generator
 
@@ -14,113 +14,92 @@ The dialogue generator is an agent that generates the robot utterance in human-r
 
 When creating the robot utterance, we define several tasks that consider sociality for natural dialogue with the user. Each task generates various utterances according to social information(e.g. user profile, health information, schedule information). The social information is updated by the Knowledge manager that manages knowledge in the form of ontology. 
 
-## 4. Hardware requirements
+## 4. Environments
 
-None
+- [ros:noetic](https://hub.docker.com/layers/ros/library/ros/noetic/images/sha256-c1565b2b554d775f1fb2fde93d1aaf76554a6a98d06f10432b0dd4ddd5d6a11c)
+- Python 3.6+
 
-## 5. Quick start 
+## 5. Quick start
 
-### 5.1 Install dependency:
+### 5.1 Start the module
 
-**requirements**  
+- Go to [Author's Google Drive](https://drive.google.com/file/d/1Tya9XQrtlAv393xh8D_5MYfBAta15quz/view?usp=sharing) and download the JSON file (authorization key), and put it in the [authorization folder](src/keys/).
+- After copying the [configuration.json.example](src/configuration.json.example) to the [configuration.json](src/configuration.json), edit the authentication key file name, etc.
 
-    $ pip install -r requirements.txt  
-    $ pip install --upgrade google-auth-oauthlib  
-    $ pip install --upgrade pyasn1-modules  
+### 5.2 Test the module
 
-**ros-melodic**
-
-    $ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-    $ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
-    $ sudo apt-get update  
-    $ sudo apt-get install ros-melodic-desktop-full  
-    $ sudo rosdep init  
-    $ rosdep update  
-
-### 5.2 Start the module
-
-Go to [Author's Google drive](https://drive.google.com/file/d/1Tya9XQrtlAv393xh8D_5MYfBAta15quz/view?usp=sharing) and download the JSON file(auth key). 
-Add the path of the downloaded JSON file to line 16 of 'SocialDMReception.py '. 
-You can start this module by launch ros package.
-
-### 5.3 Test the module
-
-To test this module, you can execute the following command line. This command sends a ROS message.
+To test this module, you can execute the following command line.
 
 **homecare**
 
-```
-$ cd dm_generator/
-$ roslaunch launch/dm_homecare.launch 
+```shell
+$ docker-compose run -e DM_NODE=homecare dm-default  # or
+$ docker-compose run -e DM_NODE=homecare dm-linux
 ```
 
 **reception**
 
+```shell
+$ docker-compose run -e DM_NODE=reception dm-default  # or
+$ docker-compose run -e DM_NODE=reception dm-linux
 ```
-$ cd dm_generator/
-$ roslaunch launch/dm_reception.launch
-```
-
-
 
 ## 6. Input/Subscribed Topics
 
-```
+```json
 {
     'header': {
-        'timestamp': '1563980674.262554407', 
+        'id': 1,
+        'timestamp': '1563980674.262554407',
+        'source': 'planning',
         'target': ['dialog'], 
         'content': ['dialog_generation'], 
-        'source': 'planning'
     }, 
-        'dialog_generation': {
-        'name': '이병현', 
-        'intent': 'transmit_information_health_advice', 
-        'id': 177,  
-        'social_context': {'take_medicine_schedule': '식후 30분 후'}
+    'dialog_generation': {
+        'intent': 'transmit_information_health_advice',
+        'human_speech': '안 먹었어.',
+        'social_context': {
+            'name': '이병현',
+            'medicine_schedule': '식후 30분 후'
+        }
     }
 }
 ```
 
 ○ header (header/taskExecution): contain information about published time, publisher name, receiver name. 
 
-- timestamp: published time 
-- target: receive module name 
-- content: role of this ROS topic name 
-- source: publish the module name 
+- id: id
+- timestamp: published time
+- source: publish the module name
+- target: receive module name
+- content: role of this ROS topic name
 
 ○ dialog_generation (dialog_generation/taskExecution): contain required information to generate robot utterance sentence. (Import from Knowledge Manager) 
 
-- intent: sub-task name 
-- id: id 
-- name: user name 
-- gender: user gender 
-- appellation: This is the name that the robot uses when calling the user. It is determined by the age of the user. 
-- visit_history: Whether the user has visited the hospital. 
-- medical_record: User's disease information 
-- social_context: required information to generate a robot utterance sentence. (Import from database) 
-- take_medicine_schedule: User's medication time 
+- intent: sub-task name
+- social_context: required information to generate a robot utterance sentence. (Import from knowledge manager)
 
 ## 7. Output/Published Topics
 
-```
+```json
 {
-    "header": {
-        "timestamp": "%i.%i" % (current_time.secs, current_time.nsecs),
-        "source": "dialog",
-        "target": ["planning"],
-        "content": ["dialog_generation"]
+    'header': {
+        'id': id,
+        'timestamp': '1563980674.262554407',
+        'source': ,'dialog',
+        'target': ['planning'],
+        'content': ['dialog_generation']
     },
-    "dialog_generation": {
-        "id": id,
-        "dialog": dialog,
-        "result": "completion"
+    'dialog_generation': {
+        'dialog': dialog,
+        'result': 'completion'
     }
 }
 ```
 
 ○ header (header/taskExecution): contain information about published time, publisher name, receiver name.  
 
+- id: id
 - timestamp: published time  
 - source: publish module name  
 - target: receive module name  
@@ -128,32 +107,13 @@ $ roslaunch launch/dm_reception.launch
 
 ○ dialog_generation (dialog_generation/taskExecution): contain generated robot speech sentence, id, result.  
 
-- id: id  
 - dialog: generated robot speech  
-- result: task progress result  
+- result: task progress result
 
-## 8. Parameters
-
-: There are two categories of parameters that can be used to configure the Dialog Generator module: dialogflow client, fulfillment.  
-
-### 8.1 dialogflow client parameters
-
--  ~GOOGLE_APPLICATION_CREDENTIALS (string, default: None): The path where the authentication key(JSON file) is stored.  
--  ~project_id (string, default: ‘socialrobot-hyu-xdtlug’): Project id of Dialogflow.  
--  ~session_id (string, default: None): It can be a random number or some type of user identifier(preferably hashed). The length of the session ID must not exceed 36 bytes.  
--  ~texts (string, default: None): User’s speech sentence.  
--  ~language_code (string, default: ko): The language of this conversational query. (ko: Korean, en: English)  
-
-### 8.2 fulfillment parameters 
-
-- ~IP_address (string, default:“localhost”): IP address  
-- ~port_num (string, default:5000): port number  
-
-## 9. Related Applications (Optional)
+## 8. Related Applications (Optional)
 
 None
 
-## 10. Related Publications (Optional)
+## 9. Related Publications (Optional)
 
--  Dialogflow API official document[Website]. (2019, Aug 22). https://cloud.google.com/dialogflow/docs/reference/rest/v2/projects.agent.sessions/detectIntent  
--  ROS Kinetic installation instructions[Website]. (2019, Aug 22). http://wiki.ros.org/kinetic/Installation  
+None
