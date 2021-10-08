@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="dm_generator" name="DM_$(env DM_NODE)_node" type="launcher.py" output="screen"/>
+</launch>

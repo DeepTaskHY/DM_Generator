@@ -8,6 +8,7 @@ services:
         container_name: generator
         environment:
             - PYTHONUNBUFFERED=1
+            - DM_NODE=homecare
         volumes:
             - ./src:/workspace/src
             - /etc/localtime:/etc/localtime

@@ -7,7 +7,7 @@ from dtroslib.helpers import get_module_configuration, get_key_path
 import rospy
 
 
-module_name = os.environ['module_name']
+module_name = os.environ['DM_NODE']
 configuration = get_module_configuration('dm_generator', module_name)
 key_path = get_key_path('dm_generator', configuration['authorization']['key'])
 
@@ -23,7 +23,7 @@ def main():
                   language_code=configuration['language-code'],
                   dialogflow_client=dialogflow_client)
 
-    rospy.loginfo('Start DM')
+    rospy.loginfo(f'Start DM ({module_name})')
 
     node.spin()
 
