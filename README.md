@@ -60,7 +60,7 @@ $ docker-compose run -e DM_NODE=reception dm-linux
         "human_speech": "안 먹었어.",
         "social_context": {
             "name": "이병현",
-            "medicine_schedule": "식후 30분 후"
+            "medicine_schedule": "식후 30분 후 복용"
         }
     }
 }
@@ -84,14 +84,14 @@ $ docker-compose run -e DM_NODE=reception dm-linux
 ```json
 {
     "header": {
-        "id": id,
+        "id": 1,
         "timestamp": "1563980674.262554407",
-        "source": ,"dialog",
+        "source": "dialog",
         "target": ["planning"],
         "content": ["dialog_generation"]
     },
     "dialog_generation": {
-        "dialog": dialog,
+        "dialog": "다음에는 빠뜨리시면 안 돼요. 식후 30분 후 복용하셔야 해요.",
         "result": "completion"
     }
 }
