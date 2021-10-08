@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os
-from ros import DMNode
-from dialogflow import DialogflowClient
-from dtroslib.helpers import get_module_configuration, get_key_path
 import rospy
+from dtroslib.dialogflow import DialogflowClient
+from dtroslib.helpers import get_module_configuration, get_key_path
+from ros import DMNode
 
 
 module_name = os.environ['DM_NODE']

@@ -1,9 +1,8 @@
-from typing import Dict, Tuple
-
 import random
 from dialogflow import DialogflowClient
-from scenarios import ScenarioParser, Scenario
 from dtroslib.ros import DTNode
+from scenarios import ScenarioParser, Scenario
+from typing import Dict, Tuple
 
 
 # Node of Dialog Manager

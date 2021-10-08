@@ -1,12 +1,11 @@
-from abc import *
-from typing import Any, List, Dict
-from proto.marshal.collections.maps import MapComposite
-
 import os
+from abc import *
 from datetime import datetime
 from distutils.util import strtobool
-from xml.etree.ElementTree import Element
 from dtroslib.helpers import XMLParser, reverse_time, get_scenario_path
+from proto.marshal.collections.maps import MapComposite
+from typing import Any, List, Dict
+from xml.etree.ElementTree import Element
 
 
 class ScenarioBase(metaclass=ABCMeta):
