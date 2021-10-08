@@ -48,19 +48,19 @@ $ docker-compose run -e DM_NODE=reception dm-linux
 
 ```json
 {
-    'header': {
-        'id': 1,
-        'timestamp': '1563980674.262554407',
-        'source': 'planning',
-        'target': ['dialog'], 
-        'content': ['dialog_generation'], 
+    "header": {
+        "id": 1,
+        "timestamp": "1563980674.262554407",
+        "source": "planning",
+        "target": ["dialog"], 
+        "content": ["dialog_generation"], 
     }, 
-    'dialog_generation': {
-        'intent': 'transmit_information_health_advice',
-        'human_speech': '안 먹었어.',
-        'social_context': {
-            'name': '이병현',
-            'medicine_schedule': '식후 30분 후'
+    "dialog_generation": {
+        "intent": "transmit_information_health_advice",
+        "human_speech": "안 먹었어.",
+        "social_context": {
+            "name": "이병현",
+            "medicine_schedule": "식후 30분 후"
         }
     }
 }
@@ -83,16 +83,16 @@ $ docker-compose run -e DM_NODE=reception dm-linux
 
 ```json
 {
-    'header': {
-        'id': id,
-        'timestamp': '1563980674.262554407',
-        'source': ,'dialog',
-        'target': ['planning'],
-        'content': ['dialog_generation']
+    "header": {
+        "id": id,
+        "timestamp": "1563980674.262554407",
+        "source": ,"dialog",
+        "target": ["planning"],
+        "content": ["dialog_generation"]
     },
-    'dialog_generation': {
-        'dialog': dialog,
-        'result': 'completion'
+    "dialog_generation": {
+        "dialog": dialog,
+        "result": "completion"
     }
 }
 ```
