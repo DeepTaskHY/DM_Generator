@@ -1,14 +1,18 @@
 version: '2.2'
 
 services:
-    dm:
+    dm-default:
         build:
             context: .
             dockerfile: Dockerfile
         container_name: generator
-        network_mode: host
         environment:
             - PYTHONUNBUFFERED=1
         volumes:
             - ./src:/workspace/src
             - /etc/localtime:/etc/localtime
+
+    dm-linux:
+        extends:
+            service: dm-default
+        network_mode: host
