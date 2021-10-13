@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
 import random
 from dtroslib.dialogflow import DialogflowClient
 from dtroslib.ros import DTNode
