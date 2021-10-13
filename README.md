@@ -23,8 +23,8 @@ When creating the robot utterance, we define several tasks that consider sociali
 
 ### 5.1 Start the module
 
-- Go to [Author's Google Drive](https://drive.google.com/file/d/1Tya9XQrtlAv393xh8D_5MYfBAta15quz/view?usp=sharing) and download the JSON file (authorization key), and put it in the [authorization folder](src/keys/).
-- After copying the [configuration.json.example](src/configuration.json.example) to the [configuration.json](src/configuration.json), edit the authentication key file name, etc.
+- Go to [Author's Google Drive](https://drive.google.com/file/d/1Tya9XQrtlAv393xh8D_5MYfBAta15quz/view?usp=sharing) and download the JSON file (authorization key), and put it in the [authorization folder](dm_generator/keys/).
+- After copying the [configuration.json.example](dm_generator/configuration.json.example) to the [configuration.json](dm_generator/configuration.json), edit the authentication key file name, etc.
 
 ### 5.2 Test the module
 
