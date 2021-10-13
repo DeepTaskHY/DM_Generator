@@ -10,7 +10,7 @@ services:
             - PYTHONUNBUFFERED=1
             - DM_NODE=homecare
         volumes:
-            - ./src:/workspace/src
+            - ./dm_generator:/workspace/src
             - /etc/localtime:/etc/localtime
 
     dm-linux:

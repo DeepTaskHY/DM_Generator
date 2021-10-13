@@ -132,10 +132,10 @@ dmypy.json
 .idea/
 
 # Authorization key
-/src/keys/*
+/dm_generator/keys/*
 
 # Configuration
-/src/configuration.json
+/dm_generator/configuration.json
 
 # Keep the folder by keeping .gitkeep
 !/**/.gitkeep
