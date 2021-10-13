@@ -9,5 +9,8 @@ source devel/setup.sh
 echo "source \"/opt/ros/$ROS_DISTRO/setup.sh\"" >> /etc/bash.bashrc
 echo "source /workspace/devel/setup.sh" >> /etc/bash.bashrc
 
+# Setup executable files
+chmod +x dm_generator/scripts/launcher.py
+
 # Execute CMD
 exec "$@"
