@@ -68,7 +68,7 @@ class Parameter(ScenarioBase):
         elif self.type == 'social_context':
             ref = content['social_context']
 
-        elif self.type == 'dialogflow':
+        elif self.type == 'dialogflow' and 'dialogflow' in content:
             ref = content['dialogflow'].query_result
 
         if ref:
