@@ -52,7 +52,7 @@ class DMNode(DTNode):
                     continue
 
                 # Add DialogFlow result
-                if 'human_speech' in content:
+                if 'human_speech' in content and content['human_speech']:
                     # Trigger event
                     intent.set_parameter_content(content)
 
