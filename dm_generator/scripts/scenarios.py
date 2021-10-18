@@ -251,6 +251,22 @@ class ConditionGroup(ConditionBase):
         return result
 
 
+class ConditionAssociationBase(ParameterAssociationBase, metaclass=ABCMeta):
+    __conditions: ConditionGroup = None
+
+    @property
+    def conditions(self) -> ConditionGroup:
+        if not self.__conditions:
+            self.__conditions = ConditionGroup(self.root.find('./conditions'))
+            self.__conditions.parameters = self.parameters
+
+        return self.__conditions
+
+    @property
+    def result(self) -> bool:
+        return self.conditions.result
+
+
 class Format(ParameterAssociationBase):
     @property
     def lang(self) -> str:
@@ -268,9 +284,8 @@ class Format(ParameterAssociationBase):
         return self.format.format(**self.parameter_values)
 
 
-class Dialog(ParameterAssociationBase):
+class Dialog(ConditionAssociationBase):
     __formats: List[Format] = []
-    __conditions: ConditionGroup = None
 
     @property
     def formats(self) -> List[Format]:
@@ -284,24 +299,18 @@ class Dialog(ParameterAssociationBase):
         return self.__formats
 
     @property
-    def conditions(self) -> ConditionGroup:
-        if not self.__conditions:
-            self.__conditions = ConditionGroup(self.root.find('./conditions'))
-
-        self.__conditions.parameters = self.parameters
-
-        return self.__conditions
-
-    @property
     def value(self) -> Dict[str, str]:
         return {format.lang: format.value for format in self.formats}
 
+
+class Event(ConditionAssociationBase):
     @property
     def result(self) -> bool:
-        return self.conditions.result
+        return self.exist and self.conditions.result
 
 
 class Intent(ScenarioBase):
+    __event: Event = None
     __parameters: Dict[str, Parameter] = {}
     __dialogs: List[Dialog] = []
 
@@ -312,6 +321,14 @@ class Intent(ScenarioBase):
             self.__parameters = {root.get('name'): Parameter(root) for root in parameters}
 
         return self.__parameters
+
+    @property
+    def event(self):
+        if not self.__event:
+            self.__event = Event(self.root.find('./event'))
+            self.__event.parameters = self.parameters
+
+        return self.__event
 
     @property
     def dialogs(self):

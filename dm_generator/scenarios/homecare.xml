@@ -1,6 +1,38 @@
 <?xml version="1.0"?>
 <scenario name="homecare">
-    <intent name="saying_hello">
+    <intent name="check_information_user">
+        <parameters>
+            <parameter name="name" type="social_context" ref="name"/>
+            <parameter name="appellation" type="social_context" ref="appellation"/>
+        </parameters>
+
+        <dialogs>
+            <dialog>
+                <format lang="ko">처음 뵙겠습니다. 이름과 나이, 성별을 알려주시겠어요?</format>
+                <conditions>
+                    <condition lparam="name" operator="exist" value="false"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format lang="ko">{name} {appellation} 맞으신가요?</format>
+                <conditions>
+                    <condition lparam="name" operator="exist" value="true"/>
+                </conditions>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="check_information_user_name">
+        <dialogs>
+            <dialog>
+                <format lang="ko">그렇다면 이름을 알려주시겠어요?</format>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="check_information_help">
         <parameters>
             <parameter name="hour" type="time" ref="hour"/>
             <parameter name="name" type="social_context" ref="name"/>
@@ -52,8 +84,9 @@
             </dialog>
 
             <!-- check_information_schedule 시나리오 -->
+            <!-- check_information_help 시나리오 -->
             <dialog>
-                <format lang="ko">{name} {appellation}, 좋은 아침이에요. 잘 지내셨어요?</format>
+                <format lang="ko">{name} {appellation}, 좋은 아침이에요. 도와드릴까요?</format>
                 <conditions>
                     <condition lparam="hello" operator="exist" value="false" pipe="and"/>
                     <conditionGroup>
@@ -63,7 +96,7 @@
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">{name} {appellation}, 좋은 오후에요. 잘 지내셨어요?</format>
+                <format lang="ko">{name} {appellation}, 좋은 오후에요. 도와드릴까요?</format>
                 <conditions>
                     <condition lparam="hello" operator="exist" value="false" pipe="and"/>
                     <conditionGroup>
@@ -73,7 +106,7 @@
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">{name} {appellation}, 좋은 저녁이에요. 잘 지내셨어요?</format>
+                <format lang="ko">{name} {appellation}, 좋은 저녁이에요. 도와드릴까요?</format>
                 <conditions>
                     <condition lparam="hello" operator="exist" value="false" pipe="and"/>
                     <conditionGroup>
@@ -83,7 +116,7 @@
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">{name} {appellation}, 잘 지내셨어요?</format>
+                <format lang="ko">{name} {appellation}, 도와드릴까요?</format>
                 <conditions>
                     <condition lparam="hello" operator="exist" value="false" pipe="and"/>
                     <conditionGroup>
@@ -135,15 +168,6 @@
     </intent>
 
 
-    <intent name="check_information_sleep">
-        <dialogs>
-            <dialog>
-                <format lang="ko">간밤에 잘 주무셨어요?</format>
-            </dialog>
-        </dialogs>
-    </intent>
-
-
     <intent name="transmit_information_reaction">
         <parameters>
             <parameter name="negative" type="dialogflow" ref="parameters.negative"/>
@@ -171,9 +195,119 @@
             <parameter name="disease_name" type="social_context" ref="disease_name"/>
         </parameters>
 
+        <event name="check-information-health">
+            <conditions>
+                <condition lparam="disease_name" operator="exist" value="true"/>
+            </conditions>
+        </event>
+
         <dialogs>
             <dialog>
                 <format lang="ko">{disease_name}은(는) 좀 어떠세요?</format>
+                <conditions>
+                    <condition lparam="disease_name" operator="exist" value="true"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format lang="ko">아픈 곳이 있으신가요?</format>
+                <conditions>
+                    <condition lparam="disease_name" operator="exist" value="false"/>
+                </conditions>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="check_information_disease_name">
+        <dialogs>
+            <dialog>
+                <format lang="ko">어디가 아프신가요?</format>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="check_information_sleep">
+        <dialogs>
+            <dialog>
+                <format lang="ko">간밤에 잘 주무셨어요?</format>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="check_information_sleep_2">
+        <dialogs>
+            <dialog>
+                <format lang="ko">하루 평균 몇 시간 주무시나요?</format>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="check_information_drink">
+        <dialogs>
+            <dialog>
+                <format lang="ko">음주하신다면 일주일에 평균 얼마나 하셨나요?</format>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="check_information_smoke">
+        <dialogs>
+            <dialog>
+                <format lang="ko">흡연하신다면 하루에 평균 몇 갑을 피셨나요?</format>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="transmit_information_advice">
+        <parameters>
+            <parameter name="disease_name" type="social_context" ref="disease_name"/>
+            <parameter name="disease_status" type="social_context" ref="disease_status"/>
+            <parameter name="sleep_status" type="social_context" ref="sleep_status"/>
+            <parameter name="drink_status" type="social_context" ref="drink_status"/>
+            <parameter name="smoke_status" type="social_context" ref="smoke_status"/>
+        </parameters>
+
+        <dialogs>
+            <dialog>
+                <format lang="ko">{disease_name} 상태가 안 좋아지셨다니 슬프네요.</format>
+                <conditions>
+                    <condition lparam="disease_status" operator="equal" value="negative"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format lang="ko">조금 더 수면이 필요할 것 같아요.</format>
+                <conditions>
+                    <condition lparam="sleep_status" operator="equal" value="negative"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format lang="ko">음주는 조금 줄여보시는 건 어떨까요.</format>
+                <conditions>
+                    <condition lparam="drink_status" operator="equal" value="negative"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format lang="ko">흡연은 생각보다 몸에 좋지 않답니다.</format>
+                <conditions>
+                    <condition lparam="smoke_status" operator="equal" value="negative"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format lang="ko">건강하신 것 같아서 다행이에요.</format>
+                <conditions>
+                    <condition lparam="disease_status" operator="equal" value="positive" pipe="and"/>
+                    <condition lparam="sleep_status" operator="equal" value="positive" pipe="and"/>
+                    <condition lparam="drink_status" operator="equal" value="positive" pipe="and"/>
+                    <condition lparam="smoke_status" operator="equal" value="positive"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format lang="ko">더욱 힘내주세요.</format>
             </dialog>
         </dialogs>
     </intent>
@@ -349,7 +483,7 @@
     </intent>
 
 
-    <intent name="transmit_information_medicine">
+    <intent name="transmit_information_medicine_status">
         <parameters>
             <parameter name="disease_name" type="social_context" ref="disease_name"/>
             <parameter name="disease_status" type="social_context" ref="disease_status"/>
@@ -369,6 +503,15 @@
                     <condition lparam="disease_status" operator="equal" value="negative"/>
                 </conditions>
             </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="transmit_information_medicine">
+        <parameters>
+        </parameters>
+
+        <dialogs>
         </dialogs>
     </intent>
 </scenario>

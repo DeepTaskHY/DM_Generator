@@ -53,6 +53,13 @@ class DMNode(DTNode):
 
                 # Add DialogFlow result
                 if 'human_speech' in content:
+                    # Trigger event
+                    intent.set_parameter_content(content)
+
+                    if intent.event.result:
+                        self.dialogflow_client.trigger_intent_event(intent.event.name)
+
+                    # Detect text
                     human_speech = content['human_speech']
                     dialogflow_result = self.dialogflow_client.detect_intent_text(human_speech)
                     content.update({'dialogflow': dialogflow_result})
@@ -62,15 +69,14 @@ class DMNode(DTNode):
                 # Generate dialog
                 try:
                     dialogs = intent.get_correct_dialogs()
-                    selected_dialog = random.choice(dialogs)
-                    generated_dialog = selected_dialog.value[self.language_code]
+                    generated_dialogs = [dialog.value[self.language_code] for dialog in dialogs]
 
                 # Out of scenario exception
                 except IndexError:
                     if 'dialogflow' in content:
-                        generated_dialog = content['dialogflow'].query_result.fulfillment_text
+                        generated_dialogs = [content['dialogflow'].query_result.fulfillment_text]
                     else:
-                        generated_dialog = None
+                        generated_dialogs = []
 
                 # Publish message
                 targets = source
@@ -82,7 +88,7 @@ class DMNode(DTNode):
 
                 generated_contents = {
                     'dialog_generation': {
-                        'dialog': generated_dialog,
+                        'dialog': ' '.join(generated_dialogs),
                         'result': 'completion'
                     }
                 }

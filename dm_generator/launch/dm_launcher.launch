@@ -1,3 +1,6 @@
 <launch>
-    <node pkg="dm_generator" name="DM_$(env DM_NODE)_node" type="launcher.py" output="screen"/>
+    <arg name="scenario_name" value="$(env scenario_name)"/>
+    <node pkg="dm_generator" name="DM_node" type="launcher.py" output="screen">
+        <param name="scenario_name" type="str" value="$(arg scenario_name)"/>
+    </node>
 </launch>

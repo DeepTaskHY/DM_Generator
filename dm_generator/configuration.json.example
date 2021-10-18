@@ -1,8 +1,6 @@
 {
   "modules": {
     "homecare": {
-      "node-name": "DM_homecare_node",
-      "scenario-name": "homecare",
       "project-id": "socialrobot-hyu-xdtlug",
       "session-id": "dialogflow-session-id",
       "authorization": {
@@ -11,8 +9,6 @@
       "language-code": "ko"
     },
     "reception": {
-      "node-name": "DM_reception_node",
-      "scenario-name": "reception",
       "project-id": "socialrobot-hyu-reception-nyla",
       "session-id": "dialogflow-session-id",
       "authorization": {
