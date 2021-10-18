@@ -519,6 +519,7 @@
 
     <intent name="transmit_information_medicine">
         <parameters>
+            <parameter name="name" type="social_context" ref="name"/>
             <parameter name="appellation" type="social_context" ref="appellation"/>
             <parameter name="location" type="social_context" ref="medicine.location"/>
             <parameter name="taking_medicine" type="social_context" ref="medicine.takingMedicine"/>
