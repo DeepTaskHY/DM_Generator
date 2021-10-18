@@ -1,0 +1,20 @@
+{
+    "header": {
+        "id": 14,
+        "timestamp": "1563980674.262554407",
+        "source": "planning",
+        "target": [
+            "dialog"
+        ],
+        "content": [
+            "dialog_generation"
+        ]
+    },
+    "dialog_generation": {
+        "intent": "saying_good_bye",
+        "human_speech": "알겠어. 고마워.",
+        "social_context": {
+            "name": "이병현"
+        }
+    }
+}

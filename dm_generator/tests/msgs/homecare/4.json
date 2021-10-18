@@ -1,0 +1,21 @@
+{
+    "header": {
+        "id": 4,
+        "timestamp": "1563980674.262554407",
+        "source": "planning",
+        "target": [
+            "dialog"
+        ],
+        "content": [
+            "dialog_generation"
+        ]
+    },
+    "dialog_generation": {
+        "intent": "check_information_disease",
+        "human_speech": "그래 고마워",
+        "social_context": {
+            "name": "이병현",
+            "disease_name": "당뇨"
+        }
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "header": {
+        "id": 6,
+        "timestamp": "1563980674.262554407",
+        "source": "planning",
+        "target": [
+            "dialog"
+        ],
+        "content": [
+            "dialog_generation"
+        ]
+    },
+    "dialog_generation": {
+        "intent": "transmit_information_disease_advice",
+        "human_speech": "짜게 먹었어",
+        "social_context": {
+            "name": "이병현",
+            "disease_name": "당뇨",
+            "disease_advice": "싱거운 음식과 가벼운 운동"
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "header": {
+        "id": 7,
+        "timestamp": "1563980674.262554407",
+        "source": "planning",
+        "target": [
+            "dialog"
+        ],
+        "content": [
+            "dialog_generation"
+        ]
+    },
+    "dialog_generation": {
+        "intent": "check_information_health",
+        "human_speech": "아니 몰라.",
+        "social_context": {
+            "name": "이병현",
+            "task": "약 복용"
+        }
+    }
+}

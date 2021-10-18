@@ -1,0 +1,21 @@
+{
+    "header": {
+        "id": 1,
+        "timestamp": "1563980674.262554407",
+        "source": "planning",
+        "target": [
+            "dialog"
+        ],
+        "content": [
+            "dialog_generation"
+        ]
+    },
+    "dialog_generation": {
+        "intent": "saying_hello",
+        "human_speech": "안녕",
+        "social_context": {
+            "name": "이병현",
+            "appellation": "어르신"
+        }
+    }
+}

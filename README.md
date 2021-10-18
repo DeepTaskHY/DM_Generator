@@ -44,6 +44,12 @@ $ docker-compose run -e DM_NODE=reception dm-default  # or
 $ docker-compose run -e DM_NODE=reception dm-linux
 ```
 
+**testbench**
+
+```shell
+$ python dm_generator/tests/testbench.py [-h] --testbench {homecare,homecare_new,reception} [--starts STARTS] [--delay DELAY]
+```
+
 ## 6. Input/Subscribed Topics
 
 ```json

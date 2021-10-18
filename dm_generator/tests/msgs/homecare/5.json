@@ -1,0 +1,20 @@
+{
+    "header": {
+        "id": 5,
+        "timestamp": "1563980674.262554407",
+        "source": "planning",
+        "target": [
+            "dialog"
+        ],
+        "content": [
+            "dialog_generation"
+        ]
+    },
+    "dialog_generation": {
+        "intent": "check_information_meal",
+        "human_speech": "안 좋아졌어. 나빠.",
+        "social_context": {
+            "name": "이병현"
+        }
+    }
+}

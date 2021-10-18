@@ -1,0 +1,20 @@
+{
+    "header": {
+        "id": 3,
+        "timestamp": "1563980674.262554407",
+        "source": "planning",
+        "target": [
+            "dialog"
+        ],
+        "content": [
+            "dialog_generation"
+        ]
+    },
+    "dialog_generation": {
+        "intent": "transmit_information_reaction",
+        "human_speech": "잘 못 잤어",
+        "social_context": {
+            "name": "이병현"
+        }
+    }
+}
