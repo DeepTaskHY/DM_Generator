@@ -10,13 +10,22 @@
             <dialog>
                 <format lang="ko">처음 뵙겠습니다. 이름과 나이, 성별을 알려주시겠어요?</format>
                 <conditions>
-                    <condition lparam="name" operator="exist" value="false"/>
+                    <condition lparam="name" operator="exist" value="false" pipe="and"/>
+                    <condition lparam="appellation" operator="exist" value="false"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <format lang="ko">나이와 성별을 알려주시겠어요?</format>
+                <conditions>
+                    <condition lparam="name" operator="exist" value="true" pipe="and"/>
+                    <condition lparam="appellation" operator="exist" value="false"/>
                 </conditions>
             </dialog>
             <dialog>
                 <format lang="ko">{name} {appellation} 맞으신가요?</format>
                 <conditions>
-                    <condition lparam="name" operator="exist" value="true"/>
+                    <condition lparam="name" operator="exist" value="true" pipe="and"/>
+                    <condition lparam="appellation" operator="exist" value="true"/>
                 </conditions>
             </dialog>
         </dialogs>
