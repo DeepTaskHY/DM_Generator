@@ -509,9 +509,22 @@
 
     <intent name="transmit_information_medicine">
         <parameters>
+            <parameter name="appellation" type="social_context" ref="appellation"/>
+            <parameter name="location" type="social_context" ref="medicine.location"/>
+            <parameter name="taking_medicine" type="social_context" ref="medicine.takingMedicine"/>
+            <parameter name="medication_guide" type="social_context" ref="medicine.medication_guide"/>
         </parameters>
 
         <dialogs>
+            <dialog>
+                <format lang="ko">약은 {location}에 있고, {medication_guide}에 드셔야 해요, {appellation}.</format>
+            </dialog>
+            <dialog>
+                <format lang="ko">이미 약을 드셨네요.</format>
+                <conditions>
+                    <condition lparam="taking_medicine" operator="equal" value="positive"/>
+                </conditions>
+            </dialog>
         </dialogs>
     </intent>
 </scenario>
