@@ -204,7 +204,7 @@
             <parameter name="disease_name" type="social_context" ref="disease_name"/>
         </parameters>
 
-        <event name="check-information-health">
+        <event name="check_information_health">
             <conditions>
                 <condition lparam="disease_name" operator="exist" value="true"/>
             </conditions>
@@ -440,16 +440,17 @@
 
     <intent name="transmit_information_disease_regard">
         <parameters>
+            <parameter name="name" type="social_context" ref="name"/>
+            <parameter name="appellation" type="social_context" ref="appellation"/>
             <parameter name="disease_name" type="social_context" ref="disease_name"/>
             <parameter name="disease_status" type="social_context" ref="disease_status"/>
-            <parameter name="appellation" type="social_context" ref="appellation"/>
             <parameter name="positive" type="dialogflow" ref="parameters.positive"/>
             <parameter name="go" type="dialogflow" ref="parameters.go"/>
         </parameters>
 
         <dialogs>
             <dialog>
-                <format lang="ko">잘 하셨어요. {appellation} {disease_name} 상태가 좋아지셨다고 들었어요.</format>
+                <format lang="ko">잘 하셨어요. {name} {appellation} {disease_name} 상태가 좋아지셨다고 들었어요.</format>
                 <conditions>
                     <condition lparam="disease_status" operator="equal" value="positive" pipe="and"/>
                     <conditionGroup>
@@ -459,7 +460,7 @@
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">잘 하셨어요. {appellation} {disease_name} 상태가 나빠지셨다고 들었어요.</format>
+                <format lang="ko">잘 하셨어요. {name} {appellation} {disease_name} 상태가 나빠지셨다고 들었어요.</format>
                 <conditions>
                     <condition lparam="disease_status" operator="equal" value="negative" pipe="and"/>
                     <conditionGroup>
@@ -469,7 +470,7 @@
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">꼭 가셔야 해요. {appellation} {disease_name} 상태가 좋아지셨다고 들었어요.</format>
+                <format lang="ko">꼭 가셔야 해요. {name} {appellation} {disease_name} 상태가 좋아지셨다고 들었어요.</format>
                 <conditions>
                     <condition lparam="disease_status" operator="equal" value="positive" pipe="and"/>
                     <conditionGroup>
@@ -479,7 +480,7 @@
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">꼭 가셔야 해요. {appellation} {disease_name} 상태가 나빠지셨다고 들었어요.</format>
+                <format lang="ko">꼭 가셔야 해요. {name} {appellation} {disease_name} 상태가 나빠지셨다고 들었어요.</format>
                 <conditions>
                     <condition lparam="disease_status" operator="equal" value="negative" pipe="and"/>
                     <conditionGroup>
@@ -501,13 +502,13 @@
 
         <dialogs>
             <dialog>
-                <format lang="ko">{appellation} {disease_name} 상태가 좋아지셔서 드시는 약이 바뀌었어요.</format>
+                <format lang="ko">{name} {appellation} {disease_name} 상태가 좋아지셔서 드시는 약이 바뀌었어요.</format>
                 <conditions>
                     <condition lparam="disease_status" operator="equal" value="positive"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">{appellation} {disease_name} 상태가 나빠지셔서 드시는 약이 바뀌었어요.</format>
+                <format lang="ko">{name} {appellation} {disease_name} 상태가 나빠지셔서 드시는 약이 바뀌었어요.</format>
                 <conditions>
                     <condition lparam="disease_status" operator="equal" value="negative"/>
                 </conditions>
@@ -526,10 +527,10 @@
 
         <dialogs>
             <dialog>
-                <format lang="ko">약은 {location}에 있고, {medication_guide}에 드셔야 해요, {appellation}.</format>
+                <format lang="ko">약은 {location}에 있고, {medication_guide}에 드셔야 해요, {name} {appellation}.</format>
             </dialog>
             <dialog>
-                <format lang="ko">이미 약을 드셨네요.</format>
+                <format lang="ko">이미 약을 드셨네요?</format>
                 <conditions>
                     <condition lparam="taking_medicine" operator="equal" value="positive"/>
                 </conditions>
