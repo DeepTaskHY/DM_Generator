@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import os
+import random
 from abc import *
 from datetime import datetime
 from distutils.util import strtobool
@@ -68,7 +69,7 @@ class Parameter(ScenarioBase):
         elif self.type == 'social_context':
             ref = content['social_context']
 
-        elif self.type == 'dialogflow' and 'dialogflow' in content:
+        elif self.type == 'dialogflow':
             ref = content['dialogflow'].query_result
 
         if ref:
@@ -290,7 +291,7 @@ class Dialog(ConditionAssociationBase):
     @property
     def formats(self) -> List[Format]:
         if not self.__formats:
-            formats = self.root.findall('./format')
+            formats = self.root.findall('./formats/format')
             self.__formats = [Format(root) for root in formats]
 
         for format in self.__formats:
@@ -299,8 +300,19 @@ class Dialog(ConditionAssociationBase):
         return self.__formats
 
     @property
-    def value(self) -> Dict[str, str]:
-        return {format.lang: format.value for format in self.formats}
+    def value(self) -> Dict[str, List[str]]:
+        values = {}
+
+        for format in self.formats:
+            if format.lang not in values:
+                values[format.lang] = []
+
+            values[format.lang].append(format.value)
+
+        return values
+
+    def selected_value(self, language_code: str) -> str:
+        return random.choice(self.value[language_code])
 
 
 class Event(ConditionAssociationBase):
@@ -351,9 +363,16 @@ class Intent(ScenarioBase):
 
 class Scenario(ScenarioBase):
     # Always return a new Intent instance
-    def get_intent(self, intent_name: str) -> Intent:
-        root = self.root.find(f'./intent[@name="{intent_name}"]')
-        return Intent(root)
+    def get_intent(self,
+                   intent_name: str,
+                   content: dict = None) -> Intent:
+
+        intent = Intent(self.root.find(f'./intent[@name="{intent_name}"]'))
+
+        if content:
+            intent.set_parameter_content(content)
+
+        return intent
 
     def get_intent_names(self) -> List[str]:
         names = []

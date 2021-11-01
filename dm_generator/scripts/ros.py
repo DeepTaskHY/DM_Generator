@@ -3,6 +3,7 @@
 import random
 from dtroslib.dialogflow import DialogflowClient
 from dtroslib.ros import DTNode
+from google.cloud import dialogflow_v2 as dialogflow
 from scenarios import ScenarioParser, Scenario
 from typing import Dict, Tuple
 
@@ -34,65 +35,75 @@ class DMNode(DTNode):
 
         return self.__scenario
 
+    def dialog_generation(self, content: dict) -> str:
+        # Instantiate Intent
+        intent_name = content['intent']
+        intent = self.scenario.get_intent(intent_name, content)
+
+        # Handling intent exceptions without scenarios
+        if not intent.exist:
+            return None
+
+        # Add DialogFlow result
+        if 'human_speech' in content:
+            # Trigger event
+            if intent.event.result:
+                self.dialogflow_client.trigger_intent_event(intent.event.name)
+
+            # Detect text
+            human_speech = content['human_speech']
+            dialogflow_result = self.dialogflow_client.detect_intent_text(human_speech)
+            content.update({'dialogflow': dialogflow_result})
+
+            # Update dialogflow parameters
+            intent.set_parameter_content(content)
+
+        # Generate dialogs
+        try:
+            dialogs = intent.get_correct_dialogs()
+            generated_dialogs = [dialog.selected_value(self.language_code) for dialog in dialogs]
+
+        # Out of scenario exception
+        except IndexError:
+            if 'dialogflow' in content:
+                dialogflow_result = content['dialogflow']
+                generated_dialogs = [dialogflow_result.query_result.fulfillment_text]
+            else:
+                generated_dialogs = []
+
+        # Dialog result
+        dialog = ' '.join(generated_dialogs)
+
+        return dialog
+
     def generate_content(self,
                          source: str,
                          content_names: list,
                          contents: Dict[str, dict]) -> Tuple[list, list, Dict[str, dict]]:
 
         for content_name in content_names:
+            targets = source
             content = contents[content_name]
+            content_names = [content_name]
+            generated_contents = {}
+
+            if isinstance(targets, str):
+                targets = [targets]
 
             if content_name == 'dialog_generation':
-                # Instantiate Intent
-                intent_name = content['intent']
-                intent = self.scenario.get_intent(intent_name)
+                dialog = self.dialog_generation(content)
 
-                # Handling intent exceptions without scenarios
-                if not intent.exist:
+                if not dialog:
                     continue
-
-                # Add DialogFlow result
-                if 'human_speech' in content and content['human_speech']:
-                    # Trigger event
-                    intent.set_parameter_content(content)
-
-                    if intent.event.result:
-                        self.dialogflow_client.trigger_intent_event(intent.event.name)
-
-                    # Detect text
-                    human_speech = content['human_speech']
-                    dialogflow_result = self.dialogflow_client.detect_intent_text(human_speech)
-                    content.update({'dialogflow': dialogflow_result})
-
-                intent.set_parameter_content(content)
-
-                # Generate dialog
-                try:
-                    dialogs = intent.get_correct_dialogs()
-                    generated_dialogs = [dialog.value[self.language_code] for dialog in dialogs]
-
-                # Out of scenario exception
-                except IndexError:
-                    if 'dialogflow' in content:
-                        generated_dialogs = [content['dialogflow'].query_result.fulfillment_text]
-                    else:
-                        generated_dialogs = []
-
-                # Publish message
-                targets = source
-
-                if isinstance(targets, str):
-                    targets = [targets]
-
-                content_names = ['dialog_generation']
 
                 generated_contents = {
                     'dialog_generation': {
-                        'dialog': ' '.join(generated_dialogs),
+                        'dialog': dialog,
                         'result': 'completion'
                     }
                 }
 
+            if generated_contents:
                 return targets, content_names, generated_contents
 
         return None, None, None

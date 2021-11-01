@@ -8,21 +8,27 @@
 
         <dialogs>
             <dialog>
-                <format lang="ko">처음 뵙겠습니다. 이름과 나이, 성별을 알려주시겠어요?</format>
+                <formats>
+                    <format lang="ko">처음 뵙겠습니다. 이름과 나이, 성별을 알려주시겠어요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="name" operator="exist" value="false" pipe="and"/>
                     <condition lparam="appellation" operator="exist" value="false"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">나이와 성별을 알려주시겠어요?</format>
+                <formats>
+                    <format lang="ko">나이와 성별을 알려주시겠어요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="name" operator="exist" value="true" pipe="and"/>
                     <condition lparam="appellation" operator="exist" value="false"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">{name} {appellation} 맞으신가요?</format>
+                <formats>
+                    <format lang="ko">{name} {appellation} 맞으신가요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="name" operator="exist" value="true" pipe="and"/>
                     <condition lparam="appellation" operator="exist" value="true"/>
@@ -35,7 +41,9 @@
     <intent name="check_information_user_name">
         <dialogs>
             <dialog>
-                <format lang="ko">그렇다면 이름을 알려주시겠어요?</format>
+                <formats>
+                    <format lang="ko">그렇다면 이름을 알려주시겠어요?</format>
+                </formats>
             </dialog>
         </dialogs>
     </intent>
@@ -52,7 +60,9 @@
         <dialogs>
             <!-- check_information_sleep 시나리오 -->
             <dialog>
-                <format lang="ko">{name} {appellation}, 좋은 아침이에요. 건강 상담이 필요하신가요?</format>
+                <formats>
+                    <format lang="ko">{name} {appellation}, 좋은 아침이에요. 건강 상담이 필요하신가요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="hello" operator="exist" value="true" pipe="and"/>
                     <conditionGroup>
@@ -62,7 +72,9 @@
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">{name} {appellation}, 좋은 오후에요. 건강 상담이 필요하신가요?</format>
+                <formats>
+                    <format lang="ko">{name} {appellation}, 좋은 오후에요. 건강 상담이 필요하신가요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="hello" operator="exist" value="true" pipe="and"/>
                     <conditionGroup>
@@ -72,7 +84,9 @@
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">{name} {appellation}, 좋은 저녁이에요. 건강 상담이 필요하신가요?</format>
+                <formats>
+                    <format lang="ko">{name} {appellation}, 좋은 저녁이에요. 건강 상담이 필요하신가요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="hello" operator="exist" value="true" pipe="and"/>
                     <conditionGroup>
@@ -82,7 +96,9 @@
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">{name} {appellation}, 안녕하세요. 건강 상담이 필요하신가요?</format>
+                <formats>
+                    <format lang="ko">{name} {appellation}, 안녕하세요. 건강 상담이 필요하신가요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="hello" operator="exist" value="true" pipe="and"/>
                     <conditionGroup>
@@ -95,7 +111,9 @@
             <!-- check_information_schedule 시나리오 -->
             <!-- check_information_help 시나리오 -->
             <dialog>
-                <format lang="ko">{name} {appellation}, 좋은 아침이에요. 도와드릴까요?</format>
+                <formats>
+                    <format lang="ko">{name} {appellation}, 좋은 아침이에요. 도와드릴까요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="hello" operator="exist" value="false" pipe="and"/>
                     <conditionGroup>
@@ -105,7 +123,9 @@
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">{name} {appellation}, 좋은 오후에요. 도와드릴까요?</format>
+                <formats>
+                    <format lang="ko">{name} {appellation}, 좋은 오후에요. 도와드릴까요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="hello" operator="exist" value="false" pipe="and"/>
                     <conditionGroup>
@@ -115,7 +135,9 @@
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">{name} {appellation}, 좋은 저녁이에요. 도와드릴까요?</format>
+                <formats>
+                    <format lang="ko">{name} {appellation}, 좋은 저녁이에요. 도와드릴까요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="hello" operator="exist" value="false" pipe="and"/>
                     <conditionGroup>
@@ -125,7 +147,9 @@
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">{name} {appellation}, 도와드릴까요?</format>
+                <formats>
+                    <format lang="ko">{name} {appellation}, 도와드릴까요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="hello" operator="exist" value="false" pipe="and"/>
                     <conditionGroup>
@@ -146,28 +170,36 @@
 
         <dialogs>
             <dialog>
-                <format lang="ko">{fulfillment_text} 좋은 하루 보내세요.</format>
+                <formats>
+                    <format lang="ko">{fulfillment_text} 좋은 하루 보내세요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="hour" operator="more" value="6" pipe="and"/>
                     <condition lparam="hour" operator="below" value="11"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">{fulfillment_text} 오후 잘 보내세요.</format>
+                <formats>
+                    <format lang="ko">{fulfillment_text} 오후 잘 보내세요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="hour" operator="more" value="12" pipe="and"/>
                     <condition lparam="hour" operator="below" value="17"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">{fulfillment_text} 저녁 잘 보내세요.</format>
+                <formats>
+                    <format lang="ko">{fulfillment_text} 저녁 잘 보내세요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="hour" operator="more" value="18" pipe="and"/>
                     <condition lparam="hour" operator="below" value="21"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">{fulfillment_text} 안녕히 가세요.</format>
+                <formats>
+                    <format lang="ko">{fulfillment_text} 안녕히 가세요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="hour" operator="more" value="22" pipe="or"/>
                     <condition lparam="hour" operator="below" value="5"/>
@@ -184,13 +216,17 @@
 
         <dialogs>
             <dialog>
-                <format lang="ko">잘 못 주무셨다니 속상해요.</format>
+                <formats>
+                    <format lang="ko">잘 못 주무셨다니 속상해요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="negative" operator="exist" value="true"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">푹 주무셨다니 다행이에요.</format>
+                <formats>
+                    <format lang="ko">푹 주무셨다니 다행이에요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="negative" operator="exist" value="false"/>
                 </conditions>
@@ -212,13 +248,17 @@
 
         <dialogs>
             <dialog>
-                <format lang="ko">{disease_name}은(는) 좀 어떠세요?</format>
+                <formats>
+                    <format lang="ko">{disease_name}은(는) 좀 어떠세요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="disease_name" operator="exist" value="true"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">아픈 곳이 있으신가요?</format>
+                <formats>
+                    <format lang="ko">아픈 곳이 있으신가요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="disease_name" operator="exist" value="false"/>
                 </conditions>
@@ -230,7 +270,9 @@
     <intent name="check_information_disease_name">
         <dialogs>
             <dialog>
-                <format lang="ko">어디가 아프신가요?</format>
+                <formats>
+                    <format lang="ko">어디가 아프신가요?</format>
+                </formats>
             </dialog>
         </dialogs>
     </intent>
@@ -239,7 +281,9 @@
     <intent name="check_information_sleep">
         <dialogs>
             <dialog>
-                <format lang="ko">간밤에 잘 주무셨어요?</format>
+                <formats>
+                    <format lang="ko">간밤에 잘 주무셨어요?</format>
+                </formats>
             </dialog>
         </dialogs>
     </intent>
@@ -248,7 +292,9 @@
     <intent name="check_information_sleep_2">
         <dialogs>
             <dialog>
-                <format lang="ko">하루 평균 몇 시간 주무시나요?</format>
+                <formats>
+                    <format lang="ko">하루 평균 몇 시간 주무시나요?</format>
+                </formats>
             </dialog>
         </dialogs>
     </intent>
@@ -257,7 +303,9 @@
     <intent name="check_information_drink">
         <dialogs>
             <dialog>
-                <format lang="ko">음주하신다면 일주일에 평균 얼마나 하셨나요?</format>
+                <formats>
+                    <format lang="ko">음주하신다면 일주일에 평균 얼마나 하셨나요?</format>
+                </formats>
             </dialog>
         </dialogs>
     </intent>
@@ -266,7 +314,9 @@
     <intent name="check_information_smoke">
         <dialogs>
             <dialog>
-                <format lang="ko">흡연하신다면 하루에 평균 몇 갑을 피셨나요?</format>
+                <formats>
+                    <format lang="ko">흡연하신다면 하루에 평균 몇 갑을 피셨나요?</format>
+                </formats>
             </dialog>
         </dialogs>
     </intent>
@@ -283,31 +333,41 @@
 
         <dialogs>
             <dialog>
-                <format lang="ko">{disease_name} 상태가 안 좋아지셨다니 슬프네요.</format>
+                <formats>
+                    <format lang="ko">{disease_name} 상태가 안 좋아지셨다니 슬프네요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="disease_status" operator="equal" value="negative"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">조금 더 수면이 필요할 것 같아요.</format>
+                <formats>
+                    <format lang="ko">조금 더 수면이 필요할 것 같아요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="sleep_status" operator="equal" value="negative"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">음주는 조금 줄여보시는 건 어떨까요.</format>
+                <formats>
+                    <format lang="ko">음주는 조금 줄여보시는 건 어떨까요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="drink_status" operator="equal" value="negative"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">흡연은 생각보다 몸에 좋지 않답니다.</format>
+                <formats>
+                    <format lang="ko">흡연은 생각보다 몸에 좋지 않답니다.</format>
+                </formats>
                 <conditions>
                     <condition lparam="smoke_status" operator="equal" value="negative"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">건강하신 것 같아서 다행이에요.</format>
+                <formats>
+                    <format lang="ko">건강하신 것 같아서 다행이에요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="disease_status" operator="equal" value="positive" pipe="and"/>
                     <condition lparam="sleep_status" operator="equal" value="positive" pipe="and"/>
@@ -316,7 +376,9 @@
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">더욱 힘내주세요.</format>
+                <formats>
+                    <format lang="ko">더욱 힘내주세요.</format>
+                </formats>
             </dialog>
         </dialogs>
     </intent>
@@ -330,13 +392,17 @@
 
         <dialogs>
             <dialog>
-                <format lang="ko">좋은 소식이네요. 식사는 뭐 드셨나요?</format>
+                <formats>
+                    <format lang="ko">좋은 소식이네요. 식사는 뭐 드셨나요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="positive" operator="exist" value="true"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">안 좋은 소식이네요. 식사는 뭐 드셨나요?</format>
+                <formats>
+                    <format lang="ko">안 좋은 소식이네요. 식사는 뭐 드셨나요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="negative" operator="exist" value="true"/>
                 </conditions>
@@ -354,13 +420,17 @@
 
         <dialogs>
             <dialog>
-                <format lang="ko">잘 하셨어요. {disease_name}에 {disease_advice} 중요한 거 아시죠?</format>
+                <formats>
+                    <format lang="ko">잘 하셨어요. {disease_name}에 {disease_advice} 중요한 거 아시죠?</format>
+                </formats>
                 <conditions>
                     <condition lparam="good_meal" operator="exist" value="true"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">조심하셔야 해요. {disease_name}에 {disease_advice} 중요한 거 아시죠?</format>
+                <formats>
+                    <format lang="ko">조심하셔야 해요. {disease_name}에 {disease_advice} 중요한 거 아시죠?</format>
+                </formats>
                 <conditions>
                     <condition lparam="good_meal" operator="exist" value="false"/>
                 </conditions>
@@ -377,13 +447,17 @@
 
         <dialogs>
             <dialog>
-                <format lang="ko">주의해주세요. {task}은(는) 하셨나요?</format>
+                <formats>
+                    <format lang="ko">주의해주세요. {task}은(는) 하셨나요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="negative" operator="exist" value="true"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">다행이에요. {task}은(는) 하셨나요?</format>
+                <formats>
+                    <format lang="ko">다행이에요. {task}은(는) 하셨나요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="negative" operator="exist" value="false"/>
                 </conditions>
@@ -400,13 +474,17 @@
 
         <dialogs>
             <dialog>
-                <format lang="ko">다음에는 빠뜨리시면 안 돼요. {medicine_schedule}하셔야 해요.</format>
+                <formats>
+                    <format lang="ko">다음에는 빠뜨리시면 안 돼요. {medicine_schedule}하셔야 해요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="negative" operator="exist" value="true"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">잘 챙기셨네요. {medicine_schedule}하셔야 해요.</format>
+                <formats>
+                    <format lang="ko">잘 챙기셨네요. {medicine_schedule}하셔야 해요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="negative" operator="exist" value="false"/>
                 </conditions>
@@ -423,13 +501,17 @@
 
         <dialogs>
             <dialog>
-                <format lang="ko">잘 못 지내셨다니 슬퍼요. 오늘 {visit_place} 방문하시는 날이었죠?</format>
+                <formats>
+                    <format lang="ko">잘 못 지내셨다니 슬퍼요. 오늘 {visit_place} 방문하시는 날이었죠?</format>
+                </formats>
                 <conditions>
                     <condition lparam="negative" operator="exist" value="true"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">잘 지내셨다니 다행이에요. 오늘 {visit_place} 방문하시는 날이었죠?</format>
+                <formats>
+                    <format lang="ko">잘 지내셨다니 다행이에요. 오늘 {visit_place} 방문하시는 날이었죠?</format>
+                </formats>
                 <conditions>
                     <condition lparam="negative" operator="exist" value="false"/>
                 </conditions>
@@ -450,7 +532,9 @@
 
         <dialogs>
             <dialog>
-                <format lang="ko">잘 하셨어요. {name} {appellation} {disease_name} 상태가 좋아지셨다고 들었어요.</format>
+                <formats>
+                    <format lang="ko">잘 하셨어요. {name} {appellation} {disease_name} 상태가 좋아지셨다고 들었어요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="disease_status" operator="equal" value="positive" pipe="and"/>
                     <conditionGroup>
@@ -460,7 +544,9 @@
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">잘 하셨어요. {name} {appellation} {disease_name} 상태가 나빠지셨다고 들었어요.</format>
+                <formats>
+                    <format lang="ko">잘 하셨어요. {name} {appellation} {disease_name} 상태가 나빠지셨다고 들었어요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="disease_status" operator="equal" value="negative" pipe="and"/>
                     <conditionGroup>
@@ -470,7 +556,9 @@
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">꼭 가셔야 해요. {name} {appellation} {disease_name} 상태가 좋아지셨다고 들었어요.</format>
+                <formats>
+                    <format lang="ko">꼭 가셔야 해요. {name} {appellation} {disease_name} 상태가 좋아지셨다고 들었어요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="disease_status" operator="equal" value="positive" pipe="and"/>
                     <conditionGroup>
@@ -480,7 +568,9 @@
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">꼭 가셔야 해요. {name} {appellation} {disease_name} 상태가 나빠지셨다고 들었어요.</format>
+                <formats>
+                    <format lang="ko">꼭 가셔야 해요. {name} {appellation} {disease_name} 상태가 나빠지셨다고 들었어요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="disease_status" operator="equal" value="negative" pipe="and"/>
                     <conditionGroup>
@@ -495,21 +585,24 @@
 
     <intent name="transmit_information_medicine_status">
         <parameters>
-            <parameter name="name" type="social_context" ref="name"/>
-            <parameter name="appellation" type="social_context" ref="appellation"/>
             <parameter name="disease_name" type="social_context" ref="disease_name"/>
             <parameter name="disease_status" type="social_context" ref="disease_status"/>
+            <parameter name="appellation" type="social_context" ref="appellation"/>
         </parameters>
 
         <dialogs>
             <dialog>
-                <format lang="ko">{name} {appellation} {disease_name} 상태가 좋아지셔서 드시는 약이 바뀌었어요.</format>
+                <formats>
+                    <format lang="ko">{name} {appellation} {disease_name} 상태가 좋아지셔서 드시는 약이 바뀌었어요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="disease_status" operator="equal" value="positive"/>
                 </conditions>
             </dialog>
             <dialog>
-                <format lang="ko">{name} {appellation} {disease_name} 상태가 나빠지셔서 드시는 약이 바뀌었어요.</format>
+                <formats>
+                    <format lang="ko">{name} {appellation} {disease_name} 상태가 나빠지셔서 드시는 약이 바뀌었어요.</format>
+                </formats>
                 <conditions>
                     <condition lparam="disease_status" operator="equal" value="negative"/>
                 </conditions>
@@ -520,7 +613,6 @@
 
     <intent name="transmit_information_medicine">
         <parameters>
-            <parameter name="name" type="social_context" ref="name"/>
             <parameter name="appellation" type="social_context" ref="appellation"/>
             <parameter name="location" type="social_context" ref="medicine.location"/>
             <parameter name="taking_medicine" type="social_context" ref="medicine.takingMedicine"/>
@@ -529,10 +621,14 @@
 
         <dialogs>
             <dialog>
-                <format lang="ko">약은 {location}에 있고, {medication_guide}에 드셔야 해요, {name} {appellation}.</format>
+                <formats>
+                    <format lang="ko">약은 {location}에 있고, {medication_guide}에 드셔야 해요, {name} {appellation}.</format>
+                </formats>
             </dialog>
             <dialog>
-                <format lang="ko">이미 약을 드셨네요?</format>
+                <formats>
+                    <format lang="ko">이미 약을 드셨네요?</format>
+                </formats>
                 <conditions>
                     <condition lparam="taking_medicine" operator="equal" value="positive"/>
                 </conditions>
