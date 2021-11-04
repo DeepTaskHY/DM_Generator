@@ -4,7 +4,7 @@ from dtroslib.dialogflow import DialogflowClient
 from dtroslib.ros import DTNode
 from google.cloud import dialogflow_v2 as dialogflow
 from scenarios import ScenarioParser, Scenario
-from typing import Dict, Tuple
+from typing import List, Dict, Tuple
 
 
 # Node of Dialog Manager
@@ -75,34 +75,29 @@ class DMNode(DTNode):
 
         return dialog
 
-    def generate_content(self,
-                         source: str,
-                         content_names: list,
-                         contents: Dict[str, dict]) -> Tuple[list, list, Dict[str, dict]]:
+    def generate_contents(self,
+                          source: str,
+                          contents: Dict[str, dict]) -> Tuple[List[str], Dict[str, dict]]:
 
-        for content_name in content_names:
-            targets = source
-            content = contents[content_name]
-            content_names = [content_name]
-            generated_contents = {}
+        targets = []
+        generated_contents = []
 
-            if isinstance(targets, str):
-                targets = [targets]
-
+        for content_name, content in contents:
             if content_name == 'dialog_generation':
                 dialog = self.dialog_generation(content)
 
                 if not dialog:
                     continue
 
-                generated_contents = {
+                targets.append(source)
+
+                generated_contents.update({
                     'dialog_generation': {
-                        'dialog': dialog,
-                        'result': 'completion'
+                        'dialog': dialog
                     }
-                }
+                })
 
-            if generated_contents:
-                return targets, content_names, generated_contents
+        # Remove duplicate targets
+        targets = list(set(targets))
 
-        return None, None, None
+        return targets, generated_contents
