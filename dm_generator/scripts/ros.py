@@ -80,7 +80,7 @@ class DMNode(DTNode):
                           contents: Dict[str, dict]) -> Tuple[List[str], Dict[str, dict]]:
 
         targets = []
-        generated_contents = []
+        generated_contents = {}
 
         for content_name, content in contents:
             if content_name == 'dialog_generation':
