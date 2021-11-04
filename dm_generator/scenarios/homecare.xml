@@ -10,6 +10,8 @@
             <dialog>
                 <formats>
                     <format lang="ko">처음 뵙겠습니다. 이름과 나이, 성별을 알려주시겠어요?</format>
+                    <format lang="ko">안녕하세요. 이름, 나이, 성별을 알려주세요!</format>
+                    <format lang="ko">어서오세요. 이름과 나이, 성별을 알려주세요.</format>
                 </formats>
                 <conditions>
                     <condition lparam="name" operator="exist" value="false" pipe="and"/>
@@ -19,6 +21,7 @@
             <dialog>
                 <formats>
                     <format lang="ko">나이와 성별을 알려주시겠어요?</format>
+                    <format lang="ko">나이와 성별을 알려주시면 감사하겠습니다.</format>
                 </formats>
                 <conditions>
                     <condition lparam="name" operator="exist" value="true" pipe="and"/>
@@ -250,6 +253,8 @@
             <dialog>
                 <formats>
                     <format lang="ko">{disease_name}은(는) 좀 어떠세요?</format>
+                    <format lang="ko">최근 {disease_name}은(는) 괜찮으신가요?</format>
+                    <format lang="ko">{disease_name}(이)가 걱정돼요. 상태는 어떤가요?</format>
                 </formats>
                 <conditions>
                     <condition lparam="disease_name" operator="exist" value="true"/>
@@ -272,6 +277,7 @@
             <dialog>
                 <formats>
                     <format lang="ko">어디가 아프신가요?</format>
+                    <format lang="ko">어떻게 아프신지 알려주세요.</format>
                 </formats>
             </dialog>
         </dialogs>
@@ -294,6 +300,8 @@
             <dialog>
                 <formats>
                     <format lang="ko">하루 평균 몇 시간 주무시나요?</format>
+                    <format lang="ko">어제 몇 시간 정도 주무셨나요?</format>
+                    <format lang="ko">최근에 얼마나 주무셨나요?</format>
                 </formats>
             </dialog>
         </dialogs>
@@ -305,6 +313,7 @@
             <dialog>
                 <formats>
                     <format lang="ko">음주하신다면 일주일에 평균 얼마나 하셨나요?</format>
+                    <format lang="ko">음주를 하시나요? 몇 잔 정도 마시는지 궁금해요.</format>
                 </formats>
             </dialog>
         </dialogs>
@@ -316,6 +325,8 @@
             <dialog>
                 <formats>
                     <format lang="ko">흡연하신다면 하루에 평균 몇 갑을 피셨나요?</format>
+                    <format lang="ko">흡연을 하시나요? 몇 갑 정도 피우시나요?</format>
+                    <format lang="ko">담배를 어느 정도 피우셨나요?</format>
                 </formats>
             </dialog>
         </dialogs>
@@ -335,6 +346,8 @@
             <dialog>
                 <formats>
                     <format lang="ko">{disease_name} 상태가 안 좋아지셨다니 슬프네요.</format>
+                    <format lang="ko">최근 {disease_name} 상태가 별로시군요. 속상하시겠어요.</format>
+                    <format lang="ko">{disease_name} 상태가 좋지 못하시다니 안타까워요.</format>
                 </formats>
                 <conditions>
                     <condition lparam="disease_status" operator="equal" value="negative"/>
@@ -343,6 +356,8 @@
             <dialog>
                 <formats>
                     <format lang="ko">조금 더 수면이 필요할 것 같아요.</format>
+                    <format lang="ko">제대로 잠을 못 주무시는 것 같아요. 되도록 수면 시간을 늘릴 수 있도록 노력이 필요할 것 같아요.</format>
+                    <format lang="ko">잠이 부족하신 것 같아요. 수면 시간을 늘려보세요.</format>
                 </formats>
                 <conditions>
                     <condition lparam="sleep_status" operator="equal" value="negative"/>
@@ -351,6 +366,8 @@
             <dialog>
                 <formats>
                     <format lang="ko">음주는 조금 줄여보시는 건 어떨까요.</format>
+                    <format lang="ko">때로는 음주가 스트레스 해소에 도움이 되지만, 조금만 줄이시면 건강에 좋을 것 같아요.</format>
+                    <format lang="ko">술은 조금은 줄여서 적당하게 즐기는 게 좋답니다.</format>
                 </formats>
                 <conditions>
                     <condition lparam="drink_status" operator="equal" value="negative"/>
@@ -359,6 +376,8 @@
             <dialog>
                 <formats>
                     <format lang="ko">흡연은 생각보다 몸에 좋지 않답니다.</format>
+                    <format lang="ko">건강을 위해서 흡연을 줄이시면 좋을 거 같아요.</format>
+                    <format lang="ko">더 좋은 모습과 건강을 위해 흡연은 조금 줄이시면 어떨까요?</format>
                 </formats>
                 <conditions>
                     <condition lparam="smoke_status" operator="equal" value="negative"/>
@@ -378,6 +397,8 @@
             <dialog>
                 <formats>
                     <format lang="ko">더욱 힘내주세요.</format>
+                    <format lang="ko">앞으로도 노력 파이팅입니다!</format>
+                    <format lang="ko">더 좋은 모습을 위해 힘내주세요~</format>
                 </formats>
             </dialog>
         </dialogs>
@@ -623,11 +644,14 @@
             <dialog>
                 <formats>
                     <format lang="ko">약은 {location}에 있고, {medication_guide}에 드셔야 해요, {name} {appellation}.</format>
+                    <format lang="ko">{location}에 약이 있습니다. {medication_guide}에 드셔주세요.</format>
                 </formats>
             </dialog>
             <dialog>
                 <formats>
-                    <format lang="ko">이미 약을 드셨네요?</format>
+                    <format lang="ko">이미 약을 드신 것 같아요.</format>
+                    <format lang="ko">약은 드신 것 같아요.</format>
+                    <format lang="ko">말씀하신 약은 잘 드신 것 같아요.</format>
                 </formats>
                 <conditions>
                     <condition lparam="taking_medicine" operator="equal" value="positive"/>
