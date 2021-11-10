@@ -2,7 +2,6 @@
   "modules": {
     "homecare": {
       "project-id": "socialrobot-hyu-xdtlug",
-      "session-id": "dialogflow-session-id",
       "authorization": {
         "key": "filename.json"
       },
@@ -10,7 +9,6 @@
     },
     "reception": {
       "project-id": "socialrobot-hyu-reception-nyla",
-      "session-id": "dialogflow-session-id",
       "authorization": {
         "key": "filename.json"
       },
