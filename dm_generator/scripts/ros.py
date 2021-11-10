@@ -82,7 +82,7 @@ class DMNode(DTNode):
         targets = []
         generated_contents = {}
 
-        for content_name, content in contents:
+        for content_name, content in contents.items():
             if content_name == 'dialog_generation':
                 dialog = self.dialog_generation(content)
 
