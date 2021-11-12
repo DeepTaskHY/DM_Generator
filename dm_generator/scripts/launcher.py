@@ -18,17 +18,17 @@ def main():
 
     # Set configuration
     project_id = configuration['project-id']
-    lang_code = configuration['language-code']
     key_path = get_key_path('dm_generator', configuration['authorization']['key'])
+    language_code = configuration['language-code']
 
     # Initialize nodes
     dialogflow_client = DialogflowClient(project_id=project_id,
                                          key_path=key_path,
-                                         language_code=lang_code)
+                                         language_code=language_code)
 
     node = DMNode(node_name=node_name,
                   scenario_name=scenario_name,
-                  language_code=lang_code,
+                  language_code=language_code,
                   dialogflow_client=dialogflow_client)
 
     rospy.loginfo(f'Start DM ({scenario_name})')
