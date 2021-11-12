@@ -33,21 +33,23 @@ To test this module, you can execute the following command line.
 **homecare**
 
 ```shell
-$ docker-compose run -e DM_NODE=homecare dm-default  # or
-$ docker-compose run -e DM_NODE=homecare dm-linux
+$ docker-compose run -e scenario_name=homecare dm-default  # or
+$ docker-compose run -e scenario_name=homecare dm-linux  # or
+$ roslaunch dm_generator dm_launcher.launch scenario_name:=homecare
 ```
 
 **reception**
 
 ```shell
-$ docker-compose run -e DM_NODE=reception dm-default  # or
-$ docker-compose run -e DM_NODE=reception dm-linux
+$ docker-compose run -e scenario_name=reception dm-default  # or
+$ docker-compose run -e scenario_name=reception dm-linux  # or
+$ roslaunch dm_generator dm_launcher.launch scenario_name:=reception
 ```
 
 **testbench**
 
 ```shell
-$ python dm_generator/tests/testbench.py [-h] --testbench {homecare,homecare_new,reception} [--starts STARTS] [--delay DELAY]
+$ python dm_generator/tests/testbench.py [-h] --testbench {homecare,reception} [--starts STARTS] [--delay DELAY]
 ```
 
 ## 6. Input/Subscribed Topics
