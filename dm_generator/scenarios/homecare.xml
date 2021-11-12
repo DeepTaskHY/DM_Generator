@@ -606,9 +606,10 @@
 
     <intent name="transmit_information_medicine_status">
         <parameters>
+            <parameter name="name" type="social_context" ref="name"/>
+            <parameter name="appellation" type="social_context" ref="appellation"/>
             <parameter name="disease_name" type="social_context" ref="disease_name"/>
             <parameter name="disease_status" type="social_context" ref="disease_status"/>
-            <parameter name="appellation" type="social_context" ref="appellation"/>
         </parameters>
 
         <dialogs>
