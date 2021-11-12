@@ -46,8 +46,8 @@ def main():
         with open(msg_path) as msg_file:
             msg = json.load(msg_file)
 
-        rospy.loginfo(msg)
         pubisher.publish(json.dumps(msg))
+        rospy.loginfo(msg)
         rospy.sleep(args.delay)
 
 
