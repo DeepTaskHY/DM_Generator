@@ -186,7 +186,7 @@
             </dialog>
             <dialog>
                 <formats>
-                    <format lang="ko">네, {disease_name}은(는) {disease_description}입니다. 증상은 {disease_symptom} 등이 있어요. {prevent}(으)로 {disease_name}을(를) 예방할 수 있어요. 저도 작년에 컴퓨터 바이러스를 잡았는데 플래시 드라이브를 더 조심해야겠어요. 하하하.</format>
+                    <format lang="ko">{disease_name}은(는) {disease_description}입니다. 증상은 {disease_symptom} 등이 있어요. {prevent}(으)로 {disease_name}을(를) 예방할 수 있어요.</format>
                 </formats>
                 <conditions>
                     <condition lparam="disease_check" operator="exist" value="true" pipe="and"/>
