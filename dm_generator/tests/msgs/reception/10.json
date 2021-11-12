@@ -1,0 +1,21 @@
+{
+    "header": {
+        "id": 10,
+        "timestamp": "1563980674.262554407",
+        "source": "planning",
+        "target": [
+            "dialog"
+        ],
+        "content": [
+            "dialog_generation"
+        ]
+    },
+    "dialog_generation": {
+        "intent": "check_information_alarm",
+        "human_speech": "그럼 2시 반에 예약해줘",
+        "social_context": {
+            "name": "이병현",
+            "available_time": "10:00, 12:00, 15:30"
+        }
+    }
+}

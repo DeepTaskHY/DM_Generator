@@ -1,0 +1,24 @@
+{
+    "header": {
+        "id": 5,
+        "timestamp": "1563980674.262554407",
+        "source": "planning",
+        "target": [
+            "dialog"
+        ],
+        "content": [
+            "dialog_generation"
+        ]
+    },
+    "dialog_generation": {
+        "intent": "check_information_disease",
+        "human_speech": "고혈압 약.",
+        "social_context": {
+            "name": "이병현",
+            "help_avail": true,
+            "disease_name": "고혈압",
+            "disease_status": "positive",
+            "appellation": "어르신"
+        }
+    }
+}

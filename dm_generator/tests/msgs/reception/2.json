@@ -1,0 +1,24 @@
+{
+    "header": {
+        "id": 2,
+        "timestamp": "1563980674.262554407",
+        "source": "planning",
+        "target": [
+            "dialog"
+        ],
+        "content": [
+            "dialog_generation"
+        ]
+    },
+    "dialog_generation": {
+        "intent": "check_information_disease",
+        "human_speech": "고혈압 약이 필요해. 도와줄래?",
+        "social_context": {
+            "name": "이병현",
+            "help_avail": false,
+            "disease_name": "고혈압",
+            "disease_status": "",
+            "appellation": "어르신"
+        }
+    }
+}

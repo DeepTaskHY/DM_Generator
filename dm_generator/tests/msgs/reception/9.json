@@ -1,0 +1,22 @@
+{
+    "header": {
+        "id": 9,
+        "timestamp": "1563980674.262554407",
+        "source": "planning",
+        "target": [
+            "dialog"
+        ],
+        "content": [
+            "dialog_generation"
+        ]
+    },
+    "dialog_generation": {
+        "intent": "transmit_information_center_schedule",
+        "human_speech": "그래 혹시 내일모레 시간이 어떻게 되니?",
+        "social_context": {
+            "name": "이병현",
+            "available_time": "오전10시, 오후12시, 오후 3시 30분",
+            "date": "2020-12-25"
+        }
+    }
+}

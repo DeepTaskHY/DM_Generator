@@ -3,8 +3,18 @@
 import json
 import rospy
 from argparse import ArgumentParser
-from helpers import get_msgs_list
+from pathlib import Path
 from std_msgs.msg import String
+
+from helpers import get_msgs_list
+
+
+def get_dir_list(base_path: str):
+    return (entry for entry in Path(base_path).iterdir() if entry.is_dir())
+
+
+def get_testbench_list():
+    return [entry.name for entry in get_dir_list('msgs')]
 
 
 def main():
@@ -14,7 +24,7 @@ def main():
     parser.add_argument('--testbench',
                         type=str,
                         required=True,
-                        choices=['homecare', 'homecare_new', 'reception'])
+                        choices=get_testbench_list())
 
     parser.add_argument('--starts',
                         type=int,

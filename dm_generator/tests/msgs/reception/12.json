@@ -1,0 +1,20 @@
+{
+    "header": {
+        "id": 12,
+        "timestamp": "1563980674.262554407",
+        "source": "planning",
+        "target": [
+            "dialog"
+        ],
+        "content": [
+            "dialog_generation"
+        ]
+    },
+    "dialog_generation": {
+        "intent": "transmit_information_reservation",
+        "human_speech": "그래줄래?",
+        "social_context": {
+            "name": "이병현"
+        }
+    }
+}

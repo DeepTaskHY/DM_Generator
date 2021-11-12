@@ -1,0 +1,23 @@
+{
+    "header": {
+        "id": 6,
+        "timestamp": "1563980674.262554407",
+        "source": "planning",
+        "target": [
+            "dialog"
+        ],
+        "content": [
+            "dialog_generation"
+        ]
+    },
+    "dialog_generation": {
+        "intent": "transmit_information_pharmacy",
+        "human_speech": "노력한 게 결과를 이루니 좋구만",
+        "social_context": {
+            "name": "이병현",
+            "opening_hour": "8시",
+            "place": "약국",
+            "treat": "처방전"
+        }
+    }
+}

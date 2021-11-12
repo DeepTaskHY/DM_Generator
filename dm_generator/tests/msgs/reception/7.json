@@ -1,0 +1,25 @@
+{
+    "header": {
+        "id": 7,
+        "timestamp": "1563980674.262554407",
+        "source": "planning",
+        "target": [
+            "dialog"
+        ],
+        "content": [
+            "dialog_generation"
+        ]
+    },
+    "dialog_generation": {
+        "intent": "transmit_information_disease_advice",
+        "human_speech": "응, 독감 예방접종을 하고 싶은데 알려줄래?",
+        "social_context": {
+            "name": "이병현",
+            "disease_name": "독감",
+            "disease_description": "바이러스로 인해 생겨나는 전염성 호흡기 질환",
+            "disease_symptom": "발열, 기침, 몸살, 금육통",
+            "prevent": "예방 접종",
+            "help_avail": true
+        }
+    }
+}

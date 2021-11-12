@@ -1,0 +1,22 @@
+{
+    "header": {
+        "id": 8,
+        "timestamp": "1563980674.262554407",
+        "source": "planning",
+        "target": [
+            "dialog"
+        ],
+        "content": [
+            "dialog_generation"
+        ]
+    },
+    "dialog_generation": {
+        "intent": "check_information_reservation",
+        "human_speech": "독감을 피하려면 어떻게 해야할 지 알려줄 수 있니?",
+        "social_context": {
+            "name": "이병현",
+            "disease_name": "독감",
+            "treat": "예방 접종"
+        }
+    }
+}
