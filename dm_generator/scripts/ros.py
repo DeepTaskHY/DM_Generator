@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 from dtroslib.dialogflow import DialogflowClient
 from dtroslib.ros import DTNode
-from google.cloud import dialogflow_v2 as dialogflow
 from scenarios import ScenarioParser, Scenario
 from typing import List, Dict, Tuple
 
@@ -58,17 +57,13 @@ class DMNode(DTNode):
             intent.set_parameter_content(content)
 
         # Generate dialogs
-        try:
-            dialogs = intent.get_correct_dialogs()
-            generated_dialogs = [dialog.selected_value(self.language_code) for dialog in dialogs]
+        dialogs = intent.get_correct_dialogs()
+        generated_dialogs = [dialog.selected_value(self.language_code) for dialog in dialogs]
 
         # Out of scenario exception
-        except IndexError:
-            if 'dialogflow' in content:
-                dialogflow_result = content['dialogflow']
-                generated_dialogs = [dialogflow_result.query_result.fulfillment_text]
-            else:
-                generated_dialogs = []
+        if not generated_dialogs and 'dialogflow' in content:
+            dialogflow_result = content['dialogflow']
+            generated_dialogs = [dialogflow_result.query_result.fulfillment_text]
 
         # Dialog result
         dialog = ' '.join(generated_dialogs)
@@ -91,10 +86,8 @@ class DMNode(DTNode):
 
                 targets.append(source)
 
-                generated_contents.update({
-                    'dialog_generation': {
-                        'dialog': dialog
-                    }
+                generated_contents.update(dialog_generation={
+                    'dialog': dialog
                 })
 
         # Remove duplicate targets
