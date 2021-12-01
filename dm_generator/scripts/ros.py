@@ -57,16 +57,13 @@ class DMNode(DTNode):
             intent.set_parameter_content(content)
 
         # Generate dialogs
-        dialogs = intent.get_correct_dialogs()
-        generated_dialogs = [dialog.selected_value(self.language_code) for dialog in dialogs]
+        intent.set_language_code(self.language_code)
+        dialog = intent.get_correct_dialog()
 
         # Out of scenario exception
-        if not generated_dialogs and 'dialogflow' in content:
+        if not dialog and 'dialogflow' in content:
             dialogflow_result = content['dialogflow']
-            generated_dialogs = [dialogflow_result.query_result.fulfillment_text]
-
-        # Dialog result
-        dialog = ' '.join(generated_dialogs)
+            dialog = dialogflow_result.query_result.fulfillment_text
 
         return dialog
 

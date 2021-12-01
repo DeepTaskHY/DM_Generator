@@ -1,5 +1,20 @@
 <?xml version="1.0"?>
 <scenario name="homecare">
+    <intent name="fallback_repeat_intent">
+        <parameters>
+            <parameter name="previous_dialog" type="variable" ref="previous_dialog"/>
+        </parameters>
+
+        <dialogs>
+            <dialog>
+                <formats>
+                    <format lang="ko">잘 이해하지 못한 거 같아요. 다시 물어봐도 될까요? {previous_dialog}</format>
+                </formats>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
     <intent name="check_information_user">
         <parameters>
             <parameter name="name" type="social_context" ref="name"/>
@@ -9,9 +24,9 @@
         <dialogs>
             <dialog>
                 <formats>
-                    <format lang="ko">처음 뵙겠습니다. 이름과 나이, 성별을 알려주시겠어요?</format>
-                    <format lang="ko">안녕하세요. 이름, 나이, 성별을 알려주세요!</format>
-                    <format lang="ko">어서오세요. 이름과 나이, 성별을 알려주세요.</format>
+                    <format lang="ko">처음 뵙겠습니다, 건강 상담을 도와드리고 있습니다. 이름과 나이, 성별을 알려주시겠어요?</format>
+                    <format lang="ko">처음 뵙겠습니다, 건강 상담을 도와드리고 있습니다. 이름, 나이, 성별을 알려주세요!</format>
+                    <format lang="ko">처음 뵙겠습니다, 건강 상담을 도와드리고 있습니다. 이름과 나이, 성별을 알려주세요.</format>
                 </formats>
                 <conditions>
                     <condition lparam="name" operator="exist" value="false" pipe="and"/>
@@ -41,12 +56,96 @@
     </intent>
 
 
-    <intent name="check_information_user_name">
+    <intent name="check_information_exist_user">
         <dialogs>
             <dialog>
                 <formats>
                     <format lang="ko">그렇다면 이름을 알려주시겠어요?</format>
                 </formats>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="check_information_user_name">
+        <parameters>
+            <parameter name="name" type="social_context" ref="name"/>
+            <parameter name="negative" type="dialogflow" ref="parameters.negative"/>
+        </parameters>
+
+        <dialogs>
+            <dialog>
+                <formats>
+                    <format lang="ko">이름은 {name}님 맞으신가요?</format>
+                </formats>
+                <conditions>
+                    <condition lparam="name" operation="exist" value="true"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <formats>
+                    <format lang="ko">이름을 다시 알려주시겠어요?</format>
+                </formats>
+                <conditions>
+                    <condition lparam="name" operation="exist" value="false" pipe="or"/>
+                    <condition lparam="negative" operation="exist" value="true"/>
+                </conditions>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="check_information_user_age">
+        <parameters>
+            <parameter name="age" type="social_context" ref="age"/>
+            <parameter name="negative" type="dialogflow" ref="parameters.negative"/>
+        </parameters>
+
+        <dialogs>
+            <dialog>
+                <formats>
+                    <format lang="ko">나이는 {age}세 맞으신가요?</format>
+                </formats>
+                <conditions>
+                    <condition lparam="age" operation="exist" value="true"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <formats>
+                    <format lang="ko">나이를 다시 알려주시겠어요?</format>
+                </formats>
+                <conditions>
+                    <condition lparam="age" operation="exist" value="false" pipe="or"/>
+                    <condition lparam="negative" operation="exist" value="true"/>
+                </conditions>
+            </dialog>
+        </dialogs>
+    </intent>
+
+
+    <intent name="check_information_user_gender">
+        <parameters>
+            <parameter name="gender" type="social_context" ref="gender"/>
+            <parameter name="negative" type="dialogflow" ref="parameters.negative"/>
+        </parameters>
+
+        <dialogs>
+            <dialog>
+                <formats>
+                    <format lang="ko">성별은 {gender} 맞으신가요?</format>
+                </formats>
+                <conditions>
+                    <condition lparam="gender" operation="exist" value="true"/>
+                </conditions>
+            </dialog>
+            <dialog>
+                <formats>
+                    <format lang="ko">성별을 다시 알려주시겠어요?</format>
+                </formats>
+                <conditions>
+                    <condition lparam="gender" operation="exist" value="false" pipe="or"/>
+                    <condition lparam="negative" operation="exist" value="true"/>
+                </conditions>
             </dialog>
         </dialogs>
     </intent>

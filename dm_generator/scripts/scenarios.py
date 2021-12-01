@@ -322,9 +322,29 @@ class Event(ConditionAssociationBase):
 
 
 class Intent(ScenarioBase):
+    __language_code: str = None
+    __previous_intent: Intent = None
     __event: Event = None
+
     __parameters: Dict[str, Parameter] = {}
     __dialogs: List[Dialog] = []
+
+    def set_language_code(self, language_code: str):
+        if self.previous_intent:
+            self.previous_intent.set_language_code(language_code)
+
+        self.__language_code = language_code
+
+    @property
+    def language_code(self) -> str:
+        return self.__language_code
+
+    def set_previous_intent(self, intent: Intent):
+        self.__previous_intent = intent
+
+    @property
+    def previous_intent(self) -> Intent:
+        return self.__previous_intent
 
     @property
     def parameters(self) -> Dict[str, Parameter]:
@@ -354,11 +374,25 @@ class Intent(ScenarioBase):
         return self.__dialogs
 
     def set_parameter_content(self, content: dict):
+        # Pass content to sub-intent
+        if self.previous_intent:
+            self.previous_intent.set_parameter_content(content)
+
+        # Pass content to parameters
+        previous_dialog = self.previous_intent.get_correct_dialog()
+        content.update(previous_dialog=previous_dialog)
+
         for parameter_name, parameter in self.parameters.items():
             parameter.set_content(content)
 
     def get_correct_dialogs(self) -> List[Dialog]:
         return [dialog for dialog in self.dialogs if dialog.result]
+
+    def get_correct_dialog(self) -> str:
+        generated_dialogs = [dialog.selected_value(self.language_code) for dialog in self.get_correct_dialogs()]
+        dialog = ' '.join(generated_dialogs)
+
+        return dialog
 
 
 class Scenario(ScenarioBase):
@@ -370,6 +404,11 @@ class Scenario(ScenarioBase):
         intent = Intent(self.root.find(f'./intent[@name="{intent_name}"]'))
 
         if content:
+            if 'previous_intent' in content:
+                previous_intent_name = content['previous_intent']
+                previous_intent = Intent(self.root.find(f'./intent[@name="{previous_intent_name}"]'))
+                intent.set_previous_intent(previous_intent)
+
             intent.set_parameter_content(content)
 
         return intent
