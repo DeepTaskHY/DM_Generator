@@ -374,11 +374,9 @@ class Intent(ScenarioBase):
         return self.__dialogs
 
     def set_parameter_content(self, content: dict):
-        # Pass content to sub-intent
         if self.previous_intent:
             self.previous_intent.set_parameter_content(content)
 
-        # Pass content to parameters
         previous_dialog = self.previous_intent.get_correct_dialog()
         content.update(previous_dialog=previous_dialog)
 
@@ -396,7 +394,6 @@ class Intent(ScenarioBase):
 
 
 class Scenario(ScenarioBase):
-    # Always return a new Intent instance
     def get_intent(self,
                    intent_name: str,
                    language_code: str,
@@ -443,6 +440,5 @@ class ScenarioParser(XMLParser):
 
         return self.__scenario_path
 
-    # Always return a new Scenario instance
     def get_scenario(self) -> Scenario:
         return Scenario(self.root)

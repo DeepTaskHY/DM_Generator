@@ -34,35 +34,26 @@ class DMNode(DTNode):
         return self.__scenario
 
     def dialog_generation(self, content: dict) -> str:
-        # Instantiate Intent
         intent_name = content['intent']
+        intent = self.scenario.get_intent(intent_name, self.language_code, content)
 
-        intent = self.scenario.get_intent(intent_name,
-                                          self.language_code,
-                                          content)
-
-        # Handling intent exceptions without scenarios
         if not intent.exist:
             return None
 
         # Add DialogFlow result
         if 'human_speech' in content:
-            # Trigger event
+            human_speech = content['human_speech']
+
             if intent.event.result:
                 self.dialogflow_client.trigger_intent_event(intent.event.name)
 
-            # Detect text
-            human_speech = content['human_speech']
             dialogflow_result = self.dialogflow_client.detect_intent_text(human_speech)
             content.update(dialogflow=dialogflow_result)
-
-            # Update dialogflow parameters
             intent.set_parameter_content(content)
 
-        # Generate dialogs
+        # Generate dialog
         dialog = intent.get_correct_dialog()
 
-        # Out of scenario exception
         if not dialog and 'dialogflow' in content:
             dialogflow_result = content['dialogflow']
             dialog = dialogflow_result.query_result.fulfillment_text
