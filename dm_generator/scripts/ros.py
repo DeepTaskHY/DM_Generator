@@ -36,7 +36,10 @@ class DMNode(DTNode):
     def dialog_generation(self, content: dict) -> str:
         # Instantiate Intent
         intent_name = content['intent']
-        intent = self.scenario.get_intent(intent_name, content)
+
+        intent = self.scenario.get_intent(intent_name,
+                                          self.language_code,
+                                          content)
 
         # Handling intent exceptions without scenarios
         if not intent.exist:
@@ -57,7 +60,6 @@ class DMNode(DTNode):
             intent.set_parameter_content(content)
 
         # Generate dialogs
-        intent.set_language_code(self.language_code)
         dialog = intent.get_correct_dialog()
 
         # Out of scenario exception

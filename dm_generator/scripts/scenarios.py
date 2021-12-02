@@ -399,9 +399,11 @@ class Scenario(ScenarioBase):
     # Always return a new Intent instance
     def get_intent(self,
                    intent_name: str,
+                   language_code: str,
                    content: dict = None) -> Intent:
 
         intent = Intent(self.root.find(f'./intent[@name="{intent_name}"]'))
+        intent.set_language_code(language_code)
 
         if content:
             if 'previous_intent' in content:
