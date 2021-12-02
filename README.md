@@ -17,7 +17,7 @@ When creating the robot utterance, we define several tasks that consider sociali
 ## 4. Environments
 
 - [ros:noetic](https://hub.docker.com/layers/ros/library/ros/noetic/images/sha256-c1565b2b554d775f1fb2fde93d1aaf76554a6a98d06f10432b0dd4ddd5d6a11c)
-- Python 3.6+
+- Python 3.7+
 
 ## 5. Quick start
 
