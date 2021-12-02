@@ -329,22 +329,24 @@ class Intent(ScenarioBase):
     __parameters: Dict[str, Parameter] = {}
     __dialogs: List[Dialog] = []
 
-    def set_language_code(self, language_code: str):
-        if self.previous_intent:
-            self.previous_intent.set_language_code(language_code)
-
-        self.__language_code = language_code
-
     @property
     def language_code(self) -> str:
         return self.__language_code
 
-    def set_previous_intent(self, intent: Intent):
-        self.__previous_intent = intent
+    @language_code.setter
+    def language_code(self, value: str):
+        if self.previous_intent:
+            self.previous_intent.language_code = value
+
+        self.__language_code = value
 
     @property
     def previous_intent(self) -> Intent:
         return self.__previous_intent
+
+    @previous_intent.setter
+    def previous_intent(self, value: Intent):
+        self.__previous_intent = value
 
     @property
     def parameters(self) -> Dict[str, Parameter]:
@@ -400,13 +402,13 @@ class Scenario(ScenarioBase):
                    content: dict = None) -> Intent:
 
         intent = Intent(self.root.find(f'./intent[@name="{intent_name}"]'))
-        intent.set_language_code(language_code)
+        intent.language_code = language_code
 
         if content:
             if 'previous_intent' in content:
                 previous_intent_name = content['previous_intent']
                 previous_intent = Intent(self.root.find(f'./intent[@name="{previous_intent_name}"]'))
-                intent.set_previous_intent(previous_intent)
+                intent.previous_intent = previous_intent
 
             intent.set_parameter_content(content)
 
