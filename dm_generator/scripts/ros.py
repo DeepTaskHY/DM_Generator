@@ -54,7 +54,7 @@ class DMNode(DTNode):
             # Detect text
             human_speech = content['human_speech']
             dialogflow_result = self.dialogflow_client.detect_intent_text(human_speech)
-            content.update({'dialogflow': dialogflow_result})
+            content.update(dialogflow=dialogflow_result)
 
             # Update dialogflow parameters
             intent.set_parameter_content(content)
