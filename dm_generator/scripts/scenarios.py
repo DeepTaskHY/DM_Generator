@@ -66,7 +66,7 @@ class Parameter(ScenarioBase):
         elif self.type == 'time':
             ref = datetime.now()
 
-        elif self.type == 'social_context':
+        elif self.type == 'social_context' and 'social_context' in content:
             ref = content['social_context']
 
         elif self.type == 'dialogflow' and 'dialogflow' in content:
