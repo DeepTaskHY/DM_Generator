@@ -352,7 +352,7 @@ class Intent(ScenarioBase):
 
     @property
     def parameters(self) -> Dict[str, Parameter]:
-        if not self.__parameters:
+        if self.exist and not self.__parameters:
             parameters = self.root.findall('./parameters/parameter')
             self.__parameters = {root.get('name'): Parameter(root) for root in parameters}
 
@@ -360,7 +360,7 @@ class Intent(ScenarioBase):
 
     @property
     def event(self):
-        if not self.__event:
+        if self.exist and not self.__event:
             self.__event = Event(self.root.find('./event'))
             self.__event.parameters = self.parameters
 
@@ -368,7 +368,7 @@ class Intent(ScenarioBase):
 
     @property
     def dialogs(self):
-        if not self.__dialogs:
+        if self.exist and not self.__dialogs:
             dialogs = self.root.findall('./dialogs/dialog')
             self.__dialogs = [Dialog(root) for root in dialogs]
 
@@ -380,9 +380,8 @@ class Intent(ScenarioBase):
     def set_parameter_content(self, content: dict):
         if self.previous_intent:
             self.previous_intent.set_parameter_content(content)
-
-        previous_dialog = self.previous_intent.get_correct_dialog()
-        content.update(previous_dialog=previous_dialog)
+            previous_dialog = self.previous_intent.get_correct_dialog()
+            content.update(previous_dialog=previous_dialog)
 
         for parameter_name, parameter in self.parameters.items():
             parameter.set_content(content)
@@ -410,6 +409,7 @@ class Scenario(ScenarioBase):
             if 'previous_intent' in content:
                 previous_intent_name = content['previous_intent']
                 previous_intent = Intent(self.root.find(f'./intent[@name="{previous_intent_name}"]'))
+                previous_intent.language_code = language_code
                 intent.previous_intent = previous_intent
 
             intent.set_parameter_content(content)
