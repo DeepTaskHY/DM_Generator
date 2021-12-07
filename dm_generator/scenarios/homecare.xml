@@ -45,7 +45,7 @@
             </dialog>
             <dialog>
                 <formats>
-                    <format lang="ko">{name} {appellation} 맞으신가요?</format>
+                    <format lang="ko">건강 상담을 도와드리고 있습니다. {name} {appellation} 맞으신가요?</format>
                 </formats>
                 <conditions>
                     <condition lparam="name" operator="exist" value="true" pipe="and"/>
