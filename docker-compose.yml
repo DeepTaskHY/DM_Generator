@@ -8,7 +8,7 @@ services:
         container_name: generator
         environment:
             - PYTHONUNBUFFERED=1
-            - scenario_name=homecare
+            - SCENARIO_NAME=homecare
         volumes:
             - ./dm_generator:/workspace/src
             - /etc/localtime:/etc/localtime

@@ -1,5 +1,5 @@
 <launch>
-    <arg name="scenario_name" default="$(env scenario_name)"/>
+    <arg name="scenario_name" default="$(env SCENARIO_NAME)"/>
     <node pkg="dm_generator" name="DM_node" type="launcher.py" output="screen">
         <param name="scenario_name" type="str" value="$(arg scenario_name)"/>
     </node>

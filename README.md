@@ -35,7 +35,7 @@ To test this module, you can execute the following command line.
 ```shell
 $ docker-compose run -e scenario_name=homecare dm-default  # or
 $ docker-compose run -e scenario_name=homecare dm-linux  # or
-$ roslaunch dm_generator dm_launcher.launch scenario_name:=homecare
+$ roslaunch dm_generator dm_launcher.launch SCENARIO_NAME:=homecare
 ```
 
 **reception**
@@ -43,7 +43,7 @@ $ roslaunch dm_generator dm_launcher.launch scenario_name:=homecare
 ```shell
 $ docker-compose run -e scenario_name=reception dm-default  # or
 $ docker-compose run -e scenario_name=reception dm-linux  # or
-$ roslaunch dm_generator dm_launcher.launch scenario_name:=reception
+$ roslaunch dm_generator dm_launcher.launch SCENARIO_NAME:=reception
 ```
 
 **testbench**
