@@ -68,19 +68,16 @@ class Parameter(ScenarioBase):
         elif self.type == 'time':
             ref = datetime.now()
 
-        elif self.type == 'social_context' and 'social_context' in content:
-            ref = content['social_context']
+        elif self.type == 'social_context' and content.get('social_context'):
+            ref = content.get('social_context')
 
-        elif self.type == 'dialogflow' and 'dialogflow' in content:
-            ref = content['dialogflow'].query_result
+        elif self.type == 'dialogflow' and content.get('dialogflow'):
+            ref = content.get('dialogflow').query_result
 
         if ref:
             for key in self.ref:
                 if isinstance(ref, MapComposite) or isinstance(ref, dict):
-                    if key in ref:
-                        ref = ref[key]
-                    else:
-                        ref = None
+                    ref = ref.get(key)
 
                 elif isinstance(ref, object):
                     ref = getattr(ref, key)
@@ -132,7 +129,7 @@ class Condition(ConditionBase):
 
     @property
     def lparam_value(self):
-        return self.parameter_values[self.lparam]
+        return self.parameter_values.get(self.lparam)
 
     @property
     def rparam(self) -> str:
@@ -143,7 +140,7 @@ class Condition(ConditionBase):
         if not self.rparam:
             return None
 
-        return self.parameter_values[self.rparam]
+        return self.parameter_values.get(self.rparam)
 
     @property
     def value(self) -> str:
@@ -314,7 +311,7 @@ class Dialog(ConditionAssociationBase):
         return values
 
     def selected_value(self, language_code: str) -> str:
-        return random.choice(self.value[language_code])
+        return random.choice(self.value.get(language_code))
 
 
 class Event(ConditionAssociationBase):
@@ -406,8 +403,8 @@ class Scenario(ScenarioBase):
         intent.language_code = language_code
 
         if content:
-            if 'previous_intent' in content:
-                previous_intent_name = content['previous_intent']
+            if content.get('previous_intent'):
+                previous_intent_name = content.get('previous_intent')
                 previous_intent = Intent(self.root.find(f'./intent[@name="{previous_intent_name}"]'))
                 previous_intent.language_code = language_code
                 intent.previous_intent = previous_intent

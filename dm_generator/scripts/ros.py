@@ -34,15 +34,15 @@ class DMNode(DTNode):
         return self.__scenario
 
     def dialog_generation(self, content: dict) -> str:
-        intent_name = content['intent']
+        intent_name = content.get('intent')
         intent = self.scenario.get_intent(intent_name, self.language_code, content)
 
         if not intent.exist:
             return None
 
         # Add DialogFlow result
-        if 'human_speech' in content:
-            human_speech = content['human_speech']
+        if content.get('human_speech'):
+            human_speech = content.get('human_speech')
 
             if intent.event.result:
                 self.dialogflow_client.trigger_intent_event(intent.event.name)
@@ -54,8 +54,8 @@ class DMNode(DTNode):
         # Generate dialog
         dialog = intent.get_correct_dialog()
 
-        if not dialog and 'dialogflow' in content:
-            dialogflow_result = content['dialogflow']
+        if not dialog and content.get('dialogflow'):
+            dialogflow_result = content.get('dialogflow')
             dialog = dialogflow_result.query_result.fulfillment_text
 
         return dialog
