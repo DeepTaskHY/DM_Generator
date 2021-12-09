@@ -30,19 +30,22 @@ When creating the robot utterance, we define several tasks that consider sociali
 
 To test this module, you can execute the following command line.
 
+**common**
+
+```shell
+$ docker-compose --env-file=.env up dm-default  # or
+$ docker-compose --env-file=.env up dm-linux
+```
+
 **homecare**
 
 ```shell
-$ docker-compose run -e scenario_name=homecare dm-default  # or
-$ docker-compose run -e scenario_name=homecare dm-linux  # or
 $ roslaunch dm_generator dm_launcher.launch SCENARIO_NAME:=homecare
 ```
 
 **reception**
 
 ```shell
-$ docker-compose run -e scenario_name=reception dm-default  # or
-$ docker-compose run -e scenario_name=reception dm-linux  # or
 $ roslaunch dm_generator dm_launcher.launch SCENARIO_NAME:=reception
 ```
 
