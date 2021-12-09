@@ -79,7 +79,7 @@
                     <format lang="ko">이름은 {name}님 맞으신가요?</format>
                 </formats>
                 <conditions>
-                    <condition lparam="name" operation="exist" value="true"/>
+                    <condition lparam="name" operator="exist" value="true"/>
                 </conditions>
             </dialog>
             <dialog>
@@ -87,8 +87,8 @@
                     <format lang="ko">이름을 다시 알려주시겠어요?</format>
                 </formats>
                 <conditions>
-                    <condition lparam="name" operation="exist" value="false" pipe="or"/>
-                    <condition lparam="negative" operation="exist" value="true"/>
+                    <condition lparam="name" operator="exist" value="false" pipe="or"/>
+                    <condition lparam="negative" operator="exist" value="true"/>
                 </conditions>
             </dialog>
         </dialogs>
@@ -107,7 +107,7 @@
                     <format lang="ko">나이는 {age}세 맞으신가요?</format>
                 </formats>
                 <conditions>
-                    <condition lparam="age" operation="exist" value="true"/>
+                    <condition lparam="age" operator="exist" value="true"/>
                 </conditions>
             </dialog>
             <dialog>
@@ -115,8 +115,8 @@
                     <format lang="ko">나이를 다시 알려주시겠어요?</format>
                 </formats>
                 <conditions>
-                    <condition lparam="age" operation="exist" value="false" pipe="or"/>
-                    <condition lparam="negative" operation="exist" value="true"/>
+                    <condition lparam="age" operator="exist" value="false" pipe="or"/>
+                    <condition lparam="negative" operator="exist" value="true"/>
                 </conditions>
             </dialog>
         </dialogs>
@@ -135,7 +135,7 @@
                     <format lang="ko">성별은 {gender} 맞으신가요?</format>
                 </formats>
                 <conditions>
-                    <condition lparam="gender" operation="exist" value="true"/>
+                    <condition lparam="gender" operator="exist" value="true"/>
                 </conditions>
             </dialog>
             <dialog>
@@ -143,8 +143,8 @@
                     <format lang="ko">성별을 다시 알려주시겠어요?</format>
                 </formats>
                 <conditions>
-                    <condition lparam="gender" operation="exist" value="false" pipe="or"/>
-                    <condition lparam="negative" operation="exist" value="true"/>
+                    <condition lparam="gender" operator="exist" value="false" pipe="or"/>
+                    <condition lparam="negative" operator="exist" value="true"/>
                 </conditions>
             </dialog>
         </dialogs>
