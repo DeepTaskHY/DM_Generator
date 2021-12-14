@@ -6,9 +6,9 @@ services:
             context: .
             dockerfile: Dockerfile
         container_name: generator
+        env_file: .env
         environment:
             - PYTHONUNBUFFERED=1
-            - SCENARIO_NAME=${SCENARIO_NAME}
         volumes:
             - ./dm_generator:/workspace/src
             - /etc/localtime:/etc/localtime
