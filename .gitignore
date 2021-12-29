@@ -134,6 +134,10 @@ dmypy.json
 # Authorization key
 /dm_generator/keys/*
 
+# Datasets
+# Authorization key
+/dm_generator/datasets/*
+
 # Configuration
 /dm_generator/configuration.json
 
