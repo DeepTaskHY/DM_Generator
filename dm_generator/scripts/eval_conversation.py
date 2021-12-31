@@ -1,13 +1,9 @@
-import os
-import pandas as pd
 import re
 import tensorflow as tf
 import tensorflow_datasets as tfds
-import urllib.request
-from dtroslib.helpers import get_package_path
-from tensorflow.keras.models import load_model
-from helpers import get_model_path
+
 from conversation import load_conversation_model
+from helpers import get_model_path
 
 
 tokenizer_path = get_model_path('conversation/tokenizer')

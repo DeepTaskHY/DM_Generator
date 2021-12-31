@@ -1,11 +1,5 @@
 import numpy as np
-import os
-import pandas as pd
-import re
 import tensorflow as tf
-import tensorflow_datasets as tfds
-import time
-import urllib.request
 from tensorflow.keras.models import load_model
 
 
