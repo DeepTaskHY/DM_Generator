@@ -5,6 +5,8 @@ import rospy
 from dtroslib.dialogflow import DialogflowClient
 from dtroslib.helpers import get_module_configuration, get_key_path
 from ros import DMNode
+from helpers import get_model_path
+from conversation import load_conversation_model
 
 
 def main():
@@ -26,10 +28,15 @@ def main():
                                          key_path=key_path,
                                          language_code=language_code)
 
+    # Load conversation model
+    model_path = get_model_path('conversation/saved_model')
+    conversation_model = load_conversation_model(model_path)
+
     node = DMNode(node_name=node_name,
                   scenario_name=scenario_name,
                   language_code=language_code,
-                  dialogflow_client=dialogflow_client)
+                  dialogflow_client=dialogflow_client,
+                  conversation_model=conversation_model)
 
     rospy.loginfo(f'Start DM ({scenario_name})')
 

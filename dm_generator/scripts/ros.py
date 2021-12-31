@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 from dtroslib.dialogflow import DialogflowClient
 from dtroslib.ros import DTNode
+from eval_conversation import predict
 from scenarios import ScenarioParser, Scenario
+from tensorflow.keras.models import Model
 from typing import List, Dict, Tuple
 
 
@@ -14,6 +16,7 @@ class DMNode(DTNode):
                  scenario_name: str,
                  language_code: str,
                  dialogflow_client: DialogflowClient,
+                 conversation_model: Model,
                  *args, **kwargs):
 
         super(DMNode, self).__init__(publish_message='/taskCompletion',
@@ -23,6 +26,7 @@ class DMNode(DTNode):
         self.source_name = 'dialog'
         self.scenario_name = scenario_name
         self.dialogflow_client = dialogflow_client
+        self.conversation_model = conversation_model
         self.language_code = language_code
 
     @property
@@ -40,7 +44,7 @@ class DMNode(DTNode):
         if not intent.exist:
             return None
 
-        # Add DialogFlow result
+        # Add DialogFlow and Conversation result
         if content.get('human_speech'):
             human_speech = content.get('human_speech')
 
@@ -49,6 +53,11 @@ class DMNode(DTNode):
 
             dialogflow_result = self.dialogflow_client.detect_intent_text(human_speech)
             content.update(dialogflow=dialogflow_result)
+
+            conversation_result = predict(self.conversation_model, human_speech)
+            content.update(conversation=conversation_result)
+
+            # Update content
             intent.set_parameter_content(content)
 
         # Generate dialog

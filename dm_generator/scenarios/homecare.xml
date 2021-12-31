@@ -267,13 +267,14 @@
     <intent name="saying_good_bye">
         <parameters>
             <parameter name="hour" type="time" ref="hour"/>
+            <parameter name="conversation" type="variable" ref="conversation"/>
             <parameter name="fulfillment_text" type="dialogflow" ref="fulfillment_text"/>
         </parameters>
 
         <dialogs>
             <dialog>
                 <formats>
-                    <format lang="ko">{fulfillment_text} 좋은 하루 보내세요.</format>
+                    <format lang="ko">{fulfillment_text} {conversation} 좋은 하루 보내세요.</format>
                 </formats>
                 <conditions>
                     <condition lparam="hour" operator="more" value="6" pipe="and"/>
@@ -282,7 +283,7 @@
             </dialog>
             <dialog>
                 <formats>
-                    <format lang="ko">{fulfillment_text} 오후 잘 보내세요.</format>
+                    <format lang="ko">{fulfillment_text} {conversation} 오후 잘 보내세요.</format>
                 </formats>
                 <conditions>
                     <condition lparam="hour" operator="more" value="12" pipe="and"/>
@@ -291,7 +292,7 @@
             </dialog>
             <dialog>
                 <formats>
-                    <format lang="ko">{fulfillment_text} 저녁 잘 보내세요.</format>
+                    <format lang="ko">{fulfillment_text} {conversation} 저녁 잘 보내세요.</format>
                 </formats>
                 <conditions>
                     <condition lparam="hour" operator="more" value="18" pipe="and"/>
@@ -300,7 +301,7 @@
             </dialog>
             <dialog>
                 <formats>
-                    <format lang="ko">{fulfillment_text} 안녕히 가세요.</format>
+                    <format lang="ko">{fulfillment_text} {conversation} 안녕히 가세요.</format>
                 </formats>
                 <conditions>
                     <condition lparam="hour" operator="more" value="22" pipe="or"/>
